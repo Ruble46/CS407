@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
-import { AppModuleShared } from './app.shared.module';
-import { IndexComponent } from './components/index/index.component';
+import { IndexSharedModule } from './index.shared.module';
+import { IndexComponent } from '../app/components/index/index.component';
 
 @NgModule({
     bootstrap: [ IndexComponent ],
     imports: [
         ServerModule,
-        AppModuleShared
+        IndexSharedModule
     ]
 })
 export class AppModule {

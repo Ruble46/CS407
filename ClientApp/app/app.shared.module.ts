@@ -15,7 +15,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 //Component Imports
 import { AccountComponent } from './components/account/account.component';
-import { AppComponent } from './components/app/app.component';
+import { IndexComponent } from './components/index/index.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationBarComponent } from './components/navigationBar/navigationBar.component';
 import { PasswordResetComponent } from './components/passwordReset/passwordReset.component';
@@ -26,10 +26,14 @@ import { ProfileComponent } from './components/profile/profile.component';
 //Service and Helper Imports
 
 
+//Shared Modules
+import { RootModuleShared } from '../root/root.shared.module';
+import { IndexSharedModule } from '../index/index.shared.module';
+
 @NgModule({
     declarations: [
         //Components go here
-        AppComponent,
+        IndexComponent,
         AccountComponent,
         HomeComponent,
         NavigationBarComponent,
@@ -47,33 +51,37 @@ import { ProfileComponent } from './components/profile/profile.component';
         NoopAnimationsModule,
 
         //Angular Modules
-         MatInputModule,
-         MatIconModule,
-         MatTableModule,
-         MatButtonModule,
-         MatPaginatorModule,
-         MatSortModule,
-         MatProgressSpinnerModule,
-         FormsModule,
-         MatButtonModule,
-         MatToolbarModule,
-         MatMenuModule,
-         MatListModule, 
-         MatSelectModule,
-         MatCardModule,
-         MatTabsModule,
-         MatDatepickerModule,
-         MatNativeDateModule,
-         MatCheckboxModule,
-         MatSidenavModule,
-         MatRadioModule,
-         MatProgressBarModule,
+        MatInputModule,
+        MatIconModule,
+        MatTableModule,
+        MatButtonModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+        FormsModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatListModule, 
+        MatSelectModule,
+        MatCardModule,
+        MatTabsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatRadioModule,
+        MatProgressBarModule,
+
+        //Shared Modules
+        RootModuleShared,
+        IndexSharedModule,
 
         //Routes
-        RouterModule.forRoot([
-            // { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: '', component: AppComponent },
-            { path: '**', redirectTo: '' },
+        RouterModule.forChild([
+            // { path: '', redirectTo: 'index', pathMatch: 'full' },
+            // { path: 'index', component: IndexComponent },
+            // { path: '**', redirectTo: 'index' },
             { path: 'passwordReset', component: PasswordResetComponent },
             { path: 'forgotPassword', component: PasswordResetRequestComponent },
             { path: 'app', component: NavigationBarComponent, children: [

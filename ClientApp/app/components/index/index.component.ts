@@ -1,13 +1,13 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'app',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css', '../../../themes/theme.css'],
+    selector: 'index',
+    templateUrl: './index.component.html',
+    styleUrls: ['./index.component.css', '../../../themes/theme.css'],
     encapsulation : ViewEncapsulation.None
 
 })
-export class AppComponent {
+export class IndexComponent {
     public emailSignIn: string;
     public passwordSignIn: string;
 

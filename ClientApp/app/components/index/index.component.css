@@ -34,13 +34,22 @@
     font-weight: 600;
 }
 
+.forgotLink {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.bottomInput {
+    margin-bottom: 10px;
+}
+
 .topInput {
-    padding-top: 30px;
+    padding-top: 20px;
 }
 
 .formInput1 {
     width: 100%;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -61,7 +70,7 @@
     margin:0 auto;
     display:block;
     width: 90%;
-    margin-top: 60px;
+    margin-top: 70px;
     color: white;
     font-size: 16px;
 }

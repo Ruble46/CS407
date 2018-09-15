@@ -12,10 +12,12 @@
                     <input matInput placeholder="Enter email address" [(ngModel)]="emailSignIn">
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="formInput1">
+                <mat-form-field appearance="outline" class="formInput1 bottomInput">
                     <mat-label>Password</mat-label>
                     <input type="password" matInput placeholder="Enter password" [(ngModel)]="passwordSignIn">
                 </mat-form-field>
+
+                <a class="forgotLink" [routerLink]="['/forgotPassword']">Forgot your password?</a>
 
                 <button mat-raised-button color="primary" id="appSingleAction1" (click)="signIn()">Sign In</button>
             </mat-tab>

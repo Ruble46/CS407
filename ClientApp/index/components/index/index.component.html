@@ -1,0 +1,44 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="background">
+    <mat-card class="appCard">
+        <mat-toolbar color="accent">
+            <h1 id="title">Game2gether</h1>
+        </mat-toolbar>
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab label="Sign In">
+                <mat-form-field appearance="outline" class="formInput1 topInput">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Enter email address" [(ngModel)]="emailSignIn">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="formInput1 bottomInput">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Enter password" [(ngModel)]="passwordSignIn">
+                </mat-form-field>
+
+                <a class="forgotLink" [routerLink]="['/forgotPassword']">Forgot your password?</a>
+
+                <button mat-raised-button color="primary" id="appSingleAction1" (click)="signIn()">Sign In</button>
+            </mat-tab>
+            <mat-tab label="Sign Up">
+                <mat-form-field appearance="outline" class="formInput2 topInput">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Enter email address" [(ngModel)]="emailSignUp">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="formInput2">
+                    <mat-label>New Password</mat-label>
+                    <input type="password" matInput placeholder="Enter password" [(ngModel)]="passwordSignUp">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="formInput2">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" matInput placeholder="Confirm password" [(ngModel)]="passwordSignUpConfirm">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" id="appSingleAction2" (click)="singUp()">Sign Up</button>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
+</div>
