@@ -1,7 +1,7 @@
 //Module Imports
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -10,7 +10,7 @@ import {MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
         MatIconModule, MatMenuModule, MatListModule, MatSelectModule,
         MatCardModule, MatTabsModule, MatDatepickerModule, MatRadioModule,
         MatNativeDateModule, MatCheckboxModule, MatSidenavModule, 
-        MatProgressBarModule} from "@angular/material";
+        MatProgressBarModule, MatDialogModule} from "@angular/material";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 //Component Imports
@@ -18,6 +18,7 @@ import { AccountComponent } from './components/account/account.component';
 import { IndexComponent } from './components/index/index.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationBarComponent } from './components/navigationBar/navigationBar.component';
+import { NewPostDialogComponent } from './components/newPostDialog/newPostDialog.component';
 import { PasswordResetComponent } from './components/passwordReset/passwordReset.component';
 import { PasswordResetRequestComponent } from './components/passwordResetRequest/passwordResetRequest.component';
 import { PostComponent } from './components/post/post.component';
@@ -37,6 +38,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         AccountComponent,
         HomeComponent,
         NavigationBarComponent,
+        NewPostDialogComponent,
         PasswordResetComponent,
         PasswordResetRequestComponent,
         PostComponent,
@@ -59,6 +61,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         MatSortModule,
         MatProgressSpinnerModule,
         FormsModule,
+        ReactiveFormsModule,
         MatButtonModule,
         MatToolbarModule,
         MatMenuModule,
@@ -72,6 +75,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         MatSidenavModule,
         MatRadioModule,
         MatProgressBarModule,
+        MatDialogModule,
 
         //Shared Modules
         RootModuleShared,
@@ -80,7 +84,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         //Routes
         RouterModule.forChild([
             // { path: '', redirectTo: 'index', pathMatch: 'full' },
-            // { path: 'index', component: IndexComponent },
+            { path: 'index', component: IndexComponent },
             // { path: '**', redirectTo: 'index' },
             { path: 'passwordReset', component: PasswordResetComponent },
             { path: 'forgotPassword', component: PasswordResetRequestComponent },
@@ -88,10 +92,12 @@ import { IndexSharedModule } from '../index/index.shared.module';
                 { path: 'account', component: AccountComponent },
                 { path: 'home', component: HomeComponent },
                 { path: 'post', component: PostComponent },
-                { path: 'profile', component: ProfileComponent }
+                { path: 'profile/:email', component: ProfileComponent }
             ]}
         ])
-    ], providers : [
+    ],
+    entryComponents: [NewPostDialogComponent],
+    providers : [
         
     ]
 })

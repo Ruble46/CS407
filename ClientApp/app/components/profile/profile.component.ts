@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'profile',
@@ -7,4 +8,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
     encapsulation : ViewEncapsulation.None
 })
 export class ProfileComponent {
+    public email: string;
+
+    constructor(private route: ActivatedRoute) {
+        route.params.subscribe((params) => {
+            this.email = params["email"]
+        });
+    }
 }

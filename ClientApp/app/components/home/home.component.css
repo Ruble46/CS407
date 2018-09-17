@@ -1,0 +1,89 @@
+.homeWrapper {
+    position: absolute;
+    height: calc(100% - 64px);
+    bottom: 0;
+    width: 100%;
+    background-color: #141518;
+    padding-bottom: 2%;
+}
+
+.fullHeight {
+    height: 100% !important;
+}
+
+.header {
+    display: block;
+    margin: 0 auto;
+    font-size: 1.25em !important;
+}
+
+.toolBar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.filtersCol {
+    height: auto;
+    padding: 5% 0 0 0;
+}
+
+.filters {
+    height: 200px;
+    border-right: #141518 solid 5px;
+}
+
+.filterBackground {
+    background-color: white;
+    padding: 5% 10% 5% 10%;
+    height: auto;
+}
+
+.feedCol {
+    padding: 5% 0 0 0;
+}
+
+.feed {
+    overflow-y: auto;
+}
+
+.navMenuItem {
+    color: #ff9900 !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .homeWrapper {
+        height: calc(100% - 56px);
+    }
+}
+
+/* CSS for card on feed */
+.card {
+    margin-bottom: 20px;
+}
+
+.cardOptionBtn {
+    position: absolute;
+    right: 30px;
+}
+
+.cardTitle {
+    font-size: 1.5em !important;
+}
+
+.cardContent {
+    margin-top: 16px;
+}
+
+.profileLink {
+    color: #ff9900;
+}
+
+/* CSS for filters */
+.platformSelect {
+    width: 100%;
+}
+
+.gameSelect {
+    width: 100%;
+}

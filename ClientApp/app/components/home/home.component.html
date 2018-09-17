@@ -1,1 +1,73 @@
-<h1>Hello, world!</h1>
+<div class="homeWrapper">
+    <div class="container fullHeight">
+        <div class="row fullHeight">
+            <div class="col-sm-4 filtersCol">
+                <div class="filters ">
+                    <mat-toolbar color="accent">
+                        <div class="header">
+                            Filters
+                        </div>
+                    </mat-toolbar>
+                    <div class="filterBackground">
+                        <mat-form-field class="platformSelect">
+                            <mat-select placeholder="Platforms" [formControl]="platforms" multiple>
+                                <mat-option *ngFor="let platform of platformList" [value]="platform">{{ platform }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="gameSelect">
+                            <mat-select placeholder="Games" [formControl]="games" multiple>
+                                <mat-option *ngFor="let game of gameList" [value]="game">{{ game }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 feedCol fullHeight">
+                <mat-toolbar class="toolBar" color="accent">
+                    <div class="header">
+                        Feed
+                    </div>
+                </mat-toolbar>
+
+                <div class="feed" style="height: 80vh">
+                    <!-- THIS IS THE CARD BEING LOOPED AND CREATED FOR THE FEED -->
+                    <mat-card class="card" *ngFor="let post of posts">
+                        <mat-card-header>
+                                <button mat-icon-button [matMenuTriggerFor]="postMenu" class="cardOptionBtn">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #postMenu="matMenu" xPosition="before" [overlapTrigger]="false">
+                                    <button mat-menu-item>
+                                        <mat-icon class="navMenuItem">share</mat-icon>
+                                        <span class="navMenuItem">Share</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon class="navMenuItem">report</mat-icon>
+                                        <span class="navMenuItem">Report</span>
+                                    </button>
+                                </mat-menu>
+                            <mat-card-title class="cardTitle">{{ post.Title }}</mat-card-title>
+                            <mat-card-subtitle>
+                                Posted By: 
+                                <a [routerLink]="['/app/profile', post.Creator]" class="profileLink">{{ post.Creator }}</a>
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="cardContent">
+                            <p>System: {{ post.System }}</p>
+                            <p>Game: {{post.Game }}</p>
+                            <p>{{ post.Description }}</p>
+                        </mat-card-content>
+                        <mat-divider></mat-divider>
+                        <mat-card-actions>
+                            <button mat-button>Contact</button>
+                        </mat-card-actions>
+                    </mat-card>  
+                    <!-- END OF CARD FOR THE FEED -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

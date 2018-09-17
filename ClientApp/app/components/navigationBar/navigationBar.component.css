@@ -1,0 +1,48 @@
+#navBar {
+    color: white;
+}
+
+#newPostBtn {
+    margin-left: 20px;
+    color: white;
+}
+
+.newPostBtn {
+    margin-right: 5px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+#navTitle {
+    font-size: 1.75em;
+}
+
+@media only screen and (max-width: 600px) {
+    #navTitle {
+        font-size: 1.3em;
+    }
+}
+
+.navTitleLink {
+    color: white;
+}
+
+.navTitleLink:hover {
+    text-decoration: none;
+    color: #ff9900;
+}
+
+.navTitleLink:focus {
+    color: white;
+    text-decoration: none;
+}
+
+.menuBtn {
+    font-size: 32px !important;
+}
+
+.navMenuItem {
+    color: #ff9900 !important;
+}

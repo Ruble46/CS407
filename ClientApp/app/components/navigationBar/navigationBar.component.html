@@ -1,0 +1,32 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<mat-toolbar color="accent" id="navBar">
+    <mat-toolbar-row>
+        <a [routerLink]="['/app/home']" class="navTitleLink">
+            <h1 id="navTitle">Game2gether</h1>
+        </a>
+        <button mat-raised-button color="primary" id="newPostBtn" (click)="openNewPost()">
+            <mat-icon class="newPostBtn">add_box</mat-icon>
+            <span>New Post</span>
+        </button>
+        <span class="spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="menuBtn">menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/app/home']">
+                <mat-icon class="navMenuItem">home</mat-icon>
+                <span class="navMenuItem">Home</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/app/account']">
+                <mat-icon class="navMenuItem">account_box</mat-icon>
+                <span class="navMenuItem">Account</span>
+            </button>
+            <button mat-menu-item [routerLink]="['']">
+                <mat-icon class="navMenuItem">exit_to_app</mat-icon>
+                <span class="navMenuItem">Logout</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>

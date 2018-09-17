@@ -37,6 +37,7 @@
 .forgotLink {
     margin-left: 20px;
     cursor: pointer;
+    z-index: 1000 !important;
 }
 
 .bottomInput {
@@ -52,6 +53,8 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
+    margin-bottom: -20px;
+    z-index: 10;
 }
 
 .formInput2 {
@@ -59,11 +62,7 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.mat-form-field-wrapper {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
+    margin-bottom: -24.5px;
 }
 
 #appSingleAction1 {

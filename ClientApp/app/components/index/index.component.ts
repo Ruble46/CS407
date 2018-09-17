@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'index',
@@ -15,16 +16,20 @@ export class IndexComponent {
     public passwordSignUp: string;
     public passwordSignUpConfirm: string;
 
-    constructor() {
-        
+    private router1: Router;
+
+    constructor(router: Router) {
+        this.router1 = router;
     }
 
     signIn() {
         console.log(this.emailSignIn + "," + this.passwordSignIn);
+        this.router1.navigateByUrl('app/home');
     }
 
     signUp() {
         console.log(this.emailSignUp + "," + this.passwordSignUp + "," + this.passwordSignUpConfirm);
+        this.router1.navigateByUrl('app/home');
     }
 
 }
