@@ -3,6 +3,6 @@ export class Post {
     Mode: string;
     Description: string;
     Creator: string;
-    System: string;
+    Platform: string;
     Game: string;
   }

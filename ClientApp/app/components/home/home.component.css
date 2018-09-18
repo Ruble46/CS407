@@ -45,6 +45,7 @@
 
 .feed {
     overflow-y: auto;
+    background-color: #141518;
 }
 
 .navMenuItem {
@@ -77,6 +78,7 @@
 
 .profileLink {
     color: #ff9900;
+    cursor: pointer;
 }
 
 /* CSS for filters */

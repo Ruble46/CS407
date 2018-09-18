@@ -23,6 +23,10 @@ import { PasswordResetComponent } from './components/passwordReset/passwordReset
 import { PasswordResetRequestComponent } from './components/passwordResetRequest/passwordResetRequest.component';
 import { PostComponent } from './components/post/post.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileChatComponent } from './components/profileChat/profileChat.component';
+import { ProfileGamingComponent } from './components/profileGaming/profileGaming.component';
+import { ProfilePostsComponent } from './components/profilePosts/profilePosts.component';
+import { ProfileRatingComponent } from './components/profileRating/profileRating.component';
 
 //Service and Helper Imports
 
@@ -42,7 +46,11 @@ import { IndexSharedModule } from '../index/index.shared.module';
         PasswordResetComponent,
         PasswordResetRequestComponent,
         PostComponent,
-        ProfileComponent
+        ProfileComponent,
+        ProfileChatComponent,
+        ProfileGamingComponent,
+        ProfilePostsComponent,
+        ProfileRatingComponent
     ],
     imports: [
         //Core Modules
@@ -92,7 +100,12 @@ import { IndexSharedModule } from '../index/index.shared.module';
                 { path: 'account', component: AccountComponent },
                 { path: 'home', component: HomeComponent },
                 { path: 'post', component: PostComponent },
-                { path: 'profile/:email', component: ProfileComponent }
+                { path: 'profile/:email', component: ProfileComponent, children: [
+                    { path: 'chat', component: ProfileChatComponent },
+                    { path: 'gaming', component: ProfileGamingComponent },
+                    { path: 'posts', component: ProfilePostsComponent },
+                    { path: 'rating', component: ProfileRatingComponent }
+                ] }
             ]}
         ])
     ],

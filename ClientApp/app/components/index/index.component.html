@@ -3,7 +3,7 @@
 <div class="background">
     <mat-card class="appCard">
         <mat-toolbar color="accent">
-            <h1 id="title">Game2gether</h1>
+            <h1 id="title" [routerLink]="['/index']">Game2gether</h1>
         </mat-toolbar>
         <mat-tab-group mat-stretch-tabs>
             <mat-tab label="Sign In">
@@ -17,7 +17,7 @@
                     <input type="password" matInput placeholder="Enter password" [(ngModel)]="passwordSignIn">
                 </mat-form-field>
 
-                <a class="forgotLink" [routerLink]="['/forgotPassword']">Forgot your password?</a>
+                <button mat-button id="forgotLink" [routerLink]="['/forgotPassword']">Forgot your password?</button>
 
                 <button mat-raised-button color="primary" id="appSingleAction1" (click)="signIn()">Sign In</button>
             </mat-tab>

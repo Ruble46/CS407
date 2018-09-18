@@ -50,7 +50,7 @@
                             <mat-card-title class="cardTitle">{{ post.Title }}</mat-card-title>
                             <mat-card-subtitle>
                                 Posted By: 
-                                <a [routerLink]="['/app/profile', post.Creator]" class="profileLink">{{ post.Creator }}</a>
+                                <a (click)="toProfile(post.Creator)" class="profileLink">{{ post.Creator }}</a>
                             </mat-card-subtitle>
                         </mat-card-header>
                         <mat-divider></mat-divider>

@@ -1,1 +1,27 @@
-<h1>this is the public profile for {{ email }}</h1>
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12 headerRow">
+            <div class="profileInfo">
+                <div class="emailTitle">
+                    {{ email }}
+                </div>
+                <div class="infoInline">
+                    <div class="infoSubtitle">
+                        Date joined: 9/17/2018
+                    </div>
+                </div>
+            </div>
+            <mat-tab-group class="profileTabs" (selectedTabChange)="onLinkClick($event)">
+                <mat-tab class="profileTab" label="Posts"></mat-tab>
+                <mat-tab class="profileTab" label="Gaming"></mat-tab>
+                <mat-tab class="profileTab" label="Chat"></mat-tab>
+                <mat-tab class="profileTab" label="Rating"></mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 contentRow">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

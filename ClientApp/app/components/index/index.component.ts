@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     encapsulation : ViewEncapsulation.None
 
 })
-export class IndexComponent {
+export class IndexComponent implements OnInit {
     public emailSignIn: string;
     public passwordSignIn: string;
 
@@ -20,6 +20,10 @@ export class IndexComponent {
 
     constructor(router: Router) {
         this.router1 = router;
+    }
+
+    ngOnInit() {
+
     }
 
     signIn() {
