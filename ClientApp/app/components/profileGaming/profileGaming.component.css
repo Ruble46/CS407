@@ -1,0 +1,58 @@
+.profileGamingWrapper {
+    height: calc(100% - 80px);
+    padding: 40px 5%;
+    background-image: url('../../../resources/images/test2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+}
+
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title, .mat-expansion-indicator::after {
+    color: white !important;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.platformExpansionPanelHeader, .platformExpansionPanelHeader:focus, .platformExpansionPanelHeader:active, .platformExpansionPanelHeader:hover {
+    background-color: #34373c !important;
+}
+
+.gameCardWrapper {
+    height: 100%;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+.gameCard {
+    height: 200px;
+    width: 200px;
+    padding-top: 25px;
+    text-align: center;
+    background-color: #ff9900;
+    color: white;
+    margin-right: 20px;
+    -webkit-box-shadow: 10px 10px 12px -8px rgba(0,0,0,1);
+    -moz-box-shadow: 10px 10px 12px -8px rgba(0,0,0,1);
+    box-shadow: 10px 10px 12px -8px rgba(0,0,0,1);
+}
+
+.gameCardIcon {
+    height: 150px;
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+    border: white 2px solid;
+}
+
+.gameCardText {
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.mat-expansion-panel-body {
+    padding: 20px !important;
+    height: 240px !important;
+}
