@@ -71,6 +71,24 @@
     font-weight: 800;
 }
 
+.mat-tab-header-pagination-chevron {
+    border-color: white !important;
+}
+
+@media only screen and (max-width: 660px) {
+    .profileTabs {
+        width: 450px;
+    }
+
+    .mat-tab-label {
+        font-size: 16px;
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+        font-size: 20px;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .headerRow {
         height: 30%
@@ -92,5 +110,17 @@
 
     .infoSubtitle {
         font-size: 1em;
+    }
+
+    .profileTabs {
+        width: 300px;
+    }
+
+    .mat-tab-label {
+        font-size: 14px;
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+        font-size: 18px;
     }
 }

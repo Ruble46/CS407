@@ -18,10 +18,41 @@
     overflow: auto;
 }
 
+@media only screen and (max-width: 900px) {
+    #profilePostsFeedWrapper {
+        width: 100%;
+    }
+}
+
 .cardTest {
     margin-bottom: 20px;
 }
 
+/* Card CSS */
+.card {
+    margin-bottom: 20px;
+}
+
+.cardOptionBtn {
+    position: absolute;
+    right: 30px;
+}
+
+.cardTitle {
+    font-size: 1.5em !important;
+}
+
+.cardContent {
+    margin-top: 16px;
+}
+
+.profileLink {
+    color: #ff9900;
+    cursor: pointer;
+}
+/* ENd of Card CSS */
+
+/* Scrollbar CSS */
 ::-webkit-scrollbar {
     width: 20px;
 }
@@ -42,3 +73,5 @@
 ::-webkit-scrollbar-thumb:hover {
     background: gray; 
 }
+
+/* End Scrollbar CSS */

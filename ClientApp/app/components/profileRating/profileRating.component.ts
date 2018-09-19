@@ -4,7 +4,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
     selector: 'profileRating',
     templateUrl: './profileRating.component.html',
     styleUrls: ['./profileRating.component.css', '../../../themes/theme.css'],
-    encapsulation : ViewEncapsulation.None
+    encapsulation : ViewEncapsulation.Native
 })
 export class ProfileRatingComponent {
 }
