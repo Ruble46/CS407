@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'profile',
@@ -11,6 +12,7 @@ import { MatTabChangeEvent } from '@angular/material';
 export class ProfileComponent implements OnInit {
     public email: string;
     private router1: Router;
+    public selected = new FormControl(0);
 
     constructor(private route: ActivatedRoute, private router: Router) {
         this.router1 = router;

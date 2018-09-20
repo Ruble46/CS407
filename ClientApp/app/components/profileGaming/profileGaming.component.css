@@ -1,3 +1,7 @@
+.gamingExpansionPanel {
+    margin-bottom: 20px;
+}
+
 .profileGamingWrapper {
     height: calc(100% - 80px);
     padding: 40px 5%;
@@ -5,12 +9,32 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: center;
+    overflow: auto;
 }
 
-.mat-expansion-panel-header-description, .mat-expansion-panel-header-title, .mat-expansion-indicator::after {
+.gamingHeadPanel {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.gamingText, .mat-expansion-indicator::after {
     color: white !important;
     font-size: 24px;
-    font-weight: 600;
+}
+
+.mat-expansion-panel-header {
+    height: 64px !important;
+}
+
+@media only screen and (max-width: 660px) { 
+    .gamingText, .mat-expansion-indicator::after {
+        font-size: 20px;
+    }
+
+    .gamingHeadPanel {
+        display: inline-flex;
+        flex-direction: column;
+    }
 }
 
 .platformExpansionPanelHeader, .platformExpansionPanelHeader:focus, .platformExpansionPanelHeader:active, .platformExpansionPanelHeader:hover {
@@ -18,17 +42,19 @@
 }
 
 .gameCardWrapper {
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
     display: inline-flex;
     flex-direction: row;
     overflow-x: auto;
+    margin: 20px;
+    padding-bottom: 10px;
 }
 
 .gameCard {
-    height: 200px;
-    width: 200px;
-    padding-top: 25px;
+    height: 175px;
+    width: 150px;
+    padding: 25px;
     text-align: center;
     background-color: #ff9900;
     color: white;
@@ -41,18 +67,39 @@
 .gameCardIcon {
     height: 150px;
     width: 150px;
-    display: block;
-    margin: 0 auto;
     border: white 2px solid;
 }
 
 .gameCardText {
-    line-height: 50px;
+    line-height: 30px;
     font-size: 20px;
     font-weight: 500;
 }
 
 .mat-expansion-panel-body {
-    padding: 20px !important;
-    height: 240px !important;
+    padding: 0 !important;
 }
+
+/* Scrollbar CSS */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: gray; 
+}
+
+/* End Scrollbar CSS */

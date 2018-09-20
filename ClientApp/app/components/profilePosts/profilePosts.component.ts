@@ -1,4 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
     selector: 'profilePosts',
@@ -7,4 +9,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
     encapsulation : ViewEncapsulation.Native
 })
 export class ProfilePostsComponent {
+    private router1: Router;
+
+    constructor(profile: ProfileComponent, router: Router) {
+        profile.selected.setValue(0);
+        this.router1 = router;
+    }
+    
+    toProfile(email) {
+        this.router1.navigateByUrl('app/profile/' + email + '/posts');
+    }
 }

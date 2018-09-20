@@ -1,0 +1,129 @@
+.profileGamingWrapper {
+    height: calc(100% - 20px);
+    width: 100%;
+    background-image: url('../../../resources/images/test2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    padding-top: 20px;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.noPadding {
+    padding: 0 !important;
+}
+
+.myRatingBorder {
+    height: auto;
+}
+
+.rateThisUserHeader {
+    border-right: #141518 solid 5px;
+}
+
+.myRatingColumn {
+    padding: 20px;
+    height: auto;
+    background-color: white;
+    border-right: #141518 solid 5px;
+}
+
+.allRatingColumn {
+    overflow: auto;
+    height: calc(100% - 64px);
+    background-color: #141518;
+}
+
+.buttonStack {
+    display:inline-flex;
+    flex-direction: column;
+}
+
+.viewBtn {
+    margin-right: 20px;
+}
+
+.ratingSubTitle {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 575px) {
+    .buttonStack {
+        display:inline-flex;
+        flex-direction: row;
+    }
+
+    .myRatingColumn {
+        height: 250px !important;
+    }
+
+    .allRatingColumn {
+        background-color: #141518;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .allRatingColumn {
+        height: calc(100% - 56px);
+    }
+
+    .myRatingBorder {
+        margin-bottom: 20px;
+    }
+}
+
+/* Card CSS */
+.cardTest {
+    margin-bottom: 20px;
+}
+
+.cardOptionBtn {
+    position: absolute;
+    right: 30px;
+}
+
+.cardTitle {
+    font-size: 1.5em !important;
+}
+
+.cardContent {
+    margin-top: 16px;
+}
+
+.profileLink {
+    color: #ff9900 !important;
+    cursor: pointer;
+}
+/* ENd of Card CSS */
+
+/* Scrollbar CSS */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: gray; 
+}
+
+/* End Scrollbar CSS */

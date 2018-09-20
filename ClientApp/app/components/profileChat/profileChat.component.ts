@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
     selector: 'profileChat',
@@ -7,4 +8,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
     encapsulation : ViewEncapsulation.Native
 })
 export class ProfileChatComponent {
+
+    constructor(profile: ProfileComponent) {
+        profile.selected.setValue(2);
+    }
 }

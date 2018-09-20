@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <mat-tab-group class="profileTabs" (selectedTabChange)="onLinkClick($event)">
+            <mat-tab-group class="profileTabs" [selectedIndex]="selected.value" (selectedTabChange)="onLinkClick($event)">
                 <mat-tab class="profileTab" label="Posts"></mat-tab>
                 <mat-tab class="profileTab" label="Gaming"></mat-tab>
                 <mat-tab class="profileTab" label="Chat"></mat-tab>
