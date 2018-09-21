@@ -44,4 +44,8 @@ export class HomeComponent implements OnInit{
     toProfile(email) {
         this.router1.navigateByUrl('app/profile/' + email + '/posts');
     }
+
+    toProfileChat(email) {
+        this.router1.navigateByUrl('app/profile/' + email + '/chat');
+    }
 }

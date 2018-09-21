@@ -1,0 +1,126 @@
+#navBar {
+    background-color: transparent;
+}
+
+.headerRow {
+    position: absolute;
+    top: 0;
+    height: 35%;
+    width: 100%;
+    background-image: url('../../../resources/images/test.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    z-index: -1;
+    border-bottom: white 2px solid;
+}
+
+.contentRow {
+    position: absolute;
+    top: calc(35% + 2px);
+    width: 100%;
+    background-color: #141518;
+    bottom: 0;
+}
+
+.profileInfo {
+    display: block;
+    margin-left: 6vw;
+    margin-top: 130px;
+}
+
+.emailTitle {
+    font-size: 3em;
+    font-weight: 600;
+    color: white;
+}
+
+.infoInline {
+    display: inline-flex;
+}
+
+.infoSubtitle {
+    font-size: 1.25em;
+    line-height: 1.5em;
+    font-weight: 400;
+    color: white;
+}
+
+.profileTabs {
+    width: 640px;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    bottom: 20px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.mat-tab-label {
+    color: white !important;
+    font-size: 18px !important;
+    font-weight: 500;
+    background-color: transparent;
+}
+
+.mat-tab-label.mat-tab-label-active {
+    color: white;
+    font-size: 24px !important;
+    background-color: transparent;
+    font-weight: 800;
+}
+
+.mat-tab-header-pagination-chevron {
+    border-color: white !important;
+}
+
+@media only screen and (max-width: 660px) {
+    .profileTabs {
+        width: 450px;
+    }
+
+    .mat-tab-label {
+        font-size: 16px;
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .headerRow {
+        height: 30%
+    }
+
+    .contentRow {
+        top: calc(30% + 2px);
+    }
+
+    .profileInfo {
+        display: block;
+        margin-left: 6vw;
+        margin-top: 70px;
+    }
+
+    .emailTitle {
+        font-size: 2em;
+    }
+
+    .infoSubtitle {
+        font-size: 1em;
+    }
+
+    .profileTabs {
+        width: 300px;
+    }
+
+    .mat-tab-label {
+        font-size: 14px;
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+        font-size: 18px;
+    }
+}

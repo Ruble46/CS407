@@ -15,8 +15,4 @@ export class ProfilePostsComponent {
         profile.selected.setValue(0);
         this.router1 = router;
     }
-    
-    toProfile(email) {
-        this.router1.navigateByUrl('app/profile/' + email + '/posts');
-    }
 }

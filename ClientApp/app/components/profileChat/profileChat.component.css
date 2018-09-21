@@ -1,0 +1,205 @@
+.profileChatWrapper {
+    height: calc(100% - 20px);
+    width: 100%;
+    background-image: url('../../../resources/images/test2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    padding: 20px 5% 0 5%;
+}
+
+.fullHeight {
+    height: 100% !important;
+}
+
+.fullWidth {
+    width: 100% !important;
+}
+
+.allChats {
+    border-right: #141518 solid 5px;
+    padding:0 !important;
+    background-color: white;
+}
+
+.allChatFeed {
+    height: calc(100% - 64px);
+    overflow-y: auto;
+}
+
+.thisChat {
+    padding:0 !important;
+    overflow-y: auto;
+    background-color: white;
+}
+
+.chatFeed {
+    height: calc(100% - 64px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.removeListPadding {
+    padding: 0 !important;
+}
+
+.allChatItem {
+    display: flex;
+}
+
+.chatItem {
+    height: auto !important;
+}
+
+.allChatLabelSetWidth {
+    width: 250px;
+}
+
+.chatLabelSetWidth {
+    width: 350px;
+}
+
+.allChatLabel {
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+}
+
+.chatLabel {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.allChatIcon {
+    display: block;
+    margin-left: auto;
+}
+
+.chatEmail {
+    font-size: 20px;
+    font-weight: 600;
+    min-width: 150px;
+}
+
+.chatDate {
+    font-size: 12px;
+    text-align: right;
+    min-width: 100px;
+    float: right;
+}
+
+.chatMessage {
+    font-size: 18px;
+}
+
+.verticalStack {
+    display: flex;
+    flex-direction: column;
+    color: #ffedd0;
+}
+
+.stack {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.newMessage {
+    height: 70px !important;
+    background-color: white;
+    border-top: rgb(90, 90, 90) 1px solid;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+}
+
+.mat-form-field-wrapper {
+    padding: 0 !important;
+}
+
+.mat-form-field-infix {
+    padding-top: 0 !important;
+}
+
+.messageInput {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.sendBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white !important;
+    right: 0;
+}
+
+@media only screen and (max-width: 775px) {
+    .stack {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chatDate {
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .allChatFeed {
+        height: calc(100% - 56px);
+        overflow-y: auto;
+    }
+
+    .profileChatWrapper {
+        height: calc(100% - 20px);
+        width: 100%;
+        background-image: url('../../../resources/images/test2.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position-y: center;
+        padding: 20px 0 0 0;
+    }
+
+    .allChatLabelSetWidth {
+        width: 150px;
+    }
+
+    .chatLabelSetWidth {
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .profileChatWrapper {
+        height: 300px !important;
+    }
+
+    .thisChat {
+        height: 500px !important;
+    }
+}
+
+/* Scrollbar CSS */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: gray; 
+}
+
+/* End Scrollbar CSS */

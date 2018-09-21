@@ -11,11 +11,15 @@ import {MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
         MatCardModule, MatTabsModule, MatDatepickerModule, MatRadioModule,
         MatNativeDateModule, MatCheckboxModule, MatSidenavModule, 
         MatProgressBarModule, MatDialogModule, MatExpansionModule,
-        MatButtonToggleModule} from "@angular/material";
+        MatButtonToggleModule, MatBadgeModule} from "@angular/material";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 //Component Imports
 import { AccountComponent } from './components/account/account.component';
+import { AccountGamingComponent } from './components/accountGaming/accountGaming.component';
+import { AccountPostsComponent } from './components/accountPosts/accountPosts.component';
+import { AccountRatingComponent } from './components/accountRating/accountRating.component';
+import { AccountSettingsComponent } from './components/accountSettings/accountSettings.component';
 import { IndexComponent } from './components/index/index.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationBarComponent } from './components/navigationBar/navigationBar.component';
@@ -30,7 +34,7 @@ import { ProfilePostsComponent } from './components/profilePosts/profilePosts.co
 import { ProfileRatingComponent } from './components/profileRating/profileRating.component';
 
 //Service and Helper Imports
-
+import { SelfService } from '../Services/SelfService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -41,6 +45,10 @@ import { IndexSharedModule } from '../index/index.shared.module';
         //Components go here
         IndexComponent,
         AccountComponent,
+        AccountGamingComponent,
+        AccountPostsComponent,
+        AccountRatingComponent,
+        AccountSettingsComponent,
         HomeComponent,
         NavigationBarComponent,
         NewPostDialogComponent,
@@ -87,6 +95,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         MatDialogModule,
         MatExpansionModule,
         MatButtonToggleModule,
+        MatBadgeModule,
 
         //Shared Modules
         RootModuleShared,
@@ -100,7 +109,12 @@ import { IndexSharedModule } from '../index/index.shared.module';
             { path: 'passwordReset', component: PasswordResetComponent },
             { path: 'forgotPassword', component: PasswordResetRequestComponent },
             { path: 'app', component: NavigationBarComponent, children: [
-                { path: 'account', component: AccountComponent },
+                { path: 'account', component: AccountComponent, children: [
+                    { path: 'settings', component: AccountSettingsComponent },
+                    { path: 'gaming', component: AccountGamingComponent },
+                    { path: 'posts', component: AccountPostsComponent },
+                    { path: 'rating', component: AccountRatingComponent }
+                ]},
                 { path: 'home', component: HomeComponent },
                 { path: 'post', component: PostComponent },
                 { path: 'profile/:email', component: ProfileComponent, children: [
@@ -108,13 +122,13 @@ import { IndexSharedModule } from '../index/index.shared.module';
                     { path: 'gaming', component: ProfileGamingComponent },
                     { path: 'posts', component: ProfilePostsComponent },
                     { path: 'rating', component: ProfileRatingComponent }
-                ] }
+                ]}
             ]}
         ])
     ],
     entryComponents: [NewPostDialogComponent],
     providers : [
-        
+        SelfService,
     ]
 })
 export class AppModuleShared {

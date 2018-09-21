@@ -1,1 +1,27 @@
-<h1>This is your account page</h1>
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12 headerRow">
+            <div class="profileInfo">
+                <div class="emailTitle">
+                    {{ email }}
+                </div>
+                <div class="infoInline">
+                    <div class="infoSubtitle">
+                        You joined: 9/17/2018
+                    </div>
+                </div>
+            </div>
+            <mat-tab-group class="profileTabs" [selectedIndex]="selected.value" (selectedTabChange)="onLinkClick($event)">
+                <mat-tab class="profileTab" label="Posts"></mat-tab>
+                <mat-tab class="profileTab" label="Gaming"></mat-tab>
+                <mat-tab class="profileTab" label="Rating"></mat-tab>
+                <mat-tab class="profileTab" label="Settings"></mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 contentRow">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

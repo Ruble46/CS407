@@ -1,0 +1,114 @@
+.fullWidth {
+    width: 100% !important;
+}
+
+.addPlatformBtn {
+    color: white !important;
+    margin-bottom: 20px;
+}
+
+.gamingExpansionPanel {
+    margin-bottom: 20px;
+}
+
+.profileGamingWrapper {
+    height: calc(100% - 80px);
+    padding: 40px 5%;
+    background-image: url('../../../resources/images/test2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    overflow: auto;
+}
+
+.gamingHeadPanel {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.gamingText, .mat-expansion-indicator::after {
+    color: white !important;
+    font-size: 24px;
+}
+
+.mat-expansion-panel-header {
+    height: 64px !important;
+}
+
+@media only screen and (max-width: 660px) { 
+    .gamingText, .mat-expansion-indicator::after {
+        font-size: 20px;
+    }
+
+    .gamingHeadPanel {
+        display: inline-flex;
+        flex-direction: column;
+    }
+}
+
+.platformExpansionPanelHeader, .platformExpansionPanelHeader:focus, .platformExpansionPanelHeader:active, .platformExpansionPanelHeader:hover {
+    background-color: #34373c !important;
+}
+
+.gameCardWrapper {
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
+    display: inline-flex;
+    flex-direction: row;
+    overflow-x: auto;
+    margin: 20px;
+    padding-bottom: 10px;
+}
+
+.gameCard {
+    height: 175px;
+    width: 150px;
+    padding: 25px;
+    text-align: center;
+    background-color: #ff9900;
+    color: white;
+    margin-right: 20px;
+    -webkit-box-shadow: 10px 10px 12px -8px rgba(0,0,0,1);
+    -moz-box-shadow: 10px 10px 12px -8px rgba(0,0,0,1);
+    box-shadow: 10px 10px 12px -8px rgba(0,0,0,1);
+}
+
+.gameCardIcon {
+    height: 150px;
+    width: 150px;
+    border: white 2px solid;
+}
+
+.gameCardText {
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+/* Scrollbar CSS */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: gray; 
+}
+
+/* End Scrollbar CSS */

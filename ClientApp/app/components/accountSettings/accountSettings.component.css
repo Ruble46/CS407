@@ -1,0 +1,9 @@
+.accountSettingsWrapper {
+    height: calc(100% - 20px);
+    width: 100%;
+    background-image: url('../../../resources/images/test2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    padding: 20px 5% 0 5%;
+}

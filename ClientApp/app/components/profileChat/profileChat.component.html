@@ -1,1 +1,67 @@
-<h1>This is the chat tab</h1>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<div class="profileChatWrapper">
+    <div class="container-fluid fullHeight">
+        <div class="row fullHeight">
+            <div class="col-sm-5 col-md-5 col-lg-4 fullHeight allChats">
+                <mat-toolbar color="accent">All Chats</mat-toolbar>
+                <div class="allChatFeed">
+                    <mat-list *ngFor="let chat of CHATS" class="removeListPadding">
+                        <button mat-button class="fullWidth" (click)="toProfile(chat.email)">
+                            <mat-list-item class="allChatItem">
+                                <div class="allChatLabelSetWidth">
+                                    <label class="allChatLabel">{{chat.email}}</label>
+                                </div>
+                                <mat-icon class="allChatIcon" matBadge="{{chat.unread}}" matBadgeColor="warn">message</mat-icon>
+                            </mat-list-item>
+                        </button>
+                        <mat-divider></mat-divider>
+                    </mat-list>
+                </div>
+            </div>
+            <div class="col-sm-7 col-md-7 col-lg-8 fullHeight thisChat">
+                <mat-toolbar color="accent">Chat</mat-toolbar>
+                <div class="chatFeed" #scrollMe>
+                    <mat-list class="removeListPadding">
+                        <mat-list-item *ngFor="let m of MESSAGES" [style.background-color]="getStyle(m.email)" class="verticalStack chatItem">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 stack">
+                                        <div class="chatEmail">
+                                            {{m.email}}
+                                        </div>
+                                        <div class="chatDate">
+                                            <i>{{m.date}}</i> <!-- use the short format -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 chatMessage">
+                                        {{m.message}}
+                                    </div>
+                                </div>
+                            </div>
+                            <mat-divider></mat-divider>
+                        </mat-list-item>
+                        <mat-list-item class="newMessage">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-9 col-sm-8 col-md-9 col-lg-10">
+                                        <mat-form-field appearance="outline" class="fullWidth">
+                                            <mat-label></mat-label>
+                                            <input matInput placeholder="Enter your message" class="messageInput fullWidth">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3 col-sm-4 col-md-3 col-lg-2">
+                                        <button mat-raised-button color="primary" class="sendBtn">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

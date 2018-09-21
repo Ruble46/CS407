@@ -35,5 +35,5 @@ export class ProfileComponent implements OnInit {
         } else if(event.tab.textLabel === 'Rating') {
             this.router1.navigateByUrl('app/profile/' + this.email + '/rating');
         }
-      }
+    }
 }
