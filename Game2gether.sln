@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game2gether", "Game2gether.csproj", "{CAC0346D-48AF-410E-8284-C915B23E6050}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAC0346D-48AF-410E-8284-C915B23E6050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC0346D-48AF-410E-8284-C915B23E6050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC0346D-48AF-410E-8284-C915B23E6050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC0346D-48AF-410E-8284-C915B23E6050}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B375CB1-65E7-4E0E-8552-F1FBC8957B4F}
+	EndGlobalSection
+EndGlobal
