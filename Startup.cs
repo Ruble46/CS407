@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Game2gether.API;
-using Game2gether.API.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Game2gether
@@ -32,24 +31,8 @@ namespace Game2gether
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<AppUser, AppRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
-                options.AccessDeniedPath = "/Account/Denied";
-                options.SlidingExpiration = true;
-                options.Cookie = new CookieBuilder
-                {
-                    HttpOnly = true,
-                    Name = ".Fiver.Security.Cookie",
-                    Path = "/",
-                    SameSite = SameSiteMode.Lax,
-                    SecurePolicy = CookieSecurePolicy.SameAsRequest
-                };
-            });
 
 
             services.AddMvc();
