@@ -11,8 +11,8 @@ using System;
 namespace Game2gether.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180926161015_init")]
-    partial class init
+    [Migration("20180928211007_identity")]
+    partial class identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

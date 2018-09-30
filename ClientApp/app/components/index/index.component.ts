@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as $ from "jquery";
 
 @Component({
     selector: 'index',
@@ -34,6 +35,16 @@ export class IndexComponent implements OnInit {
     signUp() {
         console.log(this.emailSignUp + "," + this.passwordSignUp + "," + this.passwordSignUpConfirm);
         this.router1.navigateByUrl('app/home');
+    }
+
+    signUpFacebook() {
+        var data = {};
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:58619/api/account/external",
+            data: data,
+            dataType: "json"
+        });
     }
 
 }
