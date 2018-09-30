@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
 using Game2gether.API.Models;
 using Game2gether.API;
 using SendGrid;
@@ -21,12 +22,14 @@ namespace Game2gether.Controllers
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
         readonly ApplicationDbContext _context;
+        readonly IConfiguration _config;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> SignInManager, ApplicationDbContext context)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> SignInManager, ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = SignInManager;
+            _config = config;
         }
         // Post: api/account/register
         [HttpPost("register")]
@@ -126,16 +129,7 @@ namespace Game2gether.Controllers
         [HttpGet("reset")]
         public async Task<IActionResult> reset()
         {
-            /*SmtpClient client = new SmtpClient("smtpserver");
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("user", "pass");
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("support@game2gether.com");
-            mailMessage.To.Add("kleaf.gbit@gmail.com");
-            mailMessage.Body = "body";
-            mailMessage.Subject = "subject";
-            client.Send(mailMessage);*/
-            var apiKey = "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";
+            var apiKey = _config["SendGridApiKey"];
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("support@game2gether.com", "test");
             var subject = "Here It is boi";
