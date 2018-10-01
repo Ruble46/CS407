@@ -35,6 +35,7 @@ import { ProfileRatingComponent } from './components/profileRating/profileRating
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
+import { LoginRegisterService } from '../Services/LoginRegisterService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -105,15 +106,17 @@ import { IndexSharedModule } from '../index/index.shared.module';
         RouterModule.forChild([
             // { path: '', redirectTo: 'index', pathMatch: 'full' },
             { path: 'index', component: IndexComponent },
-            // { path: '**', redirectTo: 'index' },
             { path: 'passwordReset', component: PasswordResetComponent },
             { path: 'forgotPassword', component: PasswordResetRequestComponent },
+            { path: 'app', redirectTo: 'app/home', pathMatch: 'full' },
             { path: 'app', component: NavigationBarComponent, children: [
+                { path: 'account', redirectTo: 'account/posts', pathMatch: 'full' },
                 { path: 'account', component: AccountComponent, children: [
                     { path: 'settings', component: AccountSettingsComponent },
                     { path: 'gaming', component: AccountGamingComponent },
                     { path: 'posts', component: AccountPostsComponent },
-                    { path: 'rating', component: AccountRatingComponent }
+                    { path: 'rating', component: AccountRatingComponent },
+                    { path: '**', redirectTo: 'posts' }
                 ]},
                 { path: 'home', component: HomeComponent },
                 { path: 'post', component: PostComponent },
@@ -121,14 +124,18 @@ import { IndexSharedModule } from '../index/index.shared.module';
                     { path: 'chat', component: ProfileChatComponent },
                     { path: 'gaming', component: ProfileGamingComponent },
                     { path: 'posts', component: ProfilePostsComponent },
-                    { path: 'rating', component: ProfileRatingComponent }
-                ]}
-            ]}
+                    { path: 'rating', component: ProfileRatingComponent },
+                    { path: '**', redirectTo: 'posts' }
+                ]},
+                { path: '**', redirectTo: 'home' }
+            ]},
+            { path: '**', redirectTo: 'index' }
         ])
     ],
     entryComponents: [NewPostDialogComponent],
     providers : [
         SelfService,
+        LoginRegisterService
     ]
 })
 export class AppModuleShared {

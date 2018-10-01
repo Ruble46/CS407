@@ -2,5 +2,31 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 <div class="accountSettingsWrapper">
-    <h1>account settings</h1>
+    <mat-card id="accountSettingsCard">
+        <mat-card-content>
+
+            <h1>Password Reset</h1>
+            <mat-form-field class="fullWidth">
+                <input matInput placeholder="Current password" (ngModel)="currentPassword">
+            </mat-form-field>
+            <mat-form-field class="fullWidth">
+                <input matInput placeholder="New password" (ngModel)="newPassword">
+            </mat-form-field>
+            <mat-divider></mat-divider>
+
+            <h1 class="spacer">Chat Customization</h1>
+            <mat-form-field class="fullWidth">
+                <input matInput placeholder="Background color" (ngModel)="chatBackground">
+            </mat-form-field>
+            <mat-form-field class="fullWidth">
+                <input matInput placeholder="Font color" (ngModel)="chatFontColor">
+            </mat-form-field>
+            <label class="tip">*colors must be in hex format (ex: #ff0000 or ff0000 for red)</label>
+
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" id="saveBtn">Save</button>
+        </mat-card-actions>
+    </mat-card>
 </div>

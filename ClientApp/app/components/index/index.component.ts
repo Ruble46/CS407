@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginRegisterService } from '../../../Services/LoginRegisterService';
 
 @Component({
     selector: 'index',
@@ -17,8 +18,10 @@ export class IndexComponent implements OnInit {
     public passwordSignUpConfirm: string;
 
     private router1: Router;
+    private service1: LoginRegisterService;
 
-    constructor(router: Router) {
+    constructor(private LoginRegisterService: LoginRegisterService, router: Router) {
+        this.service1 = LoginRegisterService;
         this.router1 = router;
     }
 
@@ -27,13 +30,28 @@ export class IndexComponent implements OnInit {
     }
 
     signIn() {
-        console.log(this.emailSignIn + "," + this.passwordSignIn);
-        this.router1.navigateByUrl('app/home');
+        this.service1.signIn(this.emailSignIn, this.passwordSignIn)
+        .subscribe(result => {
+            //this.router1.navigateByUrl('app/home');
+            console.log('LOGIN SUCCESSFUL');
+        }, error => {
+            //ADD MATSNACKBAR FOR ERRORO MESSAGE
+            console.error(error);
+        })
     }
 
     signUp() {
-        console.log(this.emailSignUp + "," + this.passwordSignUp + "," + this.passwordSignUpConfirm);
-        this.router1.navigateByUrl('app/home');
+        if(this.passwordSignUp === this.passwordSignUpConfirm) {
+            this.service1.signUp(this.emailSignUp, this.passwordSignUp)
+            .subscribe(result => {
+                this.router1.navigateByUrl('app/home');
+            }, error => {
+                console.error(error);
+            });
+        } else {
+            //ADD MATSNACKBAR FOR ERROR MESSAGE
+            console.error('PASSWORDS DO NOT MATCH');
+        }
     }
 
 }

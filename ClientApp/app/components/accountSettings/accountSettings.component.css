@@ -6,4 +6,29 @@
     background-size: cover;
     background-position-y: center;
     padding: 20px 5% 0 5%;
+    overflow-y: auto;
+}
+
+.fullWidth {
+    width: 100% !important;
+}
+
+.spacer {
+    margin-top: 24px;
+}
+
+#accountSettingsCard {
+    width: 100%;
+    max-width: 750px;
+    min-width: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+#saveBtn {
+    color: white;
+}
+
+.tip {
+    font-size: 12px;
 }

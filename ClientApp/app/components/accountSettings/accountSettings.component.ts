@@ -10,6 +10,10 @@ import { AccountComponent } from '../account/account.component';
 })
 export class AccountSettingsComponent {
     private router1: Router;
+    public currentPassword: string;
+    public newPassword: string;
+    public chatBackground: string;
+    public chatFontColor: string;
 
     constructor(private router: Router, profile: AccountComponent) {
         this.router1 = router;
