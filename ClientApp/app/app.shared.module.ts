@@ -36,6 +36,7 @@ import { ProfileRatingComponent } from './components/profileRating/profileRating
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
 import { LoginRegisterService } from '../Services/LoginRegisterService';
+import { AccountService } from '../Services/AccountService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -107,7 +108,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         RouterModule.forChild([
             // { path: '', redirectTo: 'index', pathMatch: 'full' },
             { path: 'index', component: IndexComponent },
-            { path: 'passwordReset', component: PasswordResetComponent },
+            { path: 'passwordReset/:email/:token', component: PasswordResetComponent },
             { path: 'forgotPassword', component: PasswordResetRequestComponent },
             { path: 'app', redirectTo: 'app/home', pathMatch: 'full' },
             { path: 'app', component: NavigationBarComponent, children: [
@@ -136,7 +137,8 @@ import { IndexSharedModule } from '../index/index.shared.module';
     entryComponents: [NewPostDialogComponent],
     providers : [
         SelfService,
-        LoginRegisterService
+        LoginRegisterService,
+        AccountService
     ]
 })
 export class AppModuleShared {

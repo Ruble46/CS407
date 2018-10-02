@@ -62,6 +62,7 @@ export class IndexComponent implements OnInit {
             .subscribe(result => {
                 this.router1.navigateByUrl('app/home');
             }, error => {
+                console.error(error);
                 if(error.error.length > 1) {
                     var errorString: string = '';
                     for(var a = 0; a < error.error.length; a++) {
@@ -69,7 +70,7 @@ export class IndexComponent implements OnInit {
                     }
                     this.openSnackBar(errorString, 'Close', error.error.length * 2200);
                 } else { 
-                    this.openSnackBar(error.error[0], 'Close', 4000);
+                    this.openSnackBar(error.error[0].description, 'Close', 4000);
                 }
             });
         } else {

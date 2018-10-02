@@ -141,7 +141,7 @@ namespace Game2gether.Controllers
             var subject = "Game2Gether password reset";
             var to = new EmailAddress(email.email, "user");
             var body = "";
-            var htmlContent = "<strong>Password reset link for " + email.email + ". Follow this link <a href = 'http://localhost:58619/" + email.email + "/" + token + "'>http://localhost:58619/</a></strong>";
+            var htmlContent = "<strong>Password reset link for " + email.email + ". Follow this link <a href = 'http://localhost:58619/passwordReset/" + email.email + "/" + Uri.EscapeDataString(token) + "'>http://localhost:58619/</a></strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
             var response = await client.SendEmailAsync(msg);
             return Ok(response);
