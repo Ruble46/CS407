@@ -126,19 +126,44 @@ namespace Game2gether.Controllers
             }
         }
 
-        [HttpGet("reset")]
-        public async Task<IActionResult> reset()
+        [HttpPost("reset/request")]
+        public async Task<IActionResult> resetRequest([FromBody] UserForm email)
         {
+            var user = await _userManager.FindByEmailAsync(email.email);
+            if(user==null)
+            {
+                return Ok();
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var apiKey = _config["SendGridApiKey"];
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("support@game2gether.com", "test");
-            var subject = "Here It is boi";
-            var to = new EmailAddress("kleaf.gbit@gmail.com", "test2");
-            var body = "YOU JUST GOT AN EMAIL YOU NERD";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var from = new EmailAddress("support@game2gether.com", "support");
+            var subject = "Game2Gether password reset";
+            var to = new EmailAddress(email.email, "user");
+            var body = "";
+            var htmlContent = "<strong>Password reset link for " + email.email + ". Follow this link <a href = 'http://localhost:58619/" + email.email + "/" + token + "'>http://localhost:58619/</a></strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
             var response = await client.SendEmailAsync(msg);
             return Ok(response);
+        }
+
+        [HttpPost("reset")]
+        public async Task<IActionResult> resetRequest([FromBody] PasswordResetForm form)
+        {
+            var user = await _userManager.FindByEmailAsync(form.email);
+            if(user == null)
+            {
+                return BadRequest();
+            }
+            var result = await _userManager.ResetPasswordAsync(user, form.token, form.newPassword);
+            if(result.Succeeded)
+            {
+                return Ok();
+            } else
+            {
+                return BadRequest(result);
+            }
+
         }
 
 
