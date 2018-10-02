@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Game2gether.API;
+using Game2gether.API.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Game2gether
@@ -31,8 +32,16 @@ namespace Game2gether
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                // facebookOptions.AppId = Configuration["AppId"];
+                facebookOptions.AppId = "500263577156314";
+                // facebookOptions.AppSecret = Configuration["AppSecret"];
+                facebookOptions.AppSecret = "eb82d0f1cbb41f3d9fe2b4931b377783";
+            });
 
 
             services.AddMvc();

@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginRegisterService } from '../../../Services/LoginRegisterService';
+import * as $ from "jquery";
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'index',
@@ -19,25 +21,39 @@ export class IndexComponent implements OnInit {
 
     private router1: Router;
     private service1: LoginRegisterService;
+    public snackBar: MatSnackBar;
 
-    constructor(private LoginRegisterService: LoginRegisterService, router: Router) {
+    constructor(public _snackBar: MatSnackBar, private LoginRegisterService: LoginRegisterService, router: Router) {
+        this.snackBar = _snackBar;
         this.service1 = LoginRegisterService;
         this.router1 = router;
+        this.emailSignIn = this.passwordSignIn = this.emailSignUp = this.passwordSignUp = this.passwordSignUpConfirm = '';
     }
 
     ngOnInit() {
 
     }
 
+    openSnackBar(message: string, action: string, lengthMs: number) {
+        this.snackBar.open(message, action, {
+            duration: lengthMs,
+        });
+    }
+
     signIn() {
-        this.service1.signIn(this.emailSignIn, this.passwordSignIn)
-        .subscribe(result => {
-            //this.router1.navigateByUrl('app/home');
-            console.log('LOGIN SUCCESSFUL');
-        }, error => {
-            //ADD MATSNACKBAR FOR ERRORO MESSAGE
-            console.error(error);
-        })
+        if(this.emailSignIn !== '' && this.emailSignIn !== null && this.passwordSignIn !== '' && this.passwordSignIn !== null) {
+            console.log("here valid");
+            console.log(this.emailSignIn + ", " + this.passwordSignIn);
+            this.service1.signIn(this.emailSignIn, this.passwordSignIn)
+            .subscribe(result => {
+                this.router1.navigateByUrl('app/home');
+            }, error => {
+                this.openSnackBar(error.error, 'Close', 3000);
+                console.error(error);
+            });
+        } else {
+            this.openSnackBar('Please provide an email and password when attempting to sign in.', 'Close', 5000);
+        }
     }
 
     signUp() {
@@ -46,12 +62,29 @@ export class IndexComponent implements OnInit {
             .subscribe(result => {
                 this.router1.navigateByUrl('app/home');
             }, error => {
-                console.error(error);
+                if(error.error.length > 1) {
+                    var errorString: string = '';
+                    for(var a = 0; a < error.error.length; a++) {
+                        errorString += error.error[a].description;
+                    }
+                    this.openSnackBar(errorString, 'Close', error.error.length * 2200);
+                } else { 
+                    this.openSnackBar(error.error[0], 'Close', 4000);
+                }
             });
         } else {
-            //ADD MATSNACKBAR FOR ERROR MESSAGE
-            console.error('PASSWORDS DO NOT MATCH');
+            this.openSnackBar('The passwords provided do not match.', 'Close', 4000);
         }
+    }
+
+    signUpFacebook() {
+        var data = {};
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:58619/api/account/external",
+            data: data,
+            dataType: "json"
+        });
     }
 
 }

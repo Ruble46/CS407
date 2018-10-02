@@ -9,7 +9,7 @@ using Game2gether.API.Models;
 
 namespace Game2gether.API
 {
-    public class ApplicationDbContext : IdentityDbContext <IdentityUser, IdentityRole, string>
+    public class ApplicationDbContext : IdentityDbContext <AppUser, IdentityRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

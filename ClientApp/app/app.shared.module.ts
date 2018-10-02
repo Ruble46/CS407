@@ -11,7 +11,7 @@ import {MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
         MatCardModule, MatTabsModule, MatDatepickerModule, MatRadioModule,
         MatNativeDateModule, MatCheckboxModule, MatSidenavModule, 
         MatProgressBarModule, MatDialogModule, MatExpansionModule,
-        MatButtonToggleModule, MatBadgeModule} from "@angular/material";
+        MatButtonToggleModule, MatBadgeModule, MatSnackBarModule} from "@angular/material";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 //Component Imports
@@ -97,6 +97,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         MatExpansionModule,
         MatButtonToggleModule,
         MatBadgeModule,
+        MatSnackBarModule,
 
         //Shared Modules
         RootModuleShared,

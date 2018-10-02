@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Game2gether.Migrations
 {
-    public partial class init : Migration
+    public partial class identity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
