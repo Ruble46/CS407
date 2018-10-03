@@ -32,3 +32,7 @@
 .tip {
     font-size: 12px;
 }
+
+.mat-simple-snackbar-action {
+    color: #ff9900 !important;
+}

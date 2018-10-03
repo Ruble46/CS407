@@ -37,4 +37,18 @@ export class AccountService {
 
         return this.http.post<any>(this.apiBaseUrl + 'api/account/reset', body, options);
     }
+
+    accountSettings(email, BackgroundColor, ChatColor) {
+        let body: Object = {
+            email: email,
+            BackgroundColor: BackgroundColor,
+            ChatColor: ChatColor
+        };
+
+        let options: Object = {
+            observe: 'response'
+        };
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/account', body, options);
+    }
 }

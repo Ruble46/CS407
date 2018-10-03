@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material';
     encapsulation : ViewEncapsulation.None
 
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent {
     public emailSignIn: string;
     public passwordSignIn: string;
 
@@ -30,10 +30,6 @@ export class IndexComponent implements OnInit {
         this.emailSignIn = this.passwordSignIn = this.emailSignUp = this.passwordSignUp = this.passwordSignUpConfirm = '';
     }
 
-    ngOnInit() {
-
-    }
-
     openSnackBar(message: string, action: string, lengthMs: number) {
         this.snackBar.open(message, action, {
             duration: lengthMs,
@@ -46,6 +42,7 @@ export class IndexComponent implements OnInit {
             console.log(this.emailSignIn + ", " + this.passwordSignIn);
             this.service1.signIn(this.emailSignIn, this.passwordSignIn)
             .subscribe(result => {
+                localStorage.setItem('email', this.emailSignIn);
                 this.router1.navigateByUrl('app/home');
             }, error => {
                 this.openSnackBar(error.error, 'Close', 3000);
@@ -60,6 +57,7 @@ export class IndexComponent implements OnInit {
         if(this.passwordSignUp === this.passwordSignUpConfirm) {
             this.service1.signUp(this.emailSignUp, this.passwordSignUp)
             .subscribe(result => {
+                localStorage.setItem('email', this.emailSignUp);
                 this.router1.navigateByUrl('app/home');
             }, error => {
                 console.error(error);
