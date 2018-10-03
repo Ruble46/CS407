@@ -10,5 +10,7 @@ namespace Game2gether.API.Models
         public string email { get; set; }
         public string username { get; set; }
         public string password { get; set; }
+        public string BackgroundColor { get; set; }
+        public string ChatColor { get; set; }
     }
 }

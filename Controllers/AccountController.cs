@@ -73,13 +73,6 @@ namespace Game2gether.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
-            return Ok(schemes);
-        }
-
         [HttpPost("external")]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
@@ -166,7 +159,21 @@ namespace Game2gether.Controllers
 
         }
 
-
+        [HttpPost]
+        public async Task<IActionResult> updateProfile([FromBody] UserForm form)
+        {
+            var user = await _userManager.FindByEmailAsync(form.email);
+            user.BackgroundColor = form.BackgroundColor;
+            user.ChatColor = form.ChatColor;
+            var result = await _userManager.UpdateAsync(user);
+            if(result.Succeeded)
+            {
+                return Ok();
+            } else
+            {
+                return BadRequest(result);
+            }
+        }
 
         private Task<AppUser> GetCurrentUserAsync()
         {
