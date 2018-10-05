@@ -11,6 +11,7 @@ using Game2gether.API.Models;
 using Game2gether.API;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -73,13 +74,16 @@ namespace Game2gether.Controllers
             }
         }
 
+
+
+
+
+        /*
         [HttpPost("external")]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action("ExternalCallback", "api/Account", new { ReturnUrl = returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
-            return Challenge(properties, provider);
+            return Challenge(provider, Url.Action("ExternalLoginCallback", "api/Account", new { ReturnUrl = returnUrl}));
         }
 
         [HttpGet("ExternalCallback")]
@@ -88,44 +92,46 @@ namespace Game2gether.Controllers
             if (remoteError != null)
             {
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
-                return View(nameof(Login));
+                return BadRequest("here");
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                return RedirectToAction(nameof(Login));
+                return BadRequest(info);
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            var result = await _signInManager.ExternalLoginSignInAsync(info.ToString(), info.ToString(), isPersistent: false);
             if (result.Succeeded)
             {
-                // Update any authentication tokens if login succeeded
-                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
-
-                return Redirect(returnUrl);
+                return Ok("bad");
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                return BadRequest("doublebad");
             }
             else
             {
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
-                ViewData["ProviderDisplayName"] = info.ProviderDisplayName;
+                ViewData["LoginProvider"] = info.ToString();
+
                 //var email = info.Principal.FindFirst(ClaimTypes.Email);
-                return View();
+                //var user = new AppUser { Email = email.ToString(), UserName = email.ToString(), AccountCreated = DateTime.Now };
+
+                return Ok();
+                
             }
         }
+        */
 
         [HttpPost("reset/request")]
         public async Task<IActionResult> resetRequest([FromBody] UserForm email)
         {
             var user = await _userManager.FindByEmailAsync(email.email);
-            if(user==null)
+            if(user == null)
             {
-                return Ok();
+                return BadRequest();
             }
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var apiKey = _config["SendGridApiKey"];
@@ -141,7 +147,7 @@ namespace Game2gether.Controllers
         }
 
         [HttpPost("reset")]
-        public async Task<IActionResult> resetRequest([FromBody] PasswordResetForm form)
+        public async Task<IActionResult> reset([FromBody] PasswordResetForm form)
         {
             var user = await _userManager.FindByEmailAsync(form.email);
             if(user == null)
@@ -173,6 +179,32 @@ namespace Game2gether.Controllers
             {
                 return BadRequest(result);
             }
+        }
+
+        [HttpPost("delete")]
+        public async Task<IActionResult> delete([FromBody] UserForm form)
+        {
+            var user = await _userManager.FindByEmailAsync(form.email);
+            if(user==null)
+            {
+                return BadRequest("User Not Found");
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if(result.Succeeded)
+            {
+                return Ok();
+            } else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("gettoken/{email}")]
+        public async Task<IActionResult> getToken(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            return Ok(token);
         }
 
         private Task<AppUser> GetCurrentUserAsync()
