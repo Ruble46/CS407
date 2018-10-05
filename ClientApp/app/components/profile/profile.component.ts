@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
+import { UserService } from '../../../Services/UserService';
 
 @Component({
     selector: 'profile',
@@ -11,10 +12,13 @@ import { FormControl } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
     public email: string;
+    public AccountCreated: Date;
     private router1: Router;
     public selected = new FormControl(0);
+    private UserService: UserService;
 
-    constructor(private route: ActivatedRoute, private router: Router) {
+    constructor(_UserService: UserService, private route: ActivatedRoute, private router: Router) {
+        this.UserService = _UserService;
         this.router1 = router;
         route.params.subscribe((params) => {
             this.email = params["email"];
@@ -22,6 +26,13 @@ export class ProfileComponent implements OnInit {
     }
     
     ngOnInit() {
+        this.UserService.getUser(this.email)
+        .subscribe(result => {
+            console.log(result);
+            this.AccountCreated = result.body.accountCreated;
+        }, error => {
+            console.error(error);
+        });
         document.getElementById('navBar').style.backgroundColor = "rgba(0,0,0,0.4)";
     }
 

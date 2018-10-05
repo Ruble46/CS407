@@ -12,6 +12,14 @@ export class AccountService {
         this.apiBaseUrl = apiURL;
     }
 
+    getAccount(email: string) {
+        let options: Object = {
+            observe: 'response'
+        }
+
+        return this.http.get<any>(this.apiBaseUrl + 'api/account/' + email, options);
+    }
+
     passwordResetRequest(email: string) {
         let body: Object = {
             email: email

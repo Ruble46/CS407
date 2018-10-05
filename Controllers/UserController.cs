@@ -29,7 +29,7 @@ namespace Game2gether.Controllers {
         public async Task<IActionResult> GetId(string email) {
             var user = await _userManager.FindByEmailAsync(email);
             if(user != null) {
-                return Ok(email);
+                return Ok(user);
             } else {
                 return BadRequest("No user found");
             }

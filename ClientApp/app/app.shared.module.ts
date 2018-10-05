@@ -37,6 +37,7 @@ import { ProfileRatingComponent } from './components/profileRating/profileRating
 import { SelfService } from '../Services/SelfService';
 import { LoginRegisterService } from '../Services/LoginRegisterService';
 import { AccountService } from '../Services/AccountService';
+import { UserService } from '../Services/UserService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -138,7 +139,8 @@ import { IndexSharedModule } from '../index/index.shared.module';
     providers : [
         SelfService,
         LoginRegisterService,
-        AccountService
+        AccountService,
+        UserService
     ]
 })
 export class AppModuleShared {
