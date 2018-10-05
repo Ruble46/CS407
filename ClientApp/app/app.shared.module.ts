@@ -32,6 +32,7 @@ import { ProfileChatComponent } from './components/profileChat/profileChat.compo
 import { ProfileGamingComponent } from './components/profileGaming/profileGaming.component';
 import { ProfilePostsComponent } from './components/profilePosts/profilePosts.component';
 import { ProfileRatingComponent } from './components/profileRating/profileRating.component';
+import { DeleteProfileDialogComponent } from './components/deleteProfileDialog/deleteProfileDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
@@ -62,7 +63,9 @@ import { IndexSharedModule } from '../index/index.shared.module';
         ProfileChatComponent,
         ProfileGamingComponent,
         ProfilePostsComponent,
-        ProfileRatingComponent
+        ProfileRatingComponent,
+        DeleteProfileDialogComponent
+
     ],
     imports: [
         //Core Modules
@@ -135,7 +138,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
             { path: '**', redirectTo: 'index' }
         ])
     ],
-    entryComponents: [NewPostDialogComponent],
+    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent],
     providers : [
         SelfService,
         LoginRegisterService,

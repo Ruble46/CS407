@@ -38,10 +38,7 @@ namespace Game2gether
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["AppId"];
-                // facebookOptions.AppSecret = Configuration["AppSecret"];     
-
-                facebookOptions.AppId = "500263577156314";
-                facebookOptions.AppSecret = "eb82d0f1cbb41f3d9fe2b4931b377783";          
+                facebookOptions.AppSecret = Configuration["AppSecret"];         
             });
 
 

@@ -36,3 +36,7 @@
 .mat-simple-snackbar-action {
     color: #ff9900 !important;
 }
+
+#deactivateBtn {
+    float: right;
+}

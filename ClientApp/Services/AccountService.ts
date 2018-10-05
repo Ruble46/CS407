@@ -20,6 +20,18 @@ export class AccountService {
         return this.http.get<any>(this.apiBaseUrl + 'api/account/' + email, options);
     }
 
+    deleteAccount(email: string) {
+        let body: Object = {
+            email: email
+        }
+
+        let options: Object = {
+            observe: 'response'
+        }
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/account/delete', body, options);
+    }
+
     passwordResetRequest(email: string) {
         let body: Object = {
             email: email

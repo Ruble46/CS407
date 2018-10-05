@@ -21,12 +21,13 @@
             <mat-form-field class="fullWidth">
                 <input matInput placeholder="Font color" [(ngModel)]="chatFontColor">
             </mat-form-field>
-            <label class="tip">*colors must be in hex format (ex: #ff0000 or ff0000 for red)</label>
+            <label class="tip">*colors must be in hex format (ex: #ff0000)</label>
 
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
             <button mat-raised-button color="primary" id="saveBtn" (click)="saveSettings()">Save</button>
+            <button mat-raised-button color="warn" id="deactivateBtn" (click)="openDeleteConfirmation()">Deactive Account</button>
         </mat-card-actions>
     </mat-card>
 </div>

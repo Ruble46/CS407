@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
             this.AccountCreated = result.body.accountCreated;
         }, error => {
             console.error(error);
+            this.router1.navigateByUrl('app/home');
         });
         document.getElementById('navBar').style.backgroundColor = "rgba(0,0,0,0.4)";
     }
