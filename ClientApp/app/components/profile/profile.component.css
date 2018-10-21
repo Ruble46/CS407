@@ -35,6 +35,15 @@
     color: white;
 }
 
+.playerDropDownBtn {
+    height: auto;
+}
+
+.playerDropDownIcon {
+    font-size: 32px !important;
+    line-height: 10px !important;
+}
+
 .infoInline {
     display: inline-flex;
 }

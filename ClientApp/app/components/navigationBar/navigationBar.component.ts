@@ -33,7 +33,7 @@ export class NavigationBarComponent {
                 console.log(this.post);
             }
             this.newPost = new Post();
-          });
+        });
     }
 }
 
