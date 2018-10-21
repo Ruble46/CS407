@@ -1,39 +1,40 @@
-<h1 mat-dialog-title>Create Post</h1>
+<h1 mat-dialog-title>Create A Post</h1>
 <mat-divider></mat-divider>
 <div mat-dialog-content class="dialogContent">
+    <h4>Post Overview</h4>
     <mat-form-field appearance="outline" class="fullWidth">
-        <mat-label>Title</mat-label>
-        <input matInput placeholder="Example Title" [(ngModel)]="data.post.Title">
-    </mat-form-field>
-
-    <mat-form-field class="fullWidth">
-        <mat-select placeholder="Select a platform" [(value)]="data.post.Platform">
-            <mat-option *ngFor="let platform of platformList" [value]="platform">
-                {{ platform }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="fullWidth">
-        <mat-select placeholder="Select a game" [(value)]="data.post.Game">
-            <mat-option *ngFor="let game of gameList" [value]="game">
-                {{ game }}
-            </mat-option>
-        </mat-select>
+        <mat-label>Post Title</mat-label>
+        <input matInput placeholder="Example Title" [(ngModel)]="data.Title">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="fullWidth">
-            <mat-label>Mode</mat-label>
-        <input matInput placeholder="PVE, PVP, Ranked, Casual, ect" [(ngModel)]="data.post.Mode">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="fullWidth">
-        <mat-label>Description</mat-label>
-        <textarea matInput class="descriptionTextArea" [(ngModel)]="data.post.Description"
+        <mat-label>Post Description</mat-label>
+        <textarea matInput class="descriptionTextArea" [(ngModel)]="data.Description"
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
             cdkAutosizeMaxRows="10"></textarea>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <h4>Game Details</h4>
+    <mat-form-field appearance="outline" class="fullWidth">
+        <mat-label>Game Title</mat-label>
+        <input matInput placeholder="Rocket League, Call of Duty, World of Warcraft, ect" [(ngModel)]="data.Game">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="fullWidth">
+        <mat-label>Game Mode</mat-label>
+        <input matInput placeholder="PVE, PVP, Ranked, Casual, ect" [(ngModel)]="data.Mode">
+    </mat-form-field>
+
+    <mat-form-field class="fullWidth">
+        <mat-select placeholder="Select a platform" [(value)]="data.Platform">
+            <mat-option *ngFor="let platform of platformList" [value]="platform">
+                {{ platform }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 </div>
 <mat-divider></mat-divider>

@@ -38,8 +38,6 @@ export class IndexComponent {
 
     signIn() {
         if(this.emailSignIn !== '' && this.emailSignIn !== null && this.passwordSignIn !== '' && this.passwordSignIn !== null) {
-            console.log("here valid");
-            console.log(this.emailSignIn + ", " + this.passwordSignIn);
             this.service1.signIn(this.emailSignIn, this.passwordSignIn)
             .subscribe(result => {
                 localStorage.setItem('email', this.emailSignIn);

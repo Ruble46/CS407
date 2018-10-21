@@ -1,9 +1,22 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div class="container-fluid">
     <div class="row ">
         <div class="col-md-12 headerRow">
             <div class="profileInfo">
                 <div class="emailTitle">
                     {{ email }}
+
+                    <button mat-icon-button [matMenuTriggerFor]="playerMenu" class="cardOptionBtn">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #playerMenu="matMenu" xPosition="before" [overlapTrigger]="false">
+                        <button mat-menu-item (click)="reportUserPopUp()">
+                            <mat-icon class="navMenuItem">report</mat-icon>
+                            <span class="navMenuItem">Report</span>
+                        </button>
+                    </mat-menu>
+
                 </div>
                 <div class="infoInline">
                     <div class="infoSubtitle">

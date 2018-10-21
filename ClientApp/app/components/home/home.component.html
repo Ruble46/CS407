@@ -15,11 +15,15 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field class="gameSelect">
-                            <mat-select placeholder="Games" [formControl]="games" multiple>
-                                <mat-option *ngFor="let game of gameList" [value]="game">{{ game }}</mat-option>
-                            </mat-select>
+                        <mat-form-field class="fullWidth">
+                            <input matInput placeholder="Game Title" [(ngModel)]="filterGame">
                         </mat-form-field>
+
+                        <mat-form-field class="fullWidth">
+                            <input matInput placeholder="Game Mode" [(ngModel)]="filterMode">
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" class="whiteText fullWidth" (click)="filterFeed()">Filter</button>
                     </div>
                 </div>
             </div>

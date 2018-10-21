@@ -13,14 +13,14 @@ export class HomeComponent implements OnInit{
     private router1: Router;
     public posts: Array<Post>;
     platforms = new FormControl();
-    platformList: string[] = ['Steam', 'Xbox', 'Playstation', 'Wii'];
+    platformList: string[] = ['Steam'];
 
-    games = new FormControl();
-    gameList: string[] = ['Rocket League', 'Garrys Mod', 'GTA V', 'Call of Duty: MW2', 'Subnautica', 'Age of Mythology', 'Half Life 2'];
+    public filterGame: string;
+    public filterMode: string;
 
     constructor(router: Router) {
         this.router1 = router;
-        var names: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "aaron@purdue.edu", "craig@purdue.edu"];
+        var names: Array<string> = ["craigruble1995@gmail.com", "b.omalley95@yahoo.com", "tom@purdue.edu", "aaron@purdue.edu", "craig@purdue.edu"];
         var modes: Array<string> = ["PVP", "PVE", "Ranked", "Casual", "Sandbox"];
         var games: Array<string> = ["The Division", "Goat Simulator", "Rainbow Six Siege", "Rocket League", "Garrys Mod"];
         this.posts = new Array<Post>();
@@ -47,5 +47,11 @@ export class HomeComponent implements OnInit{
 
     toProfileChat(email) {
         this.router1.navigateByUrl('app/profile/' + email + '/chat');
+    }
+
+    filterFeed() {
+        console.log(this.platforms.value);
+        console.log(this.filterGame);
+        console.log(this.filterMode);
     }
 }

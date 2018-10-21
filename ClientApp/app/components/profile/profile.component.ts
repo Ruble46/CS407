@@ -48,4 +48,8 @@ export class ProfileComponent implements OnInit {
             this.router1.navigateByUrl('app/profile/' + this.email + '/rating');
         }
     }
+
+    reportUserPopUp() {
+        console.log("in the popup function");
+    }
 }
