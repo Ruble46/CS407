@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginRegisterService } from '../../../Services/LoginRegisterService';
 import * as $ from "jquery";
 import { MatSnackBar } from '@angular/material';
+import { SnackBarHelper } from '../../../Helpers/SnackBars';
 
 @Component({
     selector: 'index',
@@ -21,19 +22,14 @@ export class IndexComponent {
 
     private router1: Router;
     private service1: LoginRegisterService;
-    public snackBar: MatSnackBar;
+    //public snackBar: MatSnackBar;
+    public snackBarHelper: SnackBarHelper;
 
-    constructor(public _snackBar: MatSnackBar, private LoginRegisterService: LoginRegisterService, router: Router) {
-        this.snackBar = _snackBar;
+    constructor(public _snackBarHelper: SnackBarHelper, private LoginRegisterService: LoginRegisterService, router: Router) {
+        this.snackBarHelper = _snackBarHelper;
         this.service1 = LoginRegisterService;
         this.router1 = router;
         this.emailSignIn = this.passwordSignIn = this.emailSignUp = this.passwordSignUp = this.passwordSignUpConfirm = '';
-    }
-
-    openSnackBar(message: string, action: string, lengthMs: number) {
-        this.snackBar.open(message, action, {
-            duration: lengthMs,
-        });
     }
 
     signIn() {
@@ -43,11 +39,11 @@ export class IndexComponent {
                 localStorage.setItem('email', this.emailSignIn);
                 this.router1.navigateByUrl('app/home');
             }, error => {
-                this.openSnackBar(error.error, 'Close', 3000);
+                this.snackBarHelper.openSnackBar(error.error, 'Close', 3000);
                 console.error(error);
             });
         } else {
-            this.openSnackBar('Please provide an email and password when attempting to sign in.', 'Close', 5000);
+            this.snackBarHelper.openSnackBar('Please provide an email and password when attempting to sign in.', 'Close', 5000);
         }
     }
 
@@ -64,13 +60,13 @@ export class IndexComponent {
                     for(var a = 0; a < error.error.length; a++) {
                         errorString += error.error[a].description;
                     }
-                    this.openSnackBar(errorString, 'Close', error.error.length * 2200);
+                    this.snackBarHelper.openSnackBar(errorString, 'Close', error.error.length * 2200);
                 } else { 
-                    this.openSnackBar(error.error[0].description, 'Close', 4000);
+                    this.snackBarHelper.openSnackBar(error.error[0].description, 'Close', 4000);
                 }
             });
         } else {
-            this.openSnackBar('The passwords provided do not match.', 'Close', 4000);
+            this.snackBarHelper.openSnackBar('The passwords provided do not match.', 'Close', 4000);
         }
     }
 

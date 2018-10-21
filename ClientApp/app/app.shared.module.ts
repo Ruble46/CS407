@@ -39,6 +39,7 @@ import { SelfService } from '../Services/SelfService';
 import { LoginRegisterService } from '../Services/LoginRegisterService';
 import { AccountService } from '../Services/AccountService';
 import { UserService } from '../Services/UserService';
+import { SnackBarHelper } from '../Helpers/SnackBars';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -143,7 +144,8 @@ import { IndexSharedModule } from '../index/index.shared.module';
         SelfService,
         LoginRegisterService,
         AccountService,
-        UserService
+        UserService,
+        SnackBarHelper
     ]
 })
 export class AppModuleShared {

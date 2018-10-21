@@ -46,3 +46,14 @@
 .navMenuItem {
     color: #ff9900 !important;
 }
+
+.searchbar-field {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+
+.mat-simple-snackbar-action {
+    color: #ff9900 !important;
+}
