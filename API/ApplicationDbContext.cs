@@ -15,5 +15,6 @@ namespace Game2gether.API
         {
 
         }
+        public virtual DbSet<Post> Posts { get; set; }
     }
 }
