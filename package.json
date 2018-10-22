@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@angular/material": "^6.4.7",
-    "rxjs-compat": "^6.3.2"
+    "rxjs-compat": "^6.3.2",
+    "webpack": "^2.2.0"
   }
 }

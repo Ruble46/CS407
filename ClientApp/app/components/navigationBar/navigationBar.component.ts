@@ -15,6 +15,7 @@ export class NavigationBarComponent {
     public newPost: Post;
     public post: Post;
     public snackBarHelper: SnackBarHelper;
+    public value: string;
 
     constructor(public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
         this.snackBarHelper = _snackBarHelper;
@@ -40,9 +41,8 @@ export class NavigationBarComponent {
     }
 
     logSearch() {
-        let search = (<HTMLInputElement>document.getElementById("searchInput")).value;
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(search)) {
-            console.log(`User's search: ${search}`);
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
+            console.log(`User's search: ${this.value}`);
         }
         else {
             this.snackBarHelper.openSnackBar('Please provide a valid email when attempting to search for users', 'Close', 3000);
