@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginRegisterService } from '../../../Services/LoginRegisterService';
 import * as $ from "jquery";
-import { SnackBarHelper } from '../../../Helpers/SnackBar';
+import { MatSnackBar } from '@angular/material';
+import { SnackBarHelper } from '../../../Helpers/SnackBars';
 
 @Component({
     selector: 'index',
@@ -21,6 +22,7 @@ export class IndexComponent {
 
     private router1: Router;
     private service1: LoginRegisterService;
+    //public snackBar: MatSnackBar;
     public snackBarHelper: SnackBarHelper;
 
     constructor(public _snackBarHelper: SnackBarHelper, private LoginRegisterService: LoginRegisterService, router: Router) {
