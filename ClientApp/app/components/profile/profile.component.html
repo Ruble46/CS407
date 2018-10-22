@@ -5,10 +5,10 @@
         <div class="col-md-12 headerRow">
             <div class="profileInfo">
                 <div class="emailTitle">
-                    <span>{{ email }}</span>
+                    {{ email }}
 
-                    <button mat-icon-button [matMenuTriggerFor]="playerMenu" class="playerDropDownBtn">
-                        <mat-icon class="playerDropDownIcon">more_vert</mat-icon>
+                    <button mat-icon-button [matMenuTriggerFor]="playerMenu" class="cardOptionBtn">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #playerMenu="matMenu" xPosition="before" [overlapTrigger]="false">
                         <button mat-menu-item (click)="reportUserPopUp()">

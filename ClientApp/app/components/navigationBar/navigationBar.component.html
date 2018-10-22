@@ -9,8 +9,15 @@
             <mat-icon class="newPostBtn">add_box</mat-icon>
             <span>New Post</span>
         </button>
-        
-        <span class="spacer"></span>
+
+        <mat-form-field appearence="standard" floatLabel="never" class="searchbar-field">
+            <input matInput type="text" placeholder="Search for user by email..." [(ngModel)]="value" id="searchInput" type="email" name="email"
+                ngModel="email.text" email>
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="logSearch()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+
 
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon class="menuBtn">menu</mat-icon>

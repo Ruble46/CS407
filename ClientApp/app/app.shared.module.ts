@@ -33,14 +33,13 @@ import { ProfileGamingComponent } from './components/profileGaming/profileGaming
 import { ProfilePostsComponent } from './components/profilePosts/profilePosts.component';
 import { ProfileRatingComponent } from './components/profileRating/profileRating.component';
 import { DeleteProfileDialogComponent } from './components/deleteProfileDialog/deleteProfileDialog.component';
-import { ReportUserComponent } from './components/reportUserDialog/reportUserDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
 import { LoginRegisterService } from '../Services/LoginRegisterService';
 import { AccountService } from '../Services/AccountService';
 import { UserService } from '../Services/UserService';
-import { SnackBarHelper } from '../Helpers/SnackBar';
+import { SnackBarHelper } from '../Helpers/SnackBars';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -66,8 +65,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
         ProfileGamingComponent,
         ProfilePostsComponent,
         ProfileRatingComponent,
-        DeleteProfileDialogComponent,
-        ReportUserComponent
+        DeleteProfileDialogComponent
 
     ],
     imports: [
@@ -141,7 +139,7 @@ import { IndexSharedModule } from '../index/index.shared.module';
             { path: '**', redirectTo: 'index' }
         ])
     ],
-    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent, ReportUserComponent],
+    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent],
     providers : [
         SelfService,
         LoginRegisterService,

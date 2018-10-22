@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTabChangeEvent, MatDialog } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { UserService } from '../../../Services/UserService';
-import { ReportUser } from '../../../Models/ReportUser';
-import { ReportUserComponent } from '../reportUserDialog/reportUserDialog.component';
 
 @Component({
     selector: 'profile',
@@ -18,13 +16,8 @@ export class ProfileComponent implements OnInit {
     private router1: Router;
     public selected = new FormControl(0);
     private UserService: UserService;
-    public dialog1: MatDialog;
-    public newReport: ReportUser;
-    public report: ReportUser;
 
-    constructor(public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
-        this.dialog1 = dialog;
-        this.newReport = new ReportUser();
+    constructor(_UserService: UserService, private route: ActivatedRoute, private router: Router) {
         this.UserService = _UserService;
         this.router1 = router;
         route.params.subscribe((params) => {
@@ -57,21 +50,6 @@ export class ProfileComponent implements OnInit {
     }
 
     reportUserPopUp() {
-        this.newReport.Reported = this.email;
-        this.newReport.Reporter = localStorage.getItem("email");
-        const dialogRef = this.dialog.open(ReportUserComponent, {
-            width: '400px',
-            data: this.newReport
-          });
-      
-          dialogRef.afterClosed().subscribe(result => {
-            if(result === undefined) { //cancel was clicked
-                console.log("User report was cancelled.");
-            } else { //create was clicked
-                this.report = result;
-                console.log(this.report);
-            }
-            this.newReport = new ReportUser();
-        });
+        console.log("in the popup function");
     }
 }
