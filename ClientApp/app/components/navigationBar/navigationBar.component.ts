@@ -41,7 +41,6 @@ export class NavigationBarComponent {
 
     logSearch() {
         let search = (<HTMLInputElement>document.getElementById("searchInput")).value;
-
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(search)) {
             console.log(`User's search: ${search}`);
         }
