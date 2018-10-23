@@ -51,7 +51,9 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 400px;
+    width: 50%;
+    font-weight: 200 !important;
+    font-size: 20px !important;
 }
 
 .mat-simple-snackbar-action {

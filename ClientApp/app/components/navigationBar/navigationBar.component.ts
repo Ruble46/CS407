@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Post } from '../../../Models/Post';
 import { NewPostDialogComponent } from '../newPostDialog/newPostDialog.component';
@@ -10,17 +10,21 @@ import { SnackBarHelper } from '../../../Helpers/SnackBars';
     styleUrls: ['./navigationBar.component.css', '../../../themes/theme.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class NavigationBarComponent {
+export class NavigationBarComponent implements OnInit{
     public dialog1: MatDialog;
     public newPost: Post;
     public post: Post;
     public snackBarHelper: SnackBarHelper;
     public value: string;
+    public thisUser: string;
 
     constructor(public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
         this.snackBarHelper = _snackBarHelper;
         this.dialog1 = dialog;
         this.newPost = new Post();
+    }
+    ngOnInit() {
+        this.thisUser = localStorage.getItem('email');
     }
 
     openNewPost() {

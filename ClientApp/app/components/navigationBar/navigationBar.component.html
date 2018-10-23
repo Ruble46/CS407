@@ -11,8 +11,7 @@
         </button>
 
         <mat-form-field appearence="standard" floatLabel="never" class="searchbar-field">
-            <input matInput type="text" placeholder="Search for user by email..." [(ngModel)]="value" id="searchInput" type="email" name="email"
-                ngModel="email.text" email>
+            <input matInput type="text" placeholder="Search for user by email..." [(ngModel)]="value" id="searchInput" name="email">
             <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="logSearch()">
                 <mat-icon>search</mat-icon>
             </button>
@@ -30,6 +29,10 @@
             <button mat-menu-item [routerLink]="['/app/account/posts']">
                 <mat-icon class="navMenuItem">account_box</mat-icon>
                 <span class="navMenuItem">Account</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/app/reports']" *ngIf="thisUser === 'ruble46@hotmail.com'">
+                <mat-icon class="navMenuItem">report</mat-icon>
+                <span class="navMenuItem">Reports</span>
             </button>
             <button mat-menu-item [routerLink]="['']">
                 <mat-icon class="navMenuItem">exit_to_app</mat-icon>

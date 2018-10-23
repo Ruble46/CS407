@@ -33,6 +33,8 @@ import { ProfileGamingComponent } from './components/profileGaming/profileGaming
 import { ProfilePostsComponent } from './components/profilePosts/profilePosts.component';
 import { ProfileRatingComponent } from './components/profileRating/profileRating.component';
 import { DeleteProfileDialogComponent } from './components/deleteProfileDialog/deleteProfileDialog.component';
+import { ReportsComponent} from './components/reports/reports.component';
+import { ReportUserComponent } from './components/reportUserDialog/reportUserDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
@@ -65,7 +67,9 @@ import { IndexSharedModule } from '../index/index.shared.module';
         ProfileGamingComponent,
         ProfilePostsComponent,
         ProfileRatingComponent,
-        DeleteProfileDialogComponent
+        DeleteProfileDialogComponent,
+        ReportsComponent,
+        ReportUserComponent
 
     ],
     imports: [
@@ -134,12 +138,13 @@ import { IndexSharedModule } from '../index/index.shared.module';
                     { path: 'rating', component: ProfileRatingComponent },
                     { path: '**', redirectTo: 'posts' }
                 ]},
+                { path: 'reports', component: ReportsComponent },
                 { path: '**', redirectTo: 'home' }
             ]},
             { path: '**', redirectTo: 'index' }
         ])
     ],
-    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent],
+    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent, ReportUserComponent],
     providers : [
         SelfService,
         LoginRegisterService,

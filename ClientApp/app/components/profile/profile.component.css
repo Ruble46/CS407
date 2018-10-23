@@ -75,6 +75,14 @@
     border-color: white !important;
 }
 
+.playerDropDownBtn {
+    height: auto;
+}
+ .playerDropDownIcon {
+    font-size: 32px !important;
+    line-height: 10px !important;
+}
+
 @media only screen and (max-width: 660px) {
     .profileTabs {
         width: 450px;
