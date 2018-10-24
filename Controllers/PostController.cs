@@ -23,7 +23,8 @@ namespace Game2gether.Controllers
         [HttpPost]
         public async Task<IActionResult> newPost([FromBody] Post userPost) 
         {
-            var result = _context.Posts.Add(userPost);
+            userPost.datePosted = DateTime.Now;
+            var result = await _context.Posts.AddAsync(userPost);
             _context.SaveChanges();
             return Ok(result);
         }
