@@ -38,6 +38,7 @@ import { ReportUserComponent } from './components/reportUserDialog/reportUserDia
 import { ReportComponent } from './components/report/report.component';
 import { SendEmailDialogComponent } from './components/sendEmailDialog/sendEmailDialog.component';
 import { DeleteReportDialogComponent } from './components/deleteReportDialog/deleteReportDialog.component';
+import { AssignSelfDialogComponent } from './components/assignSelfDialog/assignSelfDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
@@ -45,6 +46,7 @@ import { LoginRegisterService } from '../Services/LoginRegisterService';
 import { AccountService } from '../Services/AccountService';
 import { UserService } from '../Services/UserService';
 import { SnackBarHelper } from '../Helpers/SnackBars';
+import { PostService } from '../Services/PostService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -75,7 +77,8 @@ import { IndexSharedModule } from '../index/index.shared.module';
         ReportUserComponent,
         ReportComponent,
         SendEmailDialogComponent,
-        DeleteReportDialogComponent
+        DeleteReportDialogComponent,
+        AssignSelfDialogComponent
 
     ],
     imports: [
@@ -151,13 +154,21 @@ import { IndexSharedModule } from '../index/index.shared.module';
             { path: '**', redirectTo: 'index' }
         ])
     ],
-    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent, ReportUserComponent, SendEmailDialogComponent, DeleteReportDialogComponent],
+    entryComponents: [
+        NewPostDialogComponent, 
+        DeleteProfileDialogComponent, 
+        ReportUserComponent, 
+        SendEmailDialogComponent, 
+        DeleteReportDialogComponent, 
+        AssignSelfDialogComponent
+    ],
     providers : [
         SelfService,
         LoginRegisterService,
         AccountService,
         UserService,
-        SnackBarHelper
+        SnackBarHelper,
+        PostService
     ]
 })
 export class AppModuleShared {

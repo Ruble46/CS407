@@ -4,6 +4,7 @@ import { ReportUser } from '../../../Models/ReportUser';
 import { MatDialog } from '@angular/material';
 import { SendEmailDialogComponent } from '../sendEmailDialog/sendEmailDialog.component';
 import { Email } from '../../../Models/Email';
+import { DeleteReportDialogComponent } from '../deleteReportDialog/deleteReportDialog.component';
 
 @Component({
     selector: 'report',
@@ -19,6 +20,7 @@ export class ReportComponent implements OnInit {
     private ID: Number;
     public Report: ReportUser;
     public currentUser: string;
+    public choice: string;
 
     constructor(private route: ActivatedRoute, public dialog: MatDialog) {
         this.dialog1 = dialog;
@@ -59,7 +61,14 @@ export class ReportComponent implements OnInit {
     }
 
     closeTicketDialog() {
-
+        const dialogRef = this.dialog.open(DeleteReportDialogComponent, {
+            width: '400px',
+            data: {post: this.choice}
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+              console.log(result);
+        });
     }
 
     REPORTS: Array<ReportUser> = [

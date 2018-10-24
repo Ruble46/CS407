@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angu
 import { Post } from '../../../Models/Post';
 import { NewPostDialogComponent } from '../newPostDialog/newPostDialog.component';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
+import { PostService } from '../../../Services/PostService';
 
 @Component({
     selector: 'navigationBar',
@@ -11,6 +12,7 @@ import { SnackBarHelper } from '../../../Helpers/SnackBars';
     encapsulation: ViewEncapsulation.None
 })
 export class NavigationBarComponent implements OnInit{
+    private postService: PostService;
     public dialog1: MatDialog;
     public newPost: Post;
     public post: Post;
@@ -18,7 +20,8 @@ export class NavigationBarComponent implements OnInit{
     public value: string;
     public thisUser: string;
 
-    constructor(public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
+    constructor(private _postService: PostService, public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
+        this.postService = _postService;
         this.snackBarHelper = _snackBarHelper;
         this.dialog1 = dialog;
         this.newPost = new Post();
@@ -38,7 +41,12 @@ export class NavigationBarComponent implements OnInit{
                 console.log("Create post was cancelled.");
             } else { //create was clicked
                 this.post = result;
-                console.log(this.post);
+                this.postService.createPost(this.post)
+                .subscribe(result => {
+                    console.log(result);
+                }, error => {
+                    console.error(error);
+                });
             }
             this.newPost = new Post();
         });

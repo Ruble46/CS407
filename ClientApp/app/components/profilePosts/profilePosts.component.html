@@ -2,7 +2,7 @@
 
 <div class="profilePostsWrapper">
     <div id="profilePostsFeedWrapper">
-        <mat-card class="cardTest">
+        <!-- <mat-card class="cardTest">
             <mat-card-header>
                     <button mat-icon-button [matMenuTriggerFor]="postMenu" class="cardOptionBtn">
                         <mat-icon>more_vert</mat-icon>
@@ -12,10 +12,6 @@
                             <mat-icon class="navMenuItem">share</mat-icon>
                             <span class="navMenuItem">Share</span>
                         </button>
-                        <!-- <button mat-menu-item>
-                            <mat-icon class="navMenuItem">report</mat-icon>
-                            <span class="navMenuItem">Report</span>
-                        </button> -->
                     </mat-menu>
                 <mat-card-title class="cardTitle">Example Title 1</mat-card-title>
                 <mat-card-subtitle>
@@ -29,8 +25,9 @@
                 <p>Game: Rocket League</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </mat-card-content>
-        </mat-card> 
-        <mat-card class="cardTest">
+        </mat-card>  -->
+
+        <mat-card class="cardTest" *ngFor="let post of posts">
             <mat-card-header>
                     <button mat-icon-button [matMenuTriggerFor]="postMenu" class="cardOptionBtn">
                         <mat-icon>more_vert</mat-icon>
@@ -40,51 +37,20 @@
                             <mat-icon class="navMenuItem">share</mat-icon>
                             <span class="navMenuItem">Share</span>
                         </button>
-                        <!-- <button mat-menu-item>
-                            <mat-icon class="navMenuItem">report</mat-icon>
-                            <span class="navMenuItem">Report</span>
-                        </button> -->
                     </mat-menu>
-                <mat-card-title class="cardTitle">Example Title 1</mat-card-title>
+                <mat-card-title class="cardTitle">{{ post.Title }}</mat-card-title>
                 <mat-card-subtitle>
                     Posted By: 
-                    <label>test@purdue.edu</label>
+                    <a (click)="toProfile(post.Creator)" class="profileLink">{{ post.Creator }}</a>
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="cardContent">
-                <p>System: Steam</p>
-                <p>Game: Rocket League</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>System: {{ post.Platform }}</p>
+                <p>Game: {{post.Game }}</p>
+                <p>{{ post.Description }}</p>
             </mat-card-content>
-        </mat-card> 
-        <mat-card class="cardTest">
-            <mat-card-header>
-                    <button mat-icon-button [matMenuTriggerFor]="postMenu" class="cardOptionBtn">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #postMenu="matMenu" xPosition="before" [overlapTrigger]="false">
-                        <button mat-menu-item>
-                            <mat-icon class="navMenuItem">share</mat-icon>
-                            <span class="navMenuItem">Share</span>
-                        </button>
-                        <!-- <button mat-menu-item>
-                            <mat-icon class="navMenuItem">report</mat-icon>
-                            <span class="navMenuItem">Report</span>
-                        </button> -->
-                    </mat-menu>
-                <mat-card-title class="cardTitle">Example Title 1</mat-card-title>
-                <mat-card-subtitle>
-                    Posted By: 
-                    <label>test@purdue.edu</label>
-                </mat-card-subtitle>
-            </mat-card-header>
             <mat-divider></mat-divider>
-            <mat-card-content class="cardContent">
-                <p>System: Steam</p>
-                <p>Game: Rocket League</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </mat-card-content>
         </mat-card> 
     </div>
 </div>

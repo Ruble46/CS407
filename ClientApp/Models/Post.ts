@@ -5,4 +5,5 @@ export class Post {
   Mode: string;
   Platform: string;
   Creator: string;
+  ID: string;
 }

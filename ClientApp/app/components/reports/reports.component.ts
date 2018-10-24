@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportUser } from '../../../Models/ReportUser';
-import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatSort, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { AssignSelfDialogComponent } from '../assignSelfDialog/assignSelfDialog.component';
 
 @Component({
     selector: 'reports',
@@ -12,6 +13,8 @@ import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 
 export class ReportsComponent implements OnInit{
     private router1: Router;
+    public choice: string;
+    public dialog1: MatDialog;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -19,7 +22,8 @@ export class ReportsComponent implements OnInit{
     displayedColumns: string[] = ['Reason', 'Reported', 'Reporter', 'Assigned', 'AssignSelf', "View"];
     dataSource;
 
-    constructor(router: Router) {
+    constructor(public dialog: MatDialog, router: Router) {
+        this.dialog1 = dialog;
         this.router1 = router;
     }
 
@@ -40,6 +44,26 @@ export class ReportsComponent implements OnInit{
 
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    assignSelfDialog(ID: number) {
+        const dialogRef = this.dialog1.open(AssignSelfDialogComponent, {
+            width: '400px',
+            data: {post: this.choice}
+        });
+      
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+
+            if(result === 'yes') {
+                for(let a = 0; a < this.REPORTS.length; a++) {
+                    if(this.REPORTS[a].ID == ID) {
+                        this.REPORTS[a].Assigned = localStorage.getItem('email');
+                        break;
+                    }
+                }
+            }
+        });
     }
     
     REPORTS: Array<ReportUser> = [

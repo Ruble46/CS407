@@ -65,7 +65,7 @@ export class AccountSettingsComponent implements OnInit {
     }
 
     openDeleteConfirmation() {
-        const dialogRef = this.dialog.open(DeleteProfileDialogComponent, {
+        const dialogRef = this.dialog1.open(DeleteProfileDialogComponent, {
             width: '400px',
             data: {post: this.choice}
           });
