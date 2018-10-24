@@ -1,37 +1,38 @@
-<h1 mat-dialog-title>New Email</h1>
+<form #emailForm="ngForm">
 
-<mat-divider></mat-divider>
+    <h1 mat-dialog-title>New Email</h1>
 
-<div mat-dialog-content class="dialogContent">
+    <mat-divider></mat-divider>
 
-    <mat-form-field appearance="outline" class="fullWidth">
-        <mat-label>To</mat-label>
-        <input matInput placeholder="To" [(ngModel)]="data.To" readonly>
-    </mat-form-field>
-            
-    <mat-form-field appearance="outline" class="fullWidth">
-        <mat-label>From</mat-label>
-        <input matInput placeholder="From" [(ngModel)]="data.From" readonly>
-    </mat-form-field>
+    <div mat-dialog-content class="dialogContent">
 
-    <mat-form-field appearance="outline" class="fullWidth">
-        <mat-label>Subject</mat-label>
-        <input matInput placeholder="Email Subject" [(ngModel)]="data.Subject">
-    </mat-form-field>
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>To</mat-label>
+            <input matInput placeholder="To" [(ngModel)]="data.To" name="To" required readonly>
+        </mat-form-field>
 
-    <mat-form-field appearance="outline" class="fullWidth">
-        <mat-label>Body</mat-label>
-        <textarea matInput class="descriptionTextArea" placeholder="Email Body" [(ngModel)]="data.Body"
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="10"></textarea>
-    </mat-form-field>
-</div>
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>From</mat-label>
+            <input matInput placeholder="From" [(ngModel)]="data.From" name="From" required readonly>
+        </mat-form-field>
 
-<mat-divider></mat-divider>
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>Subject</mat-label>
+            <input matInput placeholder="Email Subject" [(ngModel)]="data.Subject" name="Subject" required>
+        </mat-form-field>
 
-<div mat-dialog-actions>
-    <button mat-button color="accent" (click)="onCancel()">Cancel</button>
-    <button mat-button color="primary" [mat-dialog-close]="data">Send</button>
-</div>
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>Body</mat-label>
+            <textarea matInput class="descriptionTextArea" placeholder="Email Body" [(ngModel)]="data.Body"
+                cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" name="Body" required></textarea>
+        </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div mat-dialog-actions>
+        <button mat-button color="accent" (click)="onCancel()">Cancel</button>
+        <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="!emailForm.valid">Send</button>
+    </div>
+
+</form>
