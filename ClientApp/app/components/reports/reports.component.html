@@ -1,35 +1,52 @@
 <div class="reportsWrapper">
     <div class="container">
-        <table mat-table [dataSource]="dataSource" class="fullWidth">
+        <mat-form-field id="filterInput" class="fullWidth">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        
+        <table mat-table [dataSource]="dataSource" class="fullWidth" matSort>
             <ng-container matColumnDef="Reason">
-                <th mat-header-cell *matHeaderCellDef> Reason </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Reason</th>
                 <td mat-cell *matCellDef="let report"> {{report.Reason}} </td>
             </ng-container>
             
             <ng-container matColumnDef="Reported">
-                <th mat-header-cell *matHeaderCellDef> Reported </th>
-                <td mat-cell *matCellDef="let report"> {{report.Reported}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Reported</th>
+                <td mat-cell *matCellDef="let report">
+                    <a [routerLink]="['/app/profile', report.Reported, 'posts']">{{report.Reported}}</a>
+                </td>
             </ng-container>
             
             <ng-container matColumnDef="Reporter">
-                <th mat-header-cell *matHeaderCellDef> Reporter </th>
-                <td mat-cell *matCellDef="let report"> {{report.Reporter}} </td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Reporter</th>
+                <td mat-cell *matCellDef="let report">
+                    <a [routerLink]="['/app/profile', report.Reporter, 'posts']">{{report.Reporter}}</a>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="Assigned">
-                    <th mat-header-cell *matHeaderCellDef> Assigned </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned</th>
                     <td mat-cell *matCellDef="let report"> {{report.Assigned}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Button">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let report">
-                     <button mat-raised-button color="primary" class="assignBtn">Assign Self</button>
+            <ng-container matColumnDef="AssignSelf">
+                <th mat-header-cell *matHeaderCellDef style="width: 140px"></th>
+                <td mat-cell *matCellDef="let report" style="width: 140px">
+                     <button mat-raised-button color="primary" class="assignBtn rightBtn" [disabled]="report.Assigned !== ''">Assign Self</button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="View">
+                <th mat-header-cell *matHeaderCellDef style="width: 140px"></th>
+                <td mat-cell *matCellDef="let report" style="width: 140px">
+                     <button mat-raised-button color="accent" class="rightBtn" [routerLink]="['/app/report', report.ID]">View</button>
                 </td>
             </ng-container>
             
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

@@ -11,7 +11,7 @@ import {MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
         MatCardModule, MatTabsModule, MatDatepickerModule, MatRadioModule,
         MatNativeDateModule, MatCheckboxModule, MatSidenavModule, 
         MatProgressBarModule, MatDialogModule, MatExpansionModule,
-        MatButtonToggleModule, MatBadgeModule, MatSnackBarModule} from "@angular/material";
+        MatButtonToggleModule, MatBadgeModule, MatSnackBarModule } from "@angular/material";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 //Component Imports
@@ -35,6 +35,9 @@ import { ProfileRatingComponent } from './components/profileRating/profileRating
 import { DeleteProfileDialogComponent } from './components/deleteProfileDialog/deleteProfileDialog.component';
 import { ReportsComponent} from './components/reports/reports.component';
 import { ReportUserComponent } from './components/reportUserDialog/reportUserDialog.component';
+import { ReportComponent } from './components/report/report.component';
+import { SendEmailDialogComponent } from './components/sendEmailDialog/sendEmailDialog.component';
+import { DeleteReportDialogComponent } from './components/deleteReportDialog/deleteReportDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
@@ -69,7 +72,10 @@ import { IndexSharedModule } from '../index/index.shared.module';
         ProfileRatingComponent,
         DeleteProfileDialogComponent,
         ReportsComponent,
-        ReportUserComponent
+        ReportUserComponent,
+        ReportComponent,
+        SendEmailDialogComponent,
+        DeleteReportDialogComponent
 
     ],
     imports: [
@@ -139,12 +145,13 @@ import { IndexSharedModule } from '../index/index.shared.module';
                     { path: '**', redirectTo: 'posts' }
                 ]},
                 { path: 'reports', component: ReportsComponent },
+                { path: 'report/:id', component: ReportComponent },
                 { path: '**', redirectTo: 'home' }
             ]},
             { path: '**', redirectTo: 'index' }
         ])
     ],
-    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent, ReportUserComponent],
+    entryComponents: [NewPostDialogComponent, DeleteProfileDialogComponent, ReportUserComponent, SendEmailDialogComponent, DeleteReportDialogComponent],
     providers : [
         SelfService,
         LoginRegisterService,

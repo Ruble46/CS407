@@ -10,7 +10,7 @@ namespace Game2gether.API.Models
     {
         [Key]
         public Guid id { get; set; }
-        public string email { get; set; }
+        public String email { get; set; }
         public String title { get; set; }
         public String content { get; set; }
         public String game { get; set; }

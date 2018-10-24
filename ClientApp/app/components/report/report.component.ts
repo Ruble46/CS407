@@ -1,47 +1,67 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReportUser } from '../../../Models/ReportUser';
-import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { SendEmailDialogComponent } from '../sendEmailDialog/sendEmailDialog.component';
+import { Email } from '../../../Models/Email';
 
 @Component({
-    selector: 'reports',
-    templateUrl: './reports.component.html',
-    styleUrls: ['./reports.component.css', '../../../themes/theme.css'],
+    selector: 'report',
+    templateUrl: './report.component.html',
+    styleUrls: ['./report.component.css', '../../../themes/theme.css'],
     encapsulation : ViewEncapsulation.None
 })
 
-export class ReportsComponent implements OnInit{
-    private router1: Router;
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+export class ReportComponent implements OnInit {
+    public dialog1: MatDialog;
+    public newEmail: Email;
+    public email: Email;
+    private ID: Number;
+    public Report: ReportUser;
+    public currentUser: string;
 
-    expandedReport: ReportUser;
-    displayedColumns: string[] = ['Reason', 'Reported', 'Reporter', 'Assigned', 'AssignSelf', "View"];
-    dataSource;
-
-    constructor(router: Router) {
-        this.router1 = router;
+    constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+        this.dialog1 = dialog;
+        route.params.subscribe((params) => {
+            this.ID = params["id"];
+        });
+        this.currentUser = localStorage.getItem('email');
+        this.newEmail = new Email();
     }
 
     ngOnInit() {
-        this.dataSource = new MatTableDataSource(this.REPORTS);
-        this.dataSource.filterPredicate = (data: ReportUser, filter: string) => {
-            let allValues: string = Object.keys(data).map(key => {
-                if(data[key] == undefined || data[key] == null) {
-                    return '';
-                }
-                return (data[key].toString()).toLowerCase();
-            }).join('');
-            return allValues.indexOf(filter.toLowerCase()) != -1;
+        for(let a = 0; a < this.REPORTS.length; a++) {
+            if(this.REPORTS[a].ID.toString() === this.ID.toString()) {
+                this.Report = this.REPORTS[a];
+                break;
+            }
         }
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        console.log(this.Report);
     }
 
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+    newEmailDialog(to: string) {
+        this.newEmail.To = to;
+        this.newEmail.From = localStorage.getItem('email');
+        const dialogRef = this.dialog.open(SendEmailDialogComponent, {
+            width: '400px',
+            data: this.newEmail
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            if(result === undefined) { //cancel was clicked
+                console.log("User report was cancelled.");
+            } else { //create was clicked
+                this.email = result;
+                console.log(this.email);
+            }
+            this.newEmail = new Email();
+        });
     }
-    
+
+    closeTicketDialog() {
+
+    }
+
     REPORTS: Array<ReportUser> = [
         {ID: 1, Reason: 'Bill is being a dick and wont stop messaging me', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: 'ruble46@hotmail.com'},
         {ID: 2, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
