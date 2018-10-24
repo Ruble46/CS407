@@ -135,7 +135,7 @@ namespace Game2gether.Controllers
             }
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var apiKey = _config["SendGridApiKey"];
-            var client = new SendGridClient("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");
+            var client = new SendGridClient(apiKey);
             var from = new EmailAddress("support@game2gether.com", "support");
             var subject = "Game2Gether password reset";
             var to = new EmailAddress(email.email, "user");

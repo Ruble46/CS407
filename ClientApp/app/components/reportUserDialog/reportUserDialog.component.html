@@ -1,17 +1,19 @@
+<form #reportUserForm="ngForm">
 <h1 mat-dialog-title>Report {{ data.Reported }}</h1>
 <mat-divider></mat-divider>
 <div mat-dialog-content class="dialogContent">
     <mat-form-field appearance="outline" class="fullWidth">
         <mat-label>Reason</mat-label>
-        <input matInput placeholder="Please be as concise as possible." [(ngModel)]="data.Reason">
+        <input matInput placeholder="Please be as concise as possible." [(ngModel)]="data.Reason" name="Reason" required>
     </mat-form-field>
     <mat-form-field appearance="outline" class="fullWidth">
         <mat-label>Description</mat-label>
-        <input matInput placeholder="Please provide as much information as possible" [(ngModel)]="data.Description">
+        <input matInput placeholder="Please provide as much information as possible" [(ngModel)]="data.Description" name="Description" required>
     </mat-form-field>
 </div>
 <mat-divider></mat-divider>
 <div mat-dialog-actions>
     <button mat-button color="accent" (click)="onCancel()">Cancel</button>
-    <button mat-button color="primary" [mat-dialog-close]="data">Submit</button>
+    <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="!reportUserForm.valid">Submit</button>
 </div>
+</form>

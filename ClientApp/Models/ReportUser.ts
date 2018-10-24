@@ -4,4 +4,5 @@ export class ReportUser {
     Reporter: String;
     Reported: String;
     Assigned: String;
+    ID: Number;
 }

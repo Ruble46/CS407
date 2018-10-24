@@ -1,4 +1,4 @@
-.reportsWrapper {
+.reportWrapper {
     position: absolute;
     top: 64px;
     bottom: 0;
@@ -21,26 +21,25 @@
     width: 100% !important;
 }
 
-.assignBtn {
-    color: white !important;
-}
-
-.rightBtn {
-    float: right;
-}
-
 a {
     color: #ff9900;
 }
 
-#filterInput {
-    background-color: white;
-    margin-bottom: 1%;
-    padding: 1% 2% 0.5% 2%;
+.reportContent {
+    margin-top: 16px;
+}
+
+#reportTitle {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.closeBtn {
+    float: right;
 }
 
 @media only screen and (max-width: 600px) {
-    .reportsWrapper {
+    .reportWrapper {
         top: 56px;
     }
 }
