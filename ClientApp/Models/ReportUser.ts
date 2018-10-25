@@ -1,8 +1,9 @@
 export class ReportUser {
-    Reason: String;
-    Description: String;
-    Reporter: String;
-    Reported: String;
-    Assigned: String;
-    ID: Number;
+    reason: String;
+    description: String;
+    reporter: String;
+    reported: String;
+    assigned: String;
+    id: String;
+    dateCreated: Date;
 }

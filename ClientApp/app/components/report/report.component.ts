@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { SendEmailDialogComponent } from '../sendEmailDialog/sendEmailDialog.component';
 import { Email } from '../../../Models/Email';
 import { DeleteReportDialogComponent } from '../deleteReportDialog/deleteReportDialog.component';
+import { ReportsService } from '../../../Services/ReportsService';
 
 @Component({
     selector: 'report',
@@ -15,30 +16,41 @@ import { DeleteReportDialogComponent } from '../deleteReportDialog/deleteReportD
 
 export class ReportComponent implements OnInit {
     public dialog1: MatDialog;
+    private reportsService: ReportsService;
     public newEmail: Email;
     public email: Email;
     private ID: Number;
     public Report: ReportUser;
     public currentUser: string;
     public choice: string;
+    public reports: Array<ReportUser>;
 
-    constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+    constructor(_reportsService: ReportsService, private route: ActivatedRoute, public dialog: MatDialog) {
+        this.reportsService = _reportsService;
         this.dialog1 = dialog;
         route.params.subscribe((params) => {
             this.ID = params["id"];
         });
         this.currentUser = localStorage.getItem('email');
+        this.Report = new ReportUser();
         this.newEmail = new Email();
+
     }
 
     ngOnInit() {
-        for(let a = 0; a < this.REPORTS.length; a++) {
-            if(this.REPORTS[a].ID.toString() === this.ID.toString()) {
-                this.Report = this.REPORTS[a];
-                break;
+        this.reportsService.getAllReports()
+        .subscribe(result => {
+            this.reports = result.body as Array<ReportUser>;
+
+            for(let a = 0; a < result.body.length; a++) {
+                if(result.body[a].id === this.ID) {
+                    this.Report = result.body[a] as ReportUser;
+                    break;
+                }
             }
-        }
-        console.log(this.Report);
+        }, error => {
+            console.error(error);
+        });
     }
 
     newEmailDialog(to: string) {
@@ -70,16 +82,4 @@ export class ReportComponent implements OnInit {
               console.log(result);
         });
     }
-
-    REPORTS: Array<ReportUser> = [
-        {ID: 1, Reason: 'Bill is being a dick and wont stop messaging me', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: 'ruble46@hotmail.com'},
-        {ID: 2, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-        {ID: 3, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-        {ID: 4, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: 'adming@game2gether.com'},
-        {ID: 5, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-        {ID: 6, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-        {ID: 7, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-        {ID: 8, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-        {ID: 9, Reason: 'Bill is being a dick', Description: 'He wont stop being a bully to me, check the chat messages between us', Reported: 'b.omalley95@yahoo.com', Reporter: 'ruble46@hotmail.com', Assigned: ''},
-    ];
 }

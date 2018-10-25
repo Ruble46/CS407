@@ -4,6 +4,8 @@ import { Post } from '../../../Models/Post';
 import { NewPostDialogComponent } from '../newPostDialog/newPostDialog.component';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
 import { PostService } from '../../../Services/PostService';
+import { UserService } from '../../../Services/UserService';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'navigationBar',
@@ -11,8 +13,10 @@ import { PostService } from '../../../Services/PostService';
     styleUrls: ['./navigationBar.component.css', '../../../themes/theme.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class NavigationBarComponent implements OnInit{
+export class NavigationBarComponent implements OnInit {
+    private router: Router;
     private postService: PostService;
+    private userService: UserService;
     public dialog1: MatDialog;
     public newPost: Post;
     public post: Post;
@@ -20,7 +24,9 @@ export class NavigationBarComponent implements OnInit{
     public value: string;
     public thisUser: string;
 
-    constructor(private _postService: PostService, public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
+    constructor(private _router: Router, private _userService: UserService, private _postService: PostService, public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
+        this.router = _router;
+        this.userService = _userService;
         this.postService = _postService;
         this.snackBarHelper = _snackBarHelper;
         this.dialog1 = dialog;
@@ -54,7 +60,14 @@ export class NavigationBarComponent implements OnInit{
 
     logSearch() {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
-            console.log(`User's search: ${this.value}`);
+            this.userService.getUser(this.value)
+            .subscribe(result => {
+                this.router.navigateByUrl('app/profile/' + this.value + '/posts');
+            }, error => {
+                console.error(error);
+                this.snackBarHelper.openSnackBar('The user ' + this.value + ' does not exist.', 'Close', 3000);
+            });
+
         }
         else {
             this.snackBarHelper.openSnackBar('Please provide a valid email when attempting to search for users', 'Close', 3000);

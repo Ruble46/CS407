@@ -34,6 +34,5 @@ namespace Game2gether.Controllers {
                 return BadRequest("No user found");
             }
         }   
-
     }
 }

@@ -7,39 +7,39 @@
         <table mat-table [dataSource]="dataSource" class="fullWidth" matSort>
             <ng-container matColumnDef="Reason">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Reason</th>
-                <td mat-cell *matCellDef="let report"> {{report.Reason}} </td>
+                <td mat-cell *matCellDef="let report"> {{report.reason}} </td>
             </ng-container>
             
             <ng-container matColumnDef="Reported">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Reported</th>
                 <td mat-cell *matCellDef="let report">
-                    <a [routerLink]="['/app/profile', report.Reported, 'posts']">{{report.Reported}}</a>
+                    <a [routerLink]="['/app/profile', report.reported, 'posts']">{{report.reported}}</a>
                 </td>
             </ng-container>
             
             <ng-container matColumnDef="Reporter">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Reporter</th>
                 <td mat-cell *matCellDef="let report">
-                    <a [routerLink]="['/app/profile', report.Reporter, 'posts']">{{report.Reporter}}</a>
+                    <a [routerLink]="['/app/profile', report.reporter, 'posts']">{{report.reporter}}</a>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="Assigned">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned</th>
-                    <td mat-cell *matCellDef="let report"> {{report.Assigned}} </td>
+                    <td mat-cell *matCellDef="let report"> {{report.assigned}} </td>
             </ng-container>
 
             <ng-container matColumnDef="AssignSelf">
                 <th mat-header-cell *matHeaderCellDef style="width: 140px"></th>
                 <td mat-cell *matCellDef="let report" style="width: 140px">
-                     <button mat-raised-button color="primary" class="assignBtn rightBtn" [disabled]="report.Assigned !== ''" (click)='assignSelfDialog(report.ID)'>Assign Self</button>
+                     <button mat-raised-button color="primary" class="assignBtn rightBtn" [disabled]="report.assigned !== ''" (click)='assignSelfDialog(report.id)'>Assign Self</button>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="View">
                 <th mat-header-cell *matHeaderCellDef style="width: 140px"></th>
                 <td mat-cell *matCellDef="let report" style="width: 140px">
-                     <button mat-raised-button color="accent" class="rightBtn" [routerLink]="['/app/report', report.ID]">View</button>
+                     <button mat-raised-button color="accent" class="rightBtn" [routerLink]="['/app/report', report.id]">View</button>
                 </td>
             </ng-container>
             

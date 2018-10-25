@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Game2gether.Controllers
 {
+    [Route("api/[controller]")]
     public class ReportController : Controller
     {
         readonly ApplicationDbContext _context;
@@ -21,16 +22,16 @@ namespace Game2gether.Controllers
         [HttpPost]
         public async Task<IActionResult> newReport([FromBody] Report report)
         {
-            var result = _context.Reports.AddAsync(report);
+            var result = await _context.Reports.AddAsync(report);
             _context.SaveChanges();
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPost("{id}")]
         public async Task<IActionResult> updateAsignee([FromBody] AppUser user, string id)
         {
             Report report = new Report();
-            report = _context.Reports.Find(id);
+            report = _context.Reports.Find(new Guid(id));
             report.Assigned = user.Email;
             _context.Entry(report).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.SaveChanges();

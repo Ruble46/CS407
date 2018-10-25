@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { UserService } from '../../../Services/UserService';
 import { ReportUser } from '../../../Models/ReportUser';
 import { ReportUserComponent } from '../reportUserDialog/reportUserDialog.component';
+import { ReportsService } from '../../../Services/ReportsService';
 
 @Component({
     selector: 'profile',
@@ -13,6 +14,7 @@ import { ReportUserComponent } from '../reportUserDialog/reportUserDialog.compon
     encapsulation : ViewEncapsulation.Native
 })
 export class ProfileComponent implements OnInit {
+    private reportsService: ReportsService;
     public email: string;
     public AccountCreated: Date;
     private router1: Router;
@@ -22,7 +24,8 @@ export class ProfileComponent implements OnInit {
     public newReport: ReportUser;
     public report: ReportUser;
 
-    constructor(public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(_reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
+        this.reportsService = _reportsService;
         this.dialog1 = dialog;
         this.newReport = new ReportUser();
         this.UserService = _UserService;
@@ -57,8 +60,8 @@ export class ProfileComponent implements OnInit {
     }
 
     reportUserPopUp() {
-        this.newReport.Reported = this.email;
-        this.newReport.Reporter = localStorage.getItem("email");
+        this.newReport.reported = this.email;
+        this.newReport.reporter = localStorage.getItem("email");
         const dialogRef = this.dialog.open(ReportUserComponent, {
             width: '400px',
             data: this.newReport
@@ -69,7 +72,12 @@ export class ProfileComponent implements OnInit {
                 console.log("User report was cancelled.");
             } else { //create was clicked
                 this.report = result;
-                console.log(this.report);
+                this.reportsService.createReport(this.report)
+                .subscribe(result => {
+                    console.log(result);
+                }, error => {
+                    console.error(error);
+                });
             }
             this.newReport = new ReportUser();
         });

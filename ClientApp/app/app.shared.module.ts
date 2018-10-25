@@ -47,6 +47,7 @@ import { AccountService } from '../Services/AccountService';
 import { UserService } from '../Services/UserService';
 import { SnackBarHelper } from '../Helpers/SnackBars';
 import { PostService } from '../Services/PostService';
+import { ReportsService } from '../Services/ReportsService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -168,7 +169,8 @@ import { IndexSharedModule } from '../index/index.shared.module';
         AccountService,
         UserService,
         SnackBarHelper,
-        PostService
+        PostService,
+        ReportsService
     ]
 })
 export class AppModuleShared {

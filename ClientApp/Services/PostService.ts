@@ -31,10 +31,6 @@ export class PostService {
             platform: post.Platform,
         }
 
-        // let body: Object = {
-        //     userPost: formattedPost
-        // }
-
         let options: Object = {
             observe: 'response'
         }
