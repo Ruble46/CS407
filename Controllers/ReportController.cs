@@ -34,7 +34,7 @@ namespace Game2gether.Controllers
             report = _context.Reports.Find(new Guid(id));
             report.Assigned = user.Email;
             _context.Entry(report).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok();
         }
 

@@ -1,14 +1,14 @@
 <form #reportUserForm="ngForm">
-<h1 mat-dialog-title>Report {{ data.Reported }}</h1>
+<h1 mat-dialog-title>Report {{ data.reported }}</h1>
 <mat-divider></mat-divider>
 <div mat-dialog-content class="dialogContent">
     <mat-form-field appearance="outline" class="fullWidth">
         <mat-label>Reason</mat-label>
-        <input matInput placeholder="Please be as concise as possible." [(ngModel)]="data.Reason" name="Reason" required>
+        <input matInput placeholder="Please be as concise as possible." [(ngModel)]="data.reason" name="Reason" required>
     </mat-form-field>
     <mat-form-field appearance="outline" class="fullWidth">
         <mat-label>Description</mat-label>
-        <input matInput placeholder="Please provide as much information as possible" [(ngModel)]="data.Description" name="Description" required>
+        <input matInput placeholder="Please provide as much information as possible" [(ngModel)]="data.description" name="Description" required>
     </mat-form-field>
 </div>
 <mat-divider></mat-divider>
