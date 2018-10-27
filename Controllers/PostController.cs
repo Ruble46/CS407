@@ -38,6 +38,7 @@ namespace Game2gether.Controllers
             return query.ToList();
         }
 
+        /* 
         [HttpGet]
         public List<Post> get()
         {
@@ -45,9 +46,73 @@ namespace Game2gether.Controllers
                         orderby p.datePosted
                         select p;
             return query.ToList();
-        }        
+        } 
+        */       
 
-        
+        [HttpGet]
+        public List<Post> get(string game, string platform, string gameMode) {
+            if(game != "" && platform != "" && gameMode != "") {
+                var query = from p in _context.Posts
+                            where p.game == game && p.platform == platform && p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform != "" && gameMode == "") {
+                var query = from p in _context.Posts
+                            where p.game == game && p.platform == platform
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform == "" && gameMode != "") {
+                var query = from p in _context.Posts
+                            where p.game == game && p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform != "" && gameMode == "") {
+                var query = from p in _context.Posts
+                            where p.game == game && p.platform == platform
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform != "" && gameMode != "") {
+                var query = from p in _context.Posts
+                            where p.platform == platform && p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform != "" && gameMode != "") {
+                var query = from p in _context.Posts
+                            where p.platform == platform && p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform == "" && gameMode == "") {
+                var query = from p in _context.Posts
+                            where p.game == game
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform != "" && gameMode == "") {
+                var query = from p in _context.Posts
+                            where p.platform == platform
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform == "" && gameMode != "") {
+                var query = from p in _context.Posts
+                            where p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else {
+                var query = from p in _context.Posts
+                        orderby p.datePosted
+                        select p;
+                return query.ToList();
+            }
+            
+        }        
         
     }
 }
