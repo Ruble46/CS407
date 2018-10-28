@@ -45,4 +45,22 @@ export class PostService {
 
         return this.http.get<any>(this.apiBaseUrl + 'api/post/' + email, options);
     }
+
+    filterPosts(game: string, gameMode: string, platform: string) {
+        let options: Object = {
+            observe: 'response'
+        }
+
+        if(!game) {
+            game = "dontFilterBy";
+        }
+        if(!gameMode) {
+            gameMode = "dontFilterBy";
+        }
+        if(!platform) {
+            platform = "dontFilterBy";
+        }
+
+        return this.http.get<any>(this.apiBaseUrl + 'api/post/filter/' + game + '/' + gameMode + '/' + platform, options);
+    }
 }

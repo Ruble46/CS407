@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit{
         document.getElementById('navBar').style.backgroundColor = "#34373c";
         this.postService.getAllPosts()
         .subscribe(result => {
+            this.posts = null;
+            this.posts = new Array<Post>();
             for(let a = 0; a < result.body.length; a++) {
                 var newPost: Post = new Post();
                 newPost.Creator = result.body[a].email;
@@ -57,8 +59,31 @@ export class HomeComponent implements OnInit{
     }
 
     filterFeed() {
-        console.log(this.platforms.value);
-        console.log(this.filterGame);
-        console.log(this.filterMode);
+        let platform: string;
+        if(!this.platforms.value) {
+            platform = "";
+        } else {
+            platform = this.platforms.value[0];
+        }
+
+        this.postService.filterPosts(this.filterGame, this.filterMode, platform)
+        .subscribe(result => {
+            this.posts = null;
+            this.posts = new Array<Post>();
+            for(let a = 0; a < result.body.length; a++) {
+                var newPost: Post = new Post();
+                newPost.Creator = result.body[a].email;
+                newPost.Description = result.body[a].content;
+                newPost.Game = result.body[a].game;
+                newPost.Mode = result.body[a].gameType;
+                newPost.Platform = result.body[a].platform;
+                newPost.Title = result.body[a].title;
+                newPost.ID = result.body[a].id;
+                this.posts.push(newPost);
+                newPost = null;
+            }
+        }, error => {
+            console.error(error);
+        })
     }
 }
