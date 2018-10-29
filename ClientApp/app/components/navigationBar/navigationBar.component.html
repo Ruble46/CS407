@@ -30,7 +30,7 @@
                 <mat-icon class="navMenuItem">account_box</mat-icon>
                 <span class="navMenuItem">Account</span>
             </button>
-            <button mat-menu-item [routerLink]="['/app/reports']" *ngIf="thisUser === 'ruble46@hotmail.com'">
+            <button mat-menu-item [routerLink]="['/app/reports']" *ngIf="thisUserRole === 'Admin'">
                 <mat-icon class="navMenuItem">report</mat-icon>
                 <span class="navMenuItem">Reports</span>
             </button>

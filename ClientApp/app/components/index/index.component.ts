@@ -4,6 +4,7 @@ import { LoginRegisterService } from '../../../Services/LoginRegisterService';
 import * as $ from "jquery";
 import { MatSnackBar } from '@angular/material';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
+import { AccountService } from '../../../Services/AccountService';
 
 @Component({
     selector: 'index',
@@ -22,12 +23,14 @@ export class IndexComponent {
 
     private router1: Router;
     private service1: LoginRegisterService;
+    private service2: AccountService;
     //public snackBar: MatSnackBar;
     public snackBarHelper: SnackBarHelper;
 
-    constructor(public _snackBarHelper: SnackBarHelper, private LoginRegisterService: LoginRegisterService, router: Router) {
+    constructor(private AccountService: AccountService, public _snackBarHelper: SnackBarHelper, private LoginRegisterService: LoginRegisterService, router: Router) {
         this.snackBarHelper = _snackBarHelper;
         this.service1 = LoginRegisterService;
+        this.service2 = AccountService;
         this.router1 = router;
         this.emailSignIn = this.passwordSignIn = this.emailSignUp = this.passwordSignUp = this.passwordSignUpConfirm = '';
     }
@@ -37,7 +40,25 @@ export class IndexComponent {
             this.service1.signIn(this.emailSignIn, this.passwordSignIn)
             .subscribe(result => {
                 localStorage.setItem('email', this.emailSignIn);
-                this.router1.navigateByUrl('app/home');
+                this.service2.getUserRole(this.emailSignIn)
+                .subscribe(result => {
+                    console.log(result);
+                    let isAdmin: boolean = false;
+                    for(let a = 0; a < result.length; a++) {
+                        if(result[a] === 'Admin') {
+                            isAdmin = true;
+                            break;
+                        }
+                    }
+                    if(isAdmin) {
+                        localStorage.setItem('role', 'Admin');
+                    } else {
+                        localStorage.setItem('role', 'User');
+                    }
+                    this.router1.navigateByUrl('app/home');
+                }, error => {
+                    console.error(error);
+                })
             }, error => {
                 this.snackBarHelper.openSnackBar(error.error, 'Close', 3000);
                 console.error(error);

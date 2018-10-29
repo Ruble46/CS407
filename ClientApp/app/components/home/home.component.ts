@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit{
 
     ngOnInit() {
         document.getElementById('navBar').style.backgroundColor = "#34373c";
-        timer(0, 5000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
+        timer(0, 30000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
         .subscribe(result => {
             console.log('timer test print');
             this.posts = null;

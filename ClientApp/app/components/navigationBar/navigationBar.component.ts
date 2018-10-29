@@ -22,7 +22,7 @@ export class NavigationBarComponent implements OnInit {
     public post: Post;
     public snackBarHelper: SnackBarHelper;
     public value: string;
-    public thisUser: string;
+    public thisUserRole: string;
 
     constructor(private _router: Router, private _userService: UserService, private _postService: PostService, public _snackBarHelper: SnackBarHelper, public dialog: MatDialog) {
         this.router = _router;
@@ -33,7 +33,7 @@ export class NavigationBarComponent implements OnInit {
         this.newPost = new Post();
     }
     ngOnInit() {
-        this.thisUser = localStorage.getItem('email');
+        this.thisUserRole = localStorage.getItem('role');
     }
 
     openNewPost() {
