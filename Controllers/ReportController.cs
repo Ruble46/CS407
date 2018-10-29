@@ -9,9 +9,11 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Game2gether.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class ReportController : Controller
     {
@@ -62,7 +64,7 @@ namespace Game2gether.Controllers
         [HttpPost("{id}/delete")]
         public async Task<IActionResult> delete(string id)
         {
-            var report = _context.Reports.Find(new Guid(id));
+            var report = await _context.Reports.FindAsync(new Guid(id));
             if(report == null)
             {
                 return BadRequest();

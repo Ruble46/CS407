@@ -48,7 +48,7 @@ namespace Game2gether
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -76,6 +76,24 @@ namespace Game2gether
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+            CreateUserRoles(services).Wait();
+        }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+
+            IdentityResult roleResult;
+            var roleCheck = await RoleManager.RoleExistsAsync("User");
+
+            if(!roleCheck)
+            {
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("User"));
+            }
+
+            //AppUser user = await UserManager.FindByEmailAsync("kleaf.gbit@gmail.com");
+            //await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

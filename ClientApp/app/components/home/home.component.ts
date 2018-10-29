@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit{
         }, error => {
             console.error(error);
         });
+        
     }
 
     getPostsTimed() {

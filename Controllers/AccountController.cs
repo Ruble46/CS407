@@ -207,6 +207,13 @@ namespace Game2gether.Controllers
             return Ok(token);
         }
 
+        [HttpGet("roles/{email}")]
+        public async Task<IList<String>> getRoles(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return await _userManager.GetRolesAsync(user);
+        }
+
         private Task<AppUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(User);

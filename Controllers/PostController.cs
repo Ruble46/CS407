@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Game2gether.API.Models;
 using Game2gether.API;
 using Microsoft.AspNetCore.Identity;
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Game2gether.Controllers
 {
