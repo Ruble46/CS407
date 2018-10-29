@@ -3,6 +3,8 @@ import { Post } from '../../../Models/Post';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from '../../../Services/PostService';
+import {Observable} from 'rxjs/Rx';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'home',
@@ -28,8 +30,11 @@ export class HomeComponent implements OnInit{
 
     ngOnInit() {
         document.getElementById('navBar').style.backgroundColor = "#34373c";
-        this.postService.getAllPosts()
+        Observable.timer(0, 30000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
         .subscribe(result => {
+            console.log('timer test print');
+            this.posts = null;
+            this.posts = new Array<Post>();
             for(let a = 0; a < result.body.length; a++) {
                 var newPost: Post = new Post();
                 newPost.Creator = result.body[a].email;
@@ -42,10 +47,32 @@ export class HomeComponent implements OnInit{
                 this.posts.push(newPost);
                 newPost = null;
             }
-
         }, error => {
             console.error(error);
         });
+    }
+
+    getPostsTimed() {
+        Observable.timer(0, 5000).pipe(switchMap(() => this.postService.getAllPosts()))
+        .subscribe(result => {
+            console.log('timer test print');
+            this.posts = null;
+            this.posts = new Array<Post>();
+            for(let a = 0; a < result.body.length; a++) {
+                var newPost: Post = new Post();
+                newPost.Creator = result.body[a].email;
+                newPost.Description = result.body[a].content;
+                newPost.Game = result.body[a].game;
+                newPost.Mode = result.body[a].gameType;
+                newPost.Platform = result.body[a].platform;
+                newPost.Title = result.body[a].title;
+                newPost.ID = result.body[a].id;
+                this.posts.push(newPost);
+                newPost = null;
+            }
+        }, error => {
+            console.error(error);
+        })
     }
 
     toProfile(email) {
@@ -57,8 +84,31 @@ export class HomeComponent implements OnInit{
     }
 
     filterFeed() {
-        console.log(this.platforms.value);
-        console.log(this.filterGame);
-        console.log(this.filterMode);
+        let platform: string;
+        if(!this.platforms.value) {
+            platform = "";
+        } else {
+            platform = this.platforms.value[0];
+        }
+
+        this.postService.filterPosts(this.filterGame, this.filterMode, platform)
+        .subscribe(result => {
+            this.posts = null;
+            this.posts = new Array<Post>();
+            for(let a = 0; a < result.body.length; a++) {
+                var newPost: Post = new Post();
+                newPost.Creator = result.body[a].email;
+                newPost.Description = result.body[a].content;
+                newPost.Game = result.body[a].game;
+                newPost.Mode = result.body[a].gameType;
+                newPost.Platform = result.body[a].platform;
+                newPost.Title = result.body[a].title;
+                newPost.ID = result.body[a].id;
+                this.posts.push(newPost);
+                newPost = null;
+            }
+        }, error => {
+            console.error(error);
+        })
     }
 }

@@ -26,7 +26,7 @@ namespace Game2gether.Controllers
             userPost.datePosted = DateTime.Now;
             var result = await _context.Posts.AddAsync(userPost);
             _context.SaveChanges();
-            return Ok(result);
+            return Ok();
         }
 
         [HttpGet("{email}")]
@@ -39,6 +39,7 @@ namespace Game2gether.Controllers
             return query.ToList();
         }
 
+        /* 
         [HttpGet]
         public List<Post> get()
         {
@@ -46,9 +47,79 @@ namespace Game2gether.Controllers
                         orderby p.datePosted
                         select p;
             return query.ToList();
-        }        
+        } 
+        */       
 
+        [HttpGet]
+        public List<Post> get() {
+            var query = from p in _context.Posts
+                    orderby p.datePosted
+                    select p;
+            return query.ToList();
+        }        
         
-        
+        [HttpGet("filter/{game}/{gameMode}/{platform}")]
+        public List<Post> get(string game, string gameMode, string platform) {
+            if(game.Equals("dontFilterBy")) {
+                game = "";
+            }
+            
+            if(gameMode.Equals("dontFilterBy")) {
+                gameMode = "";
+            }
+
+            if(platform.Equals("dontFilterBy")) {
+                platform = "";
+            }
+            
+            if(game != "" && platform != "" && gameMode != "") { //game and platform and gameMode
+                var query = from p in _context.Posts
+                            where p.game == game && p.platform == platform && p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform != "" && gameMode == "") { //game and platform
+                var query = from p in _context.Posts
+                            where p.game == game && p.platform == platform
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform == "" && gameMode != "") {
+                var query = from p in _context.Posts
+                            where p.game == game && p.gameType == gameMode //game and gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform != "" && gameMode != "") { //platform and gameMode
+                var query = from p in _context.Posts
+                            where p.platform == platform && p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game != "" && platform == "" && gameMode == "") { //game
+                var query = from p in _context.Posts
+                            where p.game == game
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform != "" && gameMode == "") { //platform
+                var query = from p in _context.Posts
+                            where p.platform == platform
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else if(game == "" && platform == "" && gameMode != "") { //gameMode
+                var query = from p in _context.Posts
+                            where p.gameType == gameMode
+                            orderby p.datePosted
+                            select p;
+                return query.ToList();
+            } else {
+                var query = from p in _context.Posts
+                        orderby p.datePosted
+                        select p;
+                return query.ToList();
+            }
+        } 
     }
 }
