@@ -5,18 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Game2gether.API.Models;
 using Game2gether.API;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Game2gether.Controllers
 {
     [Route("api/[controller]")]
     public class ReportController : Controller
     {
+        readonly IConfiguration _config;
         readonly ApplicationDbContext _context;
 
-        public ReportController(ApplicationDbContext context)
+        public ReportController(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         [HttpPost]
@@ -38,6 +43,34 @@ namespace Game2gether.Controllers
             return Ok();
         }
 
+        [HttpPost("{id}/email")]
+        public async Task<IActionResult> sendEmail([FromBody] Email email, string id)
+        {
+            var apiKey = _config["SendGridApiKey"];
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("support@game2gether.com", "support");
+            var subject = email.Body;
+            var to = new EmailAddress(email.To, "user");
+            var body = email.Body;
+            var htmlContent = "";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
+            var response = await client.SendEmailAsync(msg);
+            return Ok(response);
+
+        }
+
+        [HttpPost("{id}/delete")]
+        public async Task<IActionResult> delete(string id)
+        {
+            var report = _context.Reports.Find(new Guid(id));
+            if(report == null)
+            {
+                return BadRequest();
+            }
+            _context.Reports.Remove(report);
+            _context.SaveChanges();
+            return Ok();
+        }
 
 
         //Admins only
