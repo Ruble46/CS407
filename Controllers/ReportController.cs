@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Game2gether.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class ReportController : Controller
     {
@@ -34,6 +33,7 @@ namespace Game2gether.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}")]
         public async Task<IActionResult> updateAsignee([FromBody] AppUser user, string id)
         {
@@ -45,6 +45,7 @@ namespace Game2gether.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}/email")]
         public async Task<IActionResult> sendEmail([FromBody] Email email, string id)
         {
@@ -61,6 +62,7 @@ namespace Game2gether.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}/delete")]
         public async Task<IActionResult> delete(string id)
         {
@@ -76,6 +78,7 @@ namespace Game2gether.Controllers
 
 
         //Admins only
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public List<Report> get()
         {
