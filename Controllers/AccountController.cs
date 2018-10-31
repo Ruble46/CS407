@@ -12,6 +12,8 @@ using Game2gether.API;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Security.Claims;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,6 +26,7 @@ namespace Game2gether.Controllers
         readonly SignInManager<AppUser> _signInManager;
         readonly ApplicationDbContext _context;
         readonly IConfiguration _config;
+        readonly HttpClient Client = new HttpClient();
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> SignInManager, ApplicationDbContext context, IConfiguration config)
         {
@@ -76,7 +79,47 @@ namespace Game2gether.Controllers
 
 
 
+        [HttpPost("facebook")]
+        public async Task<IActionResult> Facebook([FromBody] ExternalAuth model)
+        {
+            var appAccessTokenResponse = await Client.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id=500263577156314&client_secret=eb82d0f1cbb41f3d9fe2b4931b377783&grant_type=client_credentials");
+            var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
 
+            var userAccessTokenValidationResponse = await Client.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={model.AccessToken}&access_token={appAccessToken.AccessToken}");
+            var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
+
+            if(!userAccessTokenValidation.Data.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userInfoResponse = await Client.GetStringAsync($"https://graph.facebook.com/v2.8/me?fields=id,email,first_name,last_name,name,gender,locale,birthday&access_token={model.AccessToken}");
+            var userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
+
+            var user = await _userManager.FindByEmailAsync(userInfo.Email);
+            
+
+            if(user == null)
+            {
+                var appUser = new AppUser
+                {
+                    Email = userInfo.Email,
+                    UserName = userInfo.Email,
+                    AccountCreated = DateTime.Now,
+                };
+
+                var result = await _userManager.CreateAsync(appUser, Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 8));
+                if (!result.Succeeded)
+                {
+                    return BadRequest();
+                }
+                user = await _userManager.FindByEmailAsync(userInfo.Email);
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return Ok();
+
+        }
 
         /*
         [HttpPost("external")]

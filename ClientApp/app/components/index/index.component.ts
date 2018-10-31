@@ -91,14 +91,8 @@ export class IndexComponent {
         }
     }
 
-    signUpFacebook() {
-        var data = {};
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:58619/api/account/external",
-            data: data,
-            dataType: "json"
-        });
+    signUpFb() {
+        window.open('https://www.facebook.com/v2.11/dialog/oauth?&response_type=token&display=popup&client_id=500263577156314&display=popup&redirect_uri=http://localhost:58619/loginfacebook.html&scope=email',null,'width=600,height=400')
     }
 
 }
