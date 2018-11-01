@@ -50,7 +50,7 @@ namespace Game2gether.Controllers
         public async Task<IActionResult> sendEmail([FromBody] Email email, string id)
         {
             var apiKey = _config["SendGridApiKey"];
-            var client = new SendGridClient(apiKey);
+            var client = new SendGridClient("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");
             var from = new EmailAddress("support@game2gether.com", "support");
             var subject = email.Body;
             var to = new EmailAddress(email.To, "user");

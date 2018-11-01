@@ -73,6 +73,11 @@ export class NavigationBarComponent implements OnInit {
             this.snackBarHelper.openSnackBar('Please provide a valid email when attempting to search for users', 'Close', 3000);
         }
     }
+
+    logout() {
+        localStorage.clear();
+        this.router.navigateByUrl('');
+    }
 }
 
 

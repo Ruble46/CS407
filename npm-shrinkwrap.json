@@ -237,6 +237,19 @@
       "integrity": "sha512-DWrdkraJO+KvBB7+Jc6AuDd2+fwV6Z9iK8cqEEoYpcurYrH7GiUZmwjFuQIIWj5HhFz6NsSxdN72YMIHT7Fy2Q==",
       "dev": true
     },
+    "@types/gapi": {
+      "version": "0.0.36",
+      "resolved": "https://registry.npmjs.org/@types/gapi/-/gapi-0.0.36.tgz",
+      "integrity": "sha512-biMDn3eNRoPEMaPTEn5DwKXu64ng3U3cDQkePOllZ7uTRcA9lpPqwcLrDPF1cP0v+CrAtyv8w95/eVDSsQYPYQ=="
+    },
+    "@types/gapi.auth2": {
+      "version": "0.0.48",
+      "resolved": "https://registry.npmjs.org/@types/gapi.auth2/-/gapi.auth2-0.0.48.tgz",
+      "integrity": "sha512-YCrefPvJOQRoQzLKkL4lIdDakYmHvH3gtI0hjpOPz1G48aUYiDNqxooSmsdmNjMPoCvxBGlM2vYsjCHT8IsZSQ==",
+      "requires": {
+        "@types/gapi": "*"
+      }
+    },
     "@types/jasmine": {
       "version": "2.5.53",
       "resolved": "https://registry.npmjs.org/@types/jasmine/-/jasmine-2.5.53.tgz",
