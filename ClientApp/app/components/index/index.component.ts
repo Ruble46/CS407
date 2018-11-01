@@ -43,6 +43,26 @@ export class IndexComponent implements OnInit, AfterViewInit {
             let profile = googleUser.getBasicProfile();
             console.log('Token || ' + googleUser.getAuthResponse().id_token);
             console.log('ID: ' + profile.getId());
+            localStorage.setItem('email', profile.U3);
+            this.service2.getUserRole(this.emailSignIn)
+                .subscribe(result => {
+                    console.log(result);
+                    let isAdmin: boolean = false;
+                    for(let a = 0; a < result.length; a++) {
+                        if(result[a] === 'Admin') {
+                            isAdmin = true;
+                            break;
+                        }
+                    }
+                    if(isAdmin) {
+                        localStorage.setItem('role', 'Admin');
+                    } else {
+                        localStorage.setItem('role', 'User');
+                    }
+                    this.router1.navigateByUrl('app/home');
+                }, error => {
+                    console.error(error);
+            })
             // ...
           }, function (error) {
             console.log(JSON.stringify(error, undefined, 2));
