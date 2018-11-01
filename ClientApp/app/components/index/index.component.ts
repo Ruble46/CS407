@@ -44,7 +44,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
             console.log('Token || ' + googleUser.getAuthResponse().id_token);
             console.log('ID: ' + profile.getId());
             localStorage.setItem('email', profile.U3);
-            this.service2.getUserRole(this.emailSignIn)
+            this.service2.getUserRole(profile.U3)
                 .subscribe(result => {
                     console.log(result);
                     let isAdmin: boolean = false;
@@ -60,6 +60,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
                         localStorage.setItem('role', 'User');
                     }
                     this.router1.navigateByUrl('app/home');
+                    location.reload();
                 }, error => {
                     console.error(error);
             })
