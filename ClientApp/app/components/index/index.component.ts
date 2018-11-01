@@ -26,7 +26,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
         'https://www.googleapis.com/auth/admin.directory.user.readonly'
     ].join(' ');
 
-    public googleInit() {        
+    public googleInit1() {        
         gapi.load('auth2', () => {
           this.auth2 = gapi.auth2.init({
             client_id: this.clientId,
@@ -34,6 +34,19 @@ export class IndexComponent implements OnInit, AfterViewInit {
             scope: this.scope
           });
           this.attachSignin(document.getElementById('googleBtn'));
+          document.getElementById('googleBtn').click();
+        });
+    }
+
+    public googleInit2() {        
+        gapi.load('auth2', () => {
+          this.auth2 = gapi.auth2.init({
+            client_id: this.clientId,
+            cookiepolicy: 'single_host_origin',
+            scope: this.scope
+          });
+          this.attachSignin(document.getElementById('googleBtnSignUp'));
+          document.getElementById('googleBtnSignUp').click();
         });
     }
 
@@ -95,6 +108,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        //this.googleInit();
         this.httpStatus.getCounter()
         .subscribe((count: number) => {
             console.log(count);
@@ -162,7 +176,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     // }
 
     ngAfterViewInit() {
-        this.googleInit();
+        //this.googleInit();
     }
 
 }
