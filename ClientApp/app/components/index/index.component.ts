@@ -64,7 +64,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
                     console.error(error);
             })
             // ...
-          }, function (error) {
+            }, function (error) {
             console.log(JSON.stringify(error, undefined, 2));
           });
     }
