@@ -50,4 +50,6 @@ namespace Game2gether.API.Models
         public string Gender { get; set; }
         public string Locale { get; set; }
     }
+
+
 }

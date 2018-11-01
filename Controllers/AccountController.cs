@@ -77,7 +77,31 @@ namespace Game2gether.Controllers
             }
         }
 
+        [HttpPost("google")]
+        public async Task<IActionResult> Google ([FromBody] GoogleUser model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.email);
+            if(user != null)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return Ok(user);
+            } else
+            {
+                user = new AppUser { Email = model.email, UserName = model.email, AccountCreated = DateTime.Now };
+                var result = await _userManager.CreateAsync(user, Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 8) + "aA!");
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
+                return Ok(user);
 
+            }
+
+        }
 
         [HttpPost("facebook")]
         public async Task<IActionResult> Facebook([FromBody] ExternalAuth model)
