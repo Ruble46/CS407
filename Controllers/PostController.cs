@@ -52,7 +52,7 @@ namespace Game2gether.Controllers
         [HttpGet]
         public List<Post> get() {
             var query = from p in _context.Posts
-                    orderby p.datePosted
+                    orderby p.datePosted descending
                     select p;
             return query.ToList();
         }        
@@ -74,48 +74,48 @@ namespace Game2gether.Controllers
             if(game != "" && platform != "" && gameMode != "") { //game and platform and gameMode
                 var query = from p in _context.Posts
                             where p.game == game && p.platform == platform && p.gameType == gameMode
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else if(game != "" && platform != "" && gameMode == "") { //game and platform
                 var query = from p in _context.Posts
                             where p.game == game && p.platform == platform
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else if(game != "" && platform == "" && gameMode != "") {
                 var query = from p in _context.Posts
                             where p.game == game && p.gameType == gameMode //game and gameMode
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else if(game == "" && platform != "" && gameMode != "") { //platform and gameMode
                 var query = from p in _context.Posts
                             where p.platform == platform && p.gameType == gameMode
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else if(game != "" && platform == "" && gameMode == "") { //game
                 var query = from p in _context.Posts
                             where p.game == game
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else if(game == "" && platform != "" && gameMode == "") { //platform
                 var query = from p in _context.Posts
                             where p.platform == platform
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else if(game == "" && platform == "" && gameMode != "") { //gameMode
                 var query = from p in _context.Posts
                             where p.gameType == gameMode
-                            orderby p.datePosted
+                            orderby p.datePosted descending
                             select p;
                 return query.ToList();
             } else {
                 var query = from p in _context.Posts
-                        orderby p.datePosted
+                        orderby p.datePosted descending
                         select p;
                 return query.ToList();
             }

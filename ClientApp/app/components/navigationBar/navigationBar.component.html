@@ -34,7 +34,7 @@
                 <mat-icon class="navMenuItem">report</mat-icon>
                 <span class="navMenuItem">Reports</span>
             </button>
-            <button mat-menu-item [routerLink]="['']">
+            <button mat-menu-item (click)="logout()">
                 <mat-icon class="navMenuItem">exit_to_app</mat-icon>
                 <span class="navMenuItem">Logout</span>
             </button>

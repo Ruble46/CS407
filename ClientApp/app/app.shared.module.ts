@@ -48,10 +48,13 @@ import { UserService } from '../Services/UserService';
 import { SnackBarHelper } from '../Helpers/SnackBars';
 import { PostService } from '../Services/PostService';
 import { ReportsService } from '../Services/ReportsService';
+import { HTTPListener, HTTPStatus } from '../Services/HttpInterceptor';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
 import { IndexSharedModule } from '../index/index.shared.module';
+
+const RxJS_Services = [HTTPListener, HTTPStatus];
 
 @NgModule({
     declarations: [
@@ -170,7 +173,9 @@ import { IndexSharedModule } from '../index/index.shared.module';
         UserService,
         SnackBarHelper,
         PostService,
-        ReportsService
+        ReportsService,
+        ...RxJS_Services,
+        { provide: HTTP_INTERCEPTORS, useClass: HTTPListener, multi: true }
     ]
 })
 export class AppModuleShared {

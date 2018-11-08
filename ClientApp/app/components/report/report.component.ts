@@ -6,6 +6,7 @@ import { SendEmailDialogComponent } from '../sendEmailDialog/sendEmailDialog.com
 import { Email } from '../../../Models/Email';
 import { DeleteReportDialogComponent } from '../deleteReportDialog/deleteReportDialog.component';
 import { ReportsService } from '../../../Services/ReportsService';
+import { SnackBarHelper } from '../../../Helpers/SnackBars';
 
 @Component({
     selector: 'report',
@@ -19,15 +20,19 @@ export class ReportComponent implements OnInit {
     private reportsService: ReportsService;
     public newEmail: Email;
     public email: Email;
-    private ID: Number;
+    private ID: string;
     public Report: ReportUser;
     public currentUser: string;
     public choice: string;
     public reports: Array<ReportUser>;
+    private router: Router;
+    private snackBar: SnackBarHelper;
 
-    constructor(_reportsService: ReportsService, private route: ActivatedRoute, public dialog: MatDialog) {
+    constructor(private _snackBar: SnackBarHelper, private _router: Router, _reportsService: ReportsService, private route: ActivatedRoute, public dialog: MatDialog) {
         this.reportsService = _reportsService;
         this.dialog1 = dialog;
+        this.router = _router;
+        this.snackBar = _snackBar;
         route.params.subscribe((params) => {
             this.ID = params["id"];
         });
@@ -55,7 +60,7 @@ export class ReportComponent implements OnInit {
 
     newEmailDialog(to: string) {
         this.newEmail.To = to;
-        this.newEmail.From = localStorage.getItem('email');
+        this.newEmail.From = 'support@game2gether.com';
         const dialogRef = this.dialog.open(SendEmailDialogComponent, {
             width: '400px',
             data: this.newEmail
@@ -67,6 +72,13 @@ export class ReportComponent implements OnInit {
             } else { //create was clicked
                 this.email = result;
                 console.log(this.email);
+
+                this.reportsService.sendEmail(this.email, this.ID)
+                .subscribe(result => {
+                    this.snackBar.openSnackBar('Email has been sent successfully.', 'Close', 3000);
+                }, error => {
+                    console.error(error);
+                })
             }
             this.newEmail = new Email();
         });
@@ -76,10 +88,18 @@ export class ReportComponent implements OnInit {
         const dialogRef = this.dialog.open(DeleteReportDialogComponent, {
             width: '400px',
             data: {post: this.choice}
-          });
-      
-          dialogRef.afterClosed().subscribe(result => {
-              console.log(result);
         });
+      
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === 'yes') {
+                this.reportsService.closeTicket(this.ID)
+                .subscribe(result => {
+                    this.router.navigateByUrl('app/reports');
+                }, error => {
+                    console.error(error);
+                })
+              }
+        });
+
     }
 }

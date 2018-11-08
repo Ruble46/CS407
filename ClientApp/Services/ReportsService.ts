@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { ReportUser } from "../Models/ReportUser";
+import { Email } from "../Models/Email";
 
 @Injectable()
 export class ReportsService {
@@ -47,5 +48,25 @@ export class ReportsService {
         }
 
         return this.http.post<any>(this.apiBaseUrl + 'api/report/' + reportID, body, options);
+    }
+
+    closeTicket(ID: string) {
+        let options: Object = {
+            observe: 'response'
+        }
+
+        let body: Object = {
+
+        }
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/report/' + ID + '/delete', body, options);
+    }
+
+    sendEmail(email: Email, ID: string) {
+        let options: Object = {
+            observe: 'response'
+        }
+
+        return this.http.post(this.apiBaseUrl + 'api/report/' + ID + '/email', email, options);
     }
 }

@@ -1,19 +1,90 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginRegisterService } from '../../../Services/LoginRegisterService';
 import * as $ from "jquery";
 import { MatSnackBar } from '@angular/material';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
 import { AccountService } from '../../../Services/AccountService';
+import { HTTPStatus } from '../../../Services/HttpInterceptor';
+
+declare const gapi: any;
 
 @Component({
     selector: 'index',
     templateUrl: './index.component.html',
     styleUrls: ['./index.component.css', '../../../themes/theme.css'],
     encapsulation : ViewEncapsulation.None
-
 })
-export class IndexComponent {
+
+export class IndexComponent implements OnInit, AfterViewInit {
+    private clientId:string = '746096005916-guf62rq24eqicg4itrtccrgkiqlbnf2m.apps.googleusercontent.com';
+    private scope = [
+        'profile',
+        'email',
+        'https://www.googleapis.com/auth/plus.me',
+        'https://www.googleapis.com/auth/contacts.readonly',
+        'https://www.googleapis.com/auth/admin.directory.user.readonly'
+    ].join(' ');
+
+    public googleInit1() {        
+        gapi.load('auth2', () => {
+          this.auth2 = gapi.auth2.init({
+            client_id: this.clientId,
+            cookiepolicy: 'single_host_origin',
+            scope: this.scope
+          });
+          this.attachSignin(document.getElementById('googleBtn'));
+          document.getElementById('googleBtn').click();
+        });
+    }
+
+    public googleInit2() {        
+        gapi.load('auth2', () => {
+          this.auth2 = gapi.auth2.init({
+            client_id: this.clientId,
+            cookiepolicy: 'single_host_origin',
+            scope: this.scope
+          });
+          this.attachSignin(document.getElementById('googleBtnSignUp'));
+          document.getElementById('googleBtnSignUp').click();
+        });
+    }
+
+    public attachSignin(element) {
+        this.auth2.attachClickHandler(element, {},
+          (googleUser) => {
+            let profile = googleUser.getBasicProfile();
+            console.log('Token || ' + googleUser.getAuthResponse().id_token);
+            console.log('ID: ' + profile.getId());
+            localStorage.setItem('email', profile.U3);
+            this.service2.getUserRole(profile.U3)
+                .subscribe(result => {
+                    console.log(result);
+                    let isAdmin: boolean = false;
+                    for(let a = 0; a < result.length; a++) {
+                        if(result[a] === 'Admin') {
+                            isAdmin = true;
+                            break;
+                        }
+                    }
+                    if(isAdmin) {
+                        localStorage.setItem('role', 'Admin');
+                    } else {
+                        localStorage.setItem('role', 'User');
+                    }
+                    this.router1.navigateByUrl('app/home');
+                    location.reload();
+                }, error => {
+                    console.error(error);
+            })
+            // ...
+            }, function (error) {
+            console.log(JSON.stringify(error, undefined, 2));
+          });
+    }
+
+    public auth2: any;
+
     public emailSignIn: string;
     public passwordSignIn: string;
 
@@ -24,15 +95,24 @@ export class IndexComponent {
     private router1: Router;
     private service1: LoginRegisterService;
     private service2: AccountService;
-    //public snackBar: MatSnackBar;
     public snackBarHelper: SnackBarHelper;
+    public httpStatus: HTTPStatus;
 
-    constructor(private AccountService: AccountService, public _snackBarHelper: SnackBarHelper, private LoginRegisterService: LoginRegisterService, router: Router) {
+    constructor(private element: ElementRef, private _httpStatus: HTTPStatus, private AccountService: AccountService, public _snackBarHelper: SnackBarHelper, private LoginRegisterService: LoginRegisterService, router: Router) {
+        this.httpStatus = _httpStatus;
         this.snackBarHelper = _snackBarHelper;
         this.service1 = LoginRegisterService;
         this.service2 = AccountService;
         this.router1 = router;
         this.emailSignIn = this.passwordSignIn = this.emailSignUp = this.passwordSignUp = this.passwordSignUpConfirm = '';
+    }
+
+    ngOnInit() {
+        //this.googleInit();
+        this.httpStatus.getCounter()
+        .subscribe((count: number) => {
+            console.log(count);
+        });
     }
 
     signIn() {
@@ -91,8 +171,12 @@ export class IndexComponent {
         }
     }
 
-    signUpFb() {
-        window.open('https://www.facebook.com/v2.11/dialog/oauth?&response_type=token&display=popup&client_id=500263577156314&display=popup&redirect_uri=http://localhost:58619/loginfacebook.html&scope=email',null,'width=600,height=400')
+    // signUpFb() {
+    //     window.open('https://www.facebook.com/v2.11/dialog/oauth?&response_type=token&display=popup&client_id=500263577156314&display=popup&redirect_uri=http://localhost:58619/loginfacebook.html&scope=email',null,'width=600,height=400')
+    // }
+
+    ngAfterViewInit() {
+        //this.googleInit();
     }
 
 }

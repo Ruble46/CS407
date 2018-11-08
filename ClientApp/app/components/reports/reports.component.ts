@@ -34,6 +34,10 @@ export class ReportsComponent implements OnInit{
     }
 
     ngOnInit() {
+        if(localStorage.getItem('role') === 'User') {
+            this.router1.navigateByUrl('app/home');
+        }
+
         this.reportsService.getAllReports()
         .subscribe(result => {
             this.reports = result.body as Array<ReportUser>;
