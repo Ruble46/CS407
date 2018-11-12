@@ -11,9 +11,10 @@ using System;
 namespace Game2gether.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181112204239_FriendSupport")]
+    partial class FriendSupport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,28 +146,6 @@ namespace Game2gether.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("Game2gether.API.Models.Rating", b =>
-                {
-                    b.Property<Guid>("id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("author");
-
-                    b.Property<DateTime>("dateCreated");
-
-                    b.Property<string>("description");
-
-                    b.Property<short>("rate");
-
-                    b.Property<string>("rated");
-
-                    b.Property<string>("title");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Game2gether.API.Models.Report", b =>

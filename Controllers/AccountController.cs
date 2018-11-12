@@ -274,6 +274,27 @@ namespace Game2gether.Controllers
             return Ok(token);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("roles/promote/{email}")]
+        public async Task<IActionResult> promote(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var roleResult = _userManager.AddToRoleAsync(user, "Admin");
+            _context.SaveChanges();
+            return Ok(roleResult);
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("roles/demote/{email}")]
+        public async Task<IActionResult> demote (string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var roleResult = _userManager.RemoveFromRoleAsync(user, "Admin");
+            _context.SaveChanges();
+            return Ok(roleResult);
+        }
+
         [HttpGet("roles/{email}")]
         public async Task<IList<String>> getRoles(string email)
         {
