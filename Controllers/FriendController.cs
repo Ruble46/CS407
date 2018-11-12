@@ -68,13 +68,17 @@ namespace Game2gether.Controllers
         public async Task<IActionResult> acceptRequest([FromBody] FriendRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.receiver);
+            var user1 = await _userManager.FindByEmailAsync(request.sender);
             if (user != null)
             {
                 if(user.friendRequests.Contains(request))
                 {
                     user.friendRequests.Remove(request);
                     user.friends.Add(request);
+                    FriendRequest temp = new FriendRequest { sender = request.receiver, receiver = request.sender };
+                    user1.friends.Add(temp);
                     await _userManager.UpdateAsync(user);
+                    await _userManager.UpdateAsync(user1);
                     return Ok();
                 } else
                 {
