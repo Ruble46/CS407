@@ -10,6 +10,7 @@ using Game2gether.API;
 
 namespace Game2gether.Controllers
 {
+    [Route("api/[controller]")]
     public class FriendController : Controller
     {
         readonly ApplicationDbContext _context;
