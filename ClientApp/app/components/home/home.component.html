@@ -15,7 +15,7 @@
               
                 <mat-card *ngFor="let invite of invites" class="darkerTopBottomBorder">
                     <mat-card-content>
-                        <h4><a [routerLink]="['/app/profile', invite, 'posts']" class="friendLink">{{invite}}</a></h4>
+                        <h4><a [routerLink]="['/app/profile', invite.sender, 'posts']" class="friendLink">{{invite.sender}}</a></h4>
                     </mat-card-content>
                     <mat-card-actions>
                           <button mat-stroked-button class="makeGreen spaceRight" (click)="requestChoice('accept', invite)">
@@ -58,7 +58,7 @@
                         <button mat-icon-button class="notificationBadge">
                             <mat-icon matBadge="1" matBadgeColor="primary" aria-label="Unread messages" [routerLink]="['/app/profile', friend, 'chat']">message</mat-icon>
                         </button>
-                        <a [routerLink]="['/app/profile', friend, 'posts']" class="friendLink">{{friend}}</a>
+                        <a [routerLink]="['/app/profile', friend.sender, 'posts']" class="friendLink">{{friend.sender}}</a>
                     </mat-card-content>
                 </mat-card>
             </mat-expansion-panel>

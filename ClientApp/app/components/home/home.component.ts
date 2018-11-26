@@ -31,10 +31,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     public httpStatus: HTTPStatus;
     public sendRequestTo: string;
 
-    public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
-    public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
-    // public friends: Array<FriendRequest>;
-    // public invites: Array<FriendRequest>;
+    // public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
+    // public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
+    public friends: Array<FriendRequest>;
+    public invites: Array<FriendRequest>;
 
     constructor(private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.FriendsService = _FriendsService;
         this.posts = new Array<Post>();
         this.currUser = localStorage.getItem('email');
-        // this.friends = new Array<FriendRequest>();
-        // this.invites = new Array<FriendRequest>();
+        this.friends = new Array<FriendRequest>();
+        this.invites = new Array<FriendRequest>();
     }
 
     ngOnInit() {
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.FriendsService.getFriends(this.currUser)
         .subscribe(result => {
             console.log(result);
-            // this.friends = result.body;
+            this.friends = result.body;
         }, error => {
             console.error(error);
         });
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.FriendsService.getRequests(this.currUser)
         .subscribe(result => {
             console.log(result);
-            // this.invites = result.body;
+            this.invites = result.body;
         }, error => {
             console.error(error);
         })
@@ -156,12 +156,34 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
     }
 
-    requestChoice(choice: string, from: string) {
-        console.log('You have chosen to ' + choice + ' the friend request from ' + from);
+    requestChoice(choice: string, request: FriendRequest) {
+        if(choice === 'accept') {
+            this.FriendsService.acceptRequest(request)
+            .subscribe(result => {
+                console.log(result);
+            }, error => {
+                console.error(error);
+            });
+        } else {
+            this.FriendsService.ignoreRequest(request)
+            .subscribe(result => {
+                console.log(result);
+            }, error => {
+                console.error(error);
+            });
+        }
     }
 
     sendFriendRequest() {
-        console.log('You are sending a friend request to the user ' + this.sendRequestTo);
+        let request: FriendRequest = new FriendRequest();
+        request.sender = this.currUser;
+        request.receiver = this.sendRequestTo;
+        this.FriendsService.sendRequest(request)
+        .subscribe(result => {
+            console.log(result);
+        }, error => {
+            console.error(error);
+        });
         this.sendRequestTo = '';
     }
 }
