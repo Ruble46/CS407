@@ -22,6 +22,29 @@ namespace Game2gether.Controllers
             _userManager = userManager;
         }
 
+        [HttpPost("remove")]
+        public async Task<IActionResult> delete(FriendRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.receiver);
+            if (user != null)
+            {
+                if (user.friends.Contains(request))
+                {
+                    user.friends.Remove(request);
+                    await _userManager.UpdateAsync(user);
+                    return Ok();
+                }
+                else
+                {
+                    return Ok();
+                }
+
+            } else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
