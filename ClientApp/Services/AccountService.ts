@@ -79,4 +79,26 @@ export class AccountService {
 
         return this.http.get<any>(this.apiBaseUrl + 'api/account/roles/' + email, options);
     }
+
+    promoteToAdmin(email: string) {
+        let body: Object = {
+        };
+
+        let options: Object = {
+            observe: 'response'
+        };
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/account/roles/promote/' + email, body, options);
+    }
+
+    demoteFromAdmin(email: string) {
+        let body: Object = {
+        };
+
+        let options: Object = {
+            observe: 'response'
+        };
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/account/roles/demote/' + email, body, options);
+    }
 }

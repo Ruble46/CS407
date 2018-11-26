@@ -7,6 +7,8 @@ import { switchMap } from 'rxjs/operators';
 import { timer } from 'rxjs';
 import { HTTPStatus } from '../../../Services/HttpInterceptor';
 import { RequestTracker } from '../../../Models/RequestTracker';
+import { FriendsService } from '../../../Services/FriendsService';
+import { FriendRequest } from '../../../Models/FriendRequest';
 
 @Component({
     selector: 'home',
@@ -14,10 +16,12 @@ import { RequestTracker } from '../../../Models/RequestTracker';
     styleUrls: ['./home.component.css', '../../../themes/theme.css'],
     encapsulation : ViewEncapsulation.None
 })
-export class HomeComponent implements OnInit, OnDestroy{
+export class HomeComponent implements OnInit, OnDestroy {
+    private currUser: string;
     mode = new FormControl('side');
     private router1: Router;
     private postService: PostService;
+    private FriendsService: FriendsService;
     public posts: Array<Post>;
     platforms = new FormControl();
     platformList: string[] = ['Steam'];
@@ -29,23 +33,45 @@ export class HomeComponent implements OnInit, OnDestroy{
 
     public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
     public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
+    // public friends: Array<FriendRequest>;
+    // public invites: Array<FriendRequest>;
 
-    constructor(private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
+    constructor(private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
         this.router1 = router;
         this.postService = _postService;
+        this.FriendsService = _FriendsService;
         this.posts = new Array<Post>();
+        this.currUser = localStorage.getItem('email');
+        // this.friends = new Array<FriendRequest>();
+        // this.invites = new Array<FriendRequest>();
     }
 
     ngOnInit() {
         document.getElementById('navBar').style.backgroundColor = "#34373c";
 
+        this.FriendsService.getFriends(this.currUser)
+        .subscribe(result => {
+            console.log(result);
+            // this.friends = result.body;
+        }, error => {
+            console.error(error);
+        });
+
+        this.FriendsService.getRequests(this.currUser)
+        .subscribe(result => {
+            console.log(result);
+            // this.invites = result.body;
+        }, error => {
+            console.error(error);
+        })
+
+        //Watcher for creating a post
         this.httpStatus.getRequest()
         .subscribe((request: RequestTracker) => {
             if(request.URL && request.URL.indexOf('/api/post') > 0 && request.Method === 'POST') {
                 this.postService.getAllPosts()
                 .subscribe(result => {
-                    console.log('timer test print');
                     this.posts = null;
                     this.posts = new Array<Post>();
                     for(let a = 0; a < result.body.length; a++) {
@@ -66,6 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy{
             }
         });
 
+        //Home post feed
         this.postSubscription = timer(0, 300000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
         .subscribe(result => {
             this.posts = null;
