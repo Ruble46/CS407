@@ -7,6 +7,7 @@ import { Email } from '../../../Models/Email';
 import { DeleteReportDialogComponent } from '../deleteReportDialog/deleteReportDialog.component';
 import { ReportsService } from '../../../Services/ReportsService';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
+import { BanUserDialogComponent } from '../banUserDialog/banUserDialog.component';
 
 @Component({
     selector: 'report',
@@ -95,11 +96,26 @@ export class ReportComponent implements OnInit {
                 this.reportsService.closeTicket(this.ID)
                 .subscribe(result => {
                     this.router.navigateByUrl('app/reports');
+                    this.choice = 'false';
                 }, error => {
+                    this.choice = 'false';
                     console.error(error);
                 })
               }
         });
 
+    }
+
+    banUserDialog() {
+        const dialogRef = this.dialog.open(BanUserDialogComponent, {
+            width: '400px',
+            data: {post: this.choice}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === 'yes') {
+                console.log('yes was clicked');
+            }
+        })
     }
 }

@@ -15,6 +15,7 @@ import { RequestTracker } from '../../../Models/RequestTracker';
     encapsulation : ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit, OnDestroy{
+    mode = new FormControl('side');
     private router1: Router;
     private postService: PostService;
     public posts: Array<Post>;
@@ -24,6 +25,10 @@ export class HomeComponent implements OnInit, OnDestroy{
     public filterMode: string;
     public postSubscription: any;
     public httpStatus: HTTPStatus;
+    public sendRequestTo: string;
+
+    public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
+    public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
 
     constructor(private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
@@ -61,7 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy{
             }
         });
 
-        this.postSubscription = timer(0, 30000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
+        this.postSubscription = timer(0, 300000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
         .subscribe(result => {
             this.posts = null;
             this.posts = new Array<Post>();
@@ -122,5 +127,14 @@ export class HomeComponent implements OnInit, OnDestroy{
         }, error => {
             console.error(error);
         })
+    }
+
+    requestChoice(choice: string, from: string) {
+        console.log('You have chosen to ' + choice + ' the friend request from ' + from);
+    }
+
+    sendFriendRequest() {
+        console.log('You are sending a friend request to the user ' + this.sendRequestTo);
+        this.sendRequestTo = '';
     }
 }

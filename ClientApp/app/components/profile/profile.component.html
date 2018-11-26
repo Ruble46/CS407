@@ -15,6 +15,22 @@
                             <mat-icon class="navMenuItem">report</mat-icon>
                             <span class="navMenuItem">Report</span>
                         </button>
+
+                        <button mat-menu-item (click)="promote()">
+                            <mat-icon class="navMenuItem">arrow_upward</mat-icon>
+                            <span class="navMenuItem">Promote</span>
+                        </button>
+
+                        <button mat-menu-item (click)="demote()">
+                            <mat-icon class="navMenuItem">arrow_downward</mat-icon>
+                            <span class="navMenuItem">Demote</span>
+                        </button>
+
+                        <button mat-menu-item (click)="unfriend()">
+                            <mat-icon class="navMenuItem">remove_circle</mat-icon>
+                            <span class="navMenuItem">Unfriend</span>
+                        </button>
+                        
                     </mat-menu>
 
                 </div>

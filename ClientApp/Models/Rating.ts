@@ -1,8 +1,9 @@
 export class Rating {
+    id: string;
     title: string;
-    rating: number;
-    desc: string;
+    rate: number;
+    description: string;
     rated: string;
     author: string;
-    creationDate: Date;
+    dateCreated: Date;
 }

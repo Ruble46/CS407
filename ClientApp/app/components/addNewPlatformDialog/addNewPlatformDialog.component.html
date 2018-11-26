@@ -1,0 +1,19 @@
+<form #platformForm="ngForm">
+    <h1 mat-dialog-title>Enter your Steam ID</h1>
+    <mat-divider></mat-divider>
+
+    <div style="height: 10px; width: 100%"></div>
+    <mat-form-field appearance="outline" class="fullWidth">
+        <mat-label>Steam ID</mat-label>
+        <input matInput placeholder="Steam ID" [(ngModel)]="steamID" name="steamID" required>
+    </mat-form-field>
+    <a href="https://support.steampowered.com/kb_article.php?ref=1558-QYAX-1965">Need help locating your Steam ID?</a>
+    <div style="height: 10px; width: 100%"></div>
+
+    <mat-divider></mat-divider>
+
+    <div mat-dialog-actions>
+        <button mat-button color="accent" (click)="onClick('Cancel')">Cancel</button>
+        <button mat-button color="primary" [disabled]="!platformForm.valid" (click)="onClick('Link')">Link</button>
+    </div>
+</form>

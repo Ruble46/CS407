@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { AccountComponent } from '../account/account.component';
+import { MatDialog } from '@angular/material';
+import { AddNewPlatformDialogComponent } from '../addNewPlatformDialog/addNewPlatformDialog.component';
 
 @Component({
     selector: 'accountGaming',
@@ -9,7 +11,21 @@ import { AccountComponent } from '../account/account.component';
 })
 export class AccountGamingComponent {
 
-    constructor(profile: AccountComponent) {
+    public dialog1: MatDialog;
+    constructor(profile: AccountComponent, public dialog: MatDialog) {
         profile.selected.setValue(1);
+        this.dialog1 = dialog;
+    }
+
+    addNewPlatformDialog() {
+        const dialogRef = this.dialog.open(AddNewPlatformDialogComponent, {
+            width: '400px'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if(result !== "" && result !== undefined) {
+                console.log(result);
+            }
+        })
     }
 }

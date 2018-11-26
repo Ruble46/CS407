@@ -38,7 +38,6 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
         this.UserService.getUser(this.email)
         .subscribe(result => {
-            console.log(result);
             this.AccountCreated = result.body.accountCreated;
         }, error => {
             console.error(error);
@@ -81,5 +80,17 @@ export class ProfileComponent implements OnInit {
             }
             this.newReport = new ReportUser();
         });
+    }
+
+    promote() {
+
+    }
+
+    demote() {
+
+    }
+
+    unfriend() {
+        
     }
 }

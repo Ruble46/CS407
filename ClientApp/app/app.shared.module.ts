@@ -23,7 +23,6 @@ import { AccountSettingsComponent } from './components/accountSettings/accountSe
 import { IndexComponent } from './components/index/index.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationBarComponent } from './components/navigationBar/navigationBar.component';
-import { NewPostDialogComponent } from './components/newPostDialog/newPostDialog.component';
 import { PasswordResetComponent } from './components/passwordReset/passwordReset.component';
 import { PasswordResetRequestComponent } from './components/passwordResetRequest/passwordResetRequest.component';
 import { PostComponent } from './components/post/post.component';
@@ -32,13 +31,18 @@ import { ProfileChatComponent } from './components/profileChat/profileChat.compo
 import { ProfileGamingComponent } from './components/profileGaming/profileGaming.component';
 import { ProfilePostsComponent } from './components/profilePosts/profilePosts.component';
 import { ProfileRatingComponent } from './components/profileRating/profileRating.component';
-import { DeleteProfileDialogComponent } from './components/deleteProfileDialog/deleteProfileDialog.component';
 import { ReportsComponent} from './components/reports/reports.component';
 import { ReportUserComponent } from './components/reportUserDialog/reportUserDialog.component';
 import { ReportComponent } from './components/report/report.component';
+
+//Dialog Imports
+import { NewPostDialogComponent } from './components/newPostDialog/newPostDialog.component';
+import { DeleteProfileDialogComponent } from './components/deleteProfileDialog/deleteProfileDialog.component';
 import { SendEmailDialogComponent } from './components/sendEmailDialog/sendEmailDialog.component';
 import { DeleteReportDialogComponent } from './components/deleteReportDialog/deleteReportDialog.component';
 import { AssignSelfDialogComponent } from './components/assignSelfDialog/assignSelfDialog.component';
+import { BanUserDialogComponent } from './components/banUserDialog/banUserDialog.component';
+import { AddNewPlatformDialogComponent } from './components/addNewPlatformDialog/addNewPlatformDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
@@ -49,6 +53,8 @@ import { SnackBarHelper } from '../Helpers/SnackBars';
 import { PostService } from '../Services/PostService';
 import { ReportsService } from '../Services/ReportsService';
 import { HTTPListener, HTTPStatus } from '../Services/HttpInterceptor';
+import { RatingService } from '../Services/RatingService';
+import { FriendsService } from '../Services/FriendsService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -82,7 +88,9 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         ReportComponent,
         SendEmailDialogComponent,
         DeleteReportDialogComponent,
-        AssignSelfDialogComponent
+        AssignSelfDialogComponent,
+        BanUserDialogComponent,
+        AddNewPlatformDialogComponent
 
     ],
     imports: [
@@ -164,7 +172,9 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         ReportUserComponent, 
         SendEmailDialogComponent, 
         DeleteReportDialogComponent, 
-        AssignSelfDialogComponent
+        AssignSelfDialogComponent,
+        BanUserDialogComponent,
+        AddNewPlatformDialogComponent
     ],
     providers : [
         SelfService,
@@ -175,7 +185,9 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         PostService,
         ReportsService,
         ...RxJS_Services,
-        { provide: HTTP_INTERCEPTORS, useClass: HTTPListener, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: HTTPListener, multi: true },
+        RatingService,
+        FriendsService
     ]
 })
 export class AppModuleShared {
