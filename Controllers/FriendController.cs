@@ -55,6 +55,7 @@ namespace Game2gether.Controllers
             if (user != null)
             {
                 var ret = user.friends.Split(",");
+                ret = ret.Where(w => w != "").ToArray();
                 return Ok(ret);
             }
             else
@@ -70,6 +71,7 @@ namespace Game2gether.Controllers
             if(user != null)
             {
                 var ret = user.friendRequests.Split(",");
+                ret = ret.Where(w => w != "").ToArray();
                 return Ok(ret);
             } else
             {
@@ -84,7 +86,10 @@ namespace Game2gether.Controllers
             if(user!=null)
             {
 
-                user.friendRequests += request.sender + ",";
+                var userRequests = user.friendRequests.Split(",");
+                userRequests.Append(request.sender);
+                var joined = string.Join(",", userRequests);
+                user.friendRequests = joined;
                 await _userManager.UpdateAsync(user);
                 return Ok();
             }
@@ -107,8 +112,15 @@ namespace Game2gether.Controllers
                     userRequests = userRequests.Where(w => w != request.sender).ToArray();
                     string joined = string.Join(",", userRequests);
                     user.friendRequests = joined;
-                    user.friends += request.sender + ",";
-                    user1.friends += request.receiver + ",";
+                    var userFriends = user.friends.Split(",");
+                    userFriends.Append(request.sender);
+                    joined = string.Join(",", userFriends);
+                    user.friends = joined;
+
+                    userFriends = user1.friends.Split(",");
+                    userFriends.Append(request.receiver);
+                    joined = string.Join(",", userFriends);
+                    user1.friends = joined;
                     await _userManager.UpdateAsync(user);
                     await _userManager.UpdateAsync(user1);
                     return Ok();
