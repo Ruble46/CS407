@@ -28,9 +28,12 @@ namespace Game2gether.Controllers
             var user = await _userManager.FindByEmailAsync(request.receiver);
             if (user != null)
             {
-                if (user.friends.Contains(request))
+                var userFriends = user.friends.Split(",");
+                if (userFriends.Contains(request.sender))
                 {
-                    user.friends.Remove(request);
+                    userFriends = userFriends.Where(w => w != request.sender).ToArray();
+                    string joined = string.Join(",", userFriends);
+                    user.friends = joined;
                     await _userManager.UpdateAsync(user);
                     return Ok();
                 }
@@ -51,7 +54,8 @@ namespace Game2gether.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
-                return Ok(user.friends);
+                var ret = user.friends.Split(",");
+                return Ok(ret);
             }
             else
             {
@@ -65,7 +69,8 @@ namespace Game2gether.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             if(user != null)
             {
-                return Ok(user.friendRequests);
+                var ret = user.friendRequests.Split(",");
+                return Ok(ret);
             } else
             {
                 return BadRequest("User not found");
@@ -78,7 +83,8 @@ namespace Game2gether.Controllers
             var user = await _userManager.FindByEmailAsync(request.receiver);
             if(user!=null)
             {
-                user.friendRequests.Add(request);
+
+                user.friendRequests += request.sender + ",";
                 await _userManager.UpdateAsync(user);
                 return Ok();
             }
@@ -95,12 +101,14 @@ namespace Game2gether.Controllers
             var user1 = await _userManager.FindByEmailAsync(request.sender);
             if (user != null)
             {
-                if(user.friendRequests.Contains(request))
+                var userRequests = user.friendRequests.Split(",");
+                if (userRequests.Contains(request.sender))
                 {
-                    user.friendRequests.Remove(request);
-                    user.friends.Add(request);
-                    FriendRequest temp = new FriendRequest { sender = request.receiver, receiver = request.sender };
-                    user1.friends.Add(temp);
+                    userRequests = userRequests.Where(w => w != request.sender).ToArray();
+                    string joined = string.Join(",", userRequests);
+                    user.friendRequests = joined;
+                    user.friends += request.sender + ",";
+                    user1.friends += request.receiver + ",";
                     await _userManager.UpdateAsync(user);
                     await _userManager.UpdateAsync(user1);
                     return Ok();
@@ -120,9 +128,12 @@ namespace Game2gether.Controllers
             var user = await _userManager.FindByEmailAsync(request.receiver);
             if (user != null)
             {
-                if (user.friendRequests.Contains(request))
+                var userRequests = user.friendRequests.Split(",");
+                if (userRequests.Contains(request.sender))
                 {
-                    user.friendRequests.Remove(request);
+                    userRequests = userRequests.Where(w => w != request.sender).ToArray();
+                    string joined = string.Join(",", userRequests);
+                    user.friendRequests = joined;
                     await _userManager.UpdateAsync(user);
                     return Ok();
                 }

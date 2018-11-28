@@ -13,7 +13,7 @@ namespace Game2gether.API.Models
         public string BackgroundColor { get; set; }
         public string ChatColor { get; set; }
         public Message[] messages { get; set; }
-        public List<FriendRequest> friends { get; set; }
-        public List<FriendRequest> friendRequests { get; set; }
+        public string friends { get; set; }
+        public string friendRequests { get; set; }
     }
 }
