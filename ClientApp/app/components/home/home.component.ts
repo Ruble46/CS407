@@ -33,8 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
     // public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
-    public friends: Array<FriendRequest>;
-    public invites: Array<FriendRequest>;
+    public friends: Array<string>;
+    public invites: Array<string>;
 
     constructor(private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.FriendsService = _FriendsService;
         this.posts = new Array<Post>();
         this.currUser = localStorage.getItem('email');
-        this.friends = new Array<FriendRequest>();
-        this.invites = new Array<FriendRequest>();
+        this.friends = new Array<string>();
+        this.invites = new Array<string>();
     }
 
     ngOnInit() {
@@ -156,8 +156,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
     }
 
-    requestChoice(choice: string, request: FriendRequest) {
+    requestChoice(choice: string, person: string) {
         if(choice === 'accept') {
+            let request: FriendRequest = new FriendRequest();
+            request.sender = person;
+            request.receiver = this.currUser;
             this.FriendsService.acceptRequest(request)
             .subscribe(result => {
                 console.log(result);
@@ -165,6 +168,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                 console.error(error);
             });
         } else {
+            let request: FriendRequest = new FriendRequest();
+            request.sender = person;
+            request.receiver = this.currUser;
             this.FriendsService.ignoreRequest(request)
             .subscribe(result => {
                 console.log(result);
