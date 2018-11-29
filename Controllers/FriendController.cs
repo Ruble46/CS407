@@ -26,6 +26,7 @@ namespace Game2gether.Controllers
         public async Task<IActionResult> delete([FromBody]FriendRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.receiver);
+            var user1 = await _userManager.FindByEmailAsync(request.sender);
             if (user != null)
             {
                 var userFriends = user.friends.Split(",");
@@ -34,7 +35,13 @@ namespace Game2gether.Controllers
                     userFriends = userFriends.Where(w => w != request.sender).ToArray();
                     string joined = string.Join(",", userFriends);
                     user.friends = joined;
+
+                    userFriends = user1.friends.Split(",");
+                    userFriends = userFriends.Where(w => w != request.receiver).ToArray();
+                    joined = string.Join(",", userFriends);
+                    user1.friends = joined;
                     await _userManager.UpdateAsync(user);
+                    await _userManager.UpdateAsync(user1);
                     return Ok();
                 }
                 else
