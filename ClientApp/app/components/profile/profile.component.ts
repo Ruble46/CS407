@@ -6,6 +6,9 @@ import { UserService } from '../../../Services/UserService';
 import { ReportUser } from '../../../Models/ReportUser';
 import { ReportUserComponent } from '../reportUserDialog/reportUserDialog.component';
 import { ReportsService } from '../../../Services/ReportsService';
+import { FriendsService } from '../../../Services/FriendsService';
+import { FriendRequest } from '../../../Models/FriendRequest';
+import { RequestTracker } from '../../../Models/RequestTracker';
 
 @Component({
     selector: 'profile',
@@ -23,13 +26,15 @@ export class ProfileComponent implements OnInit {
     public dialog1: MatDialog;
     public newReport: ReportUser;
     public report: ReportUser;
+    private FriendsService: FriendsService;
 
-    constructor(_reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
         this.reportsService = _reportsService;
         this.dialog1 = dialog;
         this.newReport = new ReportUser();
         this.UserService = _UserService;
         this.router1 = router;
+        this.FriendsService = _FriendsService;
         route.params.subscribe((params) => {
             this.email = params["email"];
         });
@@ -91,6 +96,14 @@ export class ProfileComponent implements OnInit {
     }
 
     unfriend() {
-        
+        let request: FriendRequest = new FriendRequest();
+        request.sender = this.email;
+        request.receiver = localStorage.getItem('email');
+        this.FriendsService.unfriend(request)
+        .subscribe(result => {
+            console.log(result);
+        }, error => {
+            console.error(error);
+        });
     }
 }

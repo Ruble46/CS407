@@ -23,7 +23,7 @@ namespace Game2gether.Controllers
         }
 
         [HttpPost("remove")]
-        public async Task<IActionResult> delete(FriendRequest request)
+        public async Task<IActionResult> delete([FromBody]FriendRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.receiver);
             if (user != null)
@@ -87,9 +87,15 @@ namespace Game2gether.Controllers
             {
 
                 var userRequests = user.friendRequests.Split(",");
-                userRequests.Append(request.sender);
-                var joined = string.Join(",", userRequests);
-                user.friendRequests = joined;
+                if(userRequests[0].Equals("")) {
+                    user.friendRequests = request.sender;
+                } else {
+                    String temp = "," + request.sender;
+                    user.friendRequests += temp;
+                }
+                // userRequests.Append(request.sender);
+                // var joined = string.Join(",", userRequests);
+                // user.friendRequests = joined;
                 await _userManager.UpdateAsync(user);
                 return Ok();
             }
@@ -113,14 +119,26 @@ namespace Game2gether.Controllers
                     string joined = string.Join(",", userRequests);
                     user.friendRequests = joined;
                     var userFriends = user.friends.Split(",");
-                    userFriends.Append(request.sender);
-                    joined = string.Join(",", userFriends);
-                    user.friends = joined;
+                    if(userFriends[0].Equals("")) {
+                        user.friends = request.sender;
+                    } else {
+                        String temp = "," + request.sender;
+                        user.friends += temp;
+                    }
+                    // userFriends.Append(request.sender);
+                    // joined = string.Join(",", userFriends);
+                    // user.friends = joined;
 
                     userFriends = user1.friends.Split(",");
-                    userFriends.Append(request.receiver);
-                    joined = string.Join(",", userFriends);
-                    user1.friends = joined;
+                    if(userFriends[0].Equals("")) {
+                        user1.friends = request.receiver;
+                    } else {
+                        String temp = "," + request.receiver;
+                        user1.friends += temp;
+                    }
+                    //userFriends.Append(request.receiver);
+                    // joined = string.Join(",", userFriends);
+                    // user1.friends = joined;
                     await _userManager.UpdateAsync(user);
                     await _userManager.UpdateAsync(user1);
                     return Ok();

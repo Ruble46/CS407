@@ -39,7 +39,7 @@ namespace Game2gether.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Post([FromBody] UserForm form)
         {
-            var user = new AppUser { Email = form.email, UserName = form.email, AccountCreated = DateTime.Now };
+            var user = new AppUser { Email = form.email, UserName = form.email, AccountCreated = DateTime.Now, friends = "", friendRequests = "" };
             var result = await _userManager.CreateAsync(user, form.password);
             if (result.Succeeded)
             {

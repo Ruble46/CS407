@@ -52,4 +52,12 @@ export class FriendsService {
 
         return this.http.post<any>(this.apiBaseUrl + 'api/friend/request/ignore', request, options);
     }
+
+    unfriend(request: FriendRequest) {
+        let options: Object = {
+            observe: 'response'
+        }
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/friend/remove', request, options);
+    }
 }

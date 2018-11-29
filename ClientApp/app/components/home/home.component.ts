@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.invites = result.body;
         }, error => {
             console.error(error);
-        })
+        });
 
         //Watcher for creating a post
         this.httpStatus.getRequest()
@@ -163,7 +163,19 @@ export class HomeComponent implements OnInit, OnDestroy {
             request.receiver = this.currUser;
             this.FriendsService.acceptRequest(request)
             .subscribe(result => {
-                console.log(result);
+                this.FriendsService.getRequests(this.currUser)
+                .subscribe(result => {
+                    this.invites = result.body;
+                }, error => {
+                    console.error(error);
+                });
+
+                this.FriendsService.getFriends(this.currUser)
+                .subscribe(result => {
+                    this.friends = result.body;
+                }, error => {
+                    console.error(error);
+                });
             }, error => {
                 console.error(error);
             });
@@ -173,7 +185,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             request.receiver = this.currUser;
             this.FriendsService.ignoreRequest(request)
             .subscribe(result => {
-                console.log(result);
+                this.FriendsService.getRequests(this.currUser)
+                .subscribe(result => {
+                    this.invites = result.body;
+                }, error => {
+                    console.error(error);
+                });
             }, error => {
                 console.error(error);
             });
