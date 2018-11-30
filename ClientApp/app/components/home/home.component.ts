@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             console.error(error);
         });
 
-        this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getRequests(this.currUser)))
+        this.invitesSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getRequests(this.currUser)))
         .subscribe(result => {
             console.log(result);
             this.invites = result.body;
@@ -119,13 +119,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.postSubscription.unsubscribe();
-        if(this.friendsSubscription !== undefined) {
-            this.friendsSubscription.unsubscribe();
-        }
-
-        if(this.invitesSubscription !== undefined) {
-            this.invitesSubscription.unsubscribe();
-        }
+        this.friendsSubscription.unsubscribe();
+        this.invitesSubscription.unsubscribe();
     }
 
     toProfile(email) {

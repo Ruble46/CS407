@@ -2,6 +2,11 @@
     background-color: transparent;
 }
 
+.colorGrey {
+    color: gray !important;
+    background-color: gray !important;
+}
+
 .headerRow {
     position: absolute;
     top: 0;

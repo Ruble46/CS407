@@ -9,6 +9,7 @@ import { ReportsService } from '../../../Services/ReportsService';
 import { FriendsService } from '../../../Services/FriendsService';
 import { FriendRequest } from '../../../Models/FriendRequest';
 import { RequestTracker } from '../../../Models/RequestTracker';
+import { AccountService } from '../../../Services/AccountService';
 
 @Component({
     selector: 'profile',
@@ -23,17 +24,21 @@ export class ProfileComponent implements OnInit {
     private router1: Router;
     public selected = new FormControl(0);
     private UserService: UserService;
+    private AccountService: AccountService;
     public dialog1: MatDialog;
     public newReport: ReportUser;
     public report: ReportUser;
     private FriendsService: FriendsService;
     public areFriends: boolean = false;
+    public currIsAdmin: boolean = false;
+    public userIsAdmin: boolean = false;
 
-    constructor(private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _AccountService: AccountService, private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
         this.reportsService = _reportsService;
         this.dialog1 = dialog;
         this.newReport = new ReportUser();
         this.UserService = _UserService;
+        this.AccountService = _AccountService;
         this.router1 = router;
         this.FriendsService = _FriendsService;
         route.params.subscribe((params) => {
@@ -66,6 +71,29 @@ export class ProfileComponent implements OnInit {
         }, error => {
             console.error(error);
         });
+
+        let currRole: string = localStorage.getItem('role');
+        if(currRole === "Admin") {
+            this.currIsAdmin = true;
+        }
+
+        this.AccountService.getUserRole(this.email)
+                .subscribe(result => {
+                    let isAdmin: boolean = false;
+                    for(let a = 0; a < result.length; a++) {
+                        if(result[a] === 'Admin') {
+                            isAdmin = true;
+                            break;
+                        }
+                    }
+                    if(isAdmin) {
+                        this.currIsAdmin = true;
+                    } else {
+                        this.currIsAdmin = false;
+                    }
+                }, error => {
+                    console.error(error);
+                });
     }
 
     onLinkClick(event: MatTabChangeEvent) {

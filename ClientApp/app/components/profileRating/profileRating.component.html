@@ -96,15 +96,15 @@
                         </mat-card-header>
                         <mat-divider></mat-divider>
                         <mat-card-content class="cardContent">
-                            <p>{{r.desc}}</p>
+                            <p>{{r.description}}</p>
                         </mat-card-content>
                         <mat-divider></mat-divider>
                         <mat-card-actions>
-                            <div *ngIf="r.rating == 1">Overall Rating: <mat-icon>thumb_up</mat-icon>
+                            <div *ngIf="r.rate == 1">Overall Rating: <mat-icon>thumb_up</mat-icon>
                             </div>
-                            <div *ngIf="r.rating == 0">Overall Rating: <mat-icon>thumbs_up_down</mat-icon>
+                            <div *ngIf="r.rate == 0">Overall Rating: <mat-icon>thumbs_up_down</mat-icon>
                             </div>
-                            <div *ngIf="r.rating == -1">Overall Rating: <mat-icon>thumb_down</mat-icon>
+                            <div *ngIf="r.rate == -1">Overall Rating: <mat-icon>thumb_down</mat-icon>
                             </div>
                         </mat-card-actions>
                     </mat-card>

@@ -122,7 +122,6 @@ export class IndexComponent implements OnInit, AfterViewInit {
                 localStorage.setItem('email', this.emailSignIn);
                 this.service2.getUserRole(this.emailSignIn)
                 .subscribe(result => {
-                    console.log(result);
                     let isAdmin: boolean = false;
                     for(let a = 0; a < result.length; a++) {
                         if(result[a] === 'Admin') {
@@ -138,7 +137,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
                     this.router1.navigateByUrl('app/home');
                 }, error => {
                     console.error(error);
-                })
+                });
             }, error => {
                 this.snackBarHelper.openSnackBar(error.error, 'Close', 3000);
                 console.error(error);

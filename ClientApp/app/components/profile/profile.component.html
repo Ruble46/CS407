@@ -16,14 +16,14 @@
                             <span class="navMenuItem">Report</span>
                         </button>
 
-                        <button mat-menu-item (click)="promote()">
-                            <mat-icon class="navMenuItem">arrow_upward</mat-icon>
-                            <span class="navMenuItem">Promote</span>
+                        <button *ngIf="!currIsAdmin" [disabled]="!currIsAdmin" [ngClass]="{'colorGrey': !currIsAdmin}" mat-menu-item (click)="promote()">
+                            <mat-icon class="navMenuItem" [ngClass]="{'colorGrey': !currIsAdmin}">arrow_upward</mat-icon>
+                            <span class="navMenuItem" [ngClass]="{'colorGrey': !currIsAdmin}">Promote</span>
                         </button>
 
-                        <button mat-menu-item (click)="demote()">
-                            <mat-icon class="navMenuItem">arrow_downward</mat-icon>
-                            <span class="navMenuItem">Demote</span>
+                        <button *ngIf="!currIsAdmin" [disabled]="currIsAdmin" [ngClass]="{'colorGrey': currIsAdmin}" mat-menu-item (click)="demote()">
+                            <mat-icon class="navMenuItem" [ngClass]="{'colorGrey': currIsAdmin}">arrow_downward</mat-icon>
+                            <span class="navMenuItem" [ngClass]="{'colorGrey': currIsAdmin}">Demote</span>
                         </button>
 
                         <button *ngIf="areFriends" mat-menu-item (click)="unfriend()">
