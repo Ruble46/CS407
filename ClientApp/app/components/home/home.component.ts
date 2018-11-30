@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     public filterGame: string;
     public filterMode: string;
     public postSubscription: any;
+    public friendsSubscription: any;
+    public invitesSubscription: any;
     public httpStatus: HTTPStatus;
     public sendRequestTo: string;
 
@@ -50,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         document.getElementById('navBar').style.backgroundColor = "#34373c";
 
-        this.FriendsService.getFriends(this.currUser)
+        this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
         .subscribe(result => {
             console.log(result);
             this.friends = result.body;
@@ -58,7 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             console.error(error);
         });
 
-        this.FriendsService.getRequests(this.currUser)
+        this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getRequests(this.currUser)))
         .subscribe(result => {
             console.log(result);
             this.invites = result.body;
@@ -117,6 +119,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.postSubscription.unsubscribe();
+        if(this.friendsSubscription !== undefined) {
+            this.friendsSubscription.unsubscribe();
+        }
+
+        if(this.invitesSubscription !== undefined) {
+            this.invitesSubscription.unsubscribe();
+        }
     }
 
     toProfile(email) {

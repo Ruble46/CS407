@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
     public newReport: ReportUser;
     public report: ReportUser;
     private FriendsService: FriendsService;
+    public areFriends: boolean = false;
 
     constructor(private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
         this.reportsService = _reportsService;
@@ -48,7 +49,23 @@ export class ProfileComponent implements OnInit {
             console.error(error);
             this.router1.navigateByUrl('app/home');
         });
+
         document.getElementById('navBar').style.backgroundColor = "rgba(0,0,0,0.4)";
+
+        let currUser: string = localStorage.getItem('email');
+        this.FriendsService.getFriends(currUser)
+        .subscribe(result => {
+            let friends: Array<string> = new Array<string>();
+            friends = result.body;
+            for(let a = 0; a < friends.length; a++) {
+                if(friends[a] === this.email) {
+                    this.areFriends = true;
+                    break;
+                }
+            }
+        }, error => {
+            console.error(error);
+        });
     }
 
     onLinkClick(event: MatTabChangeEvent) {
@@ -101,7 +118,13 @@ export class ProfileComponent implements OnInit {
         request.receiver = localStorage.getItem('email');
         this.FriendsService.unfriend(request)
         .subscribe(result => {
-            console.log(result);
+            let currUser: string = localStorage.getItem('email');
+            this.FriendsService.getFriends(currUser)
+            .subscribe(result => {
+                this.areFriends = false;
+            }, error => {
+                console.error(error);
+            });
         }, error => {
             console.error(error);
         });
