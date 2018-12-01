@@ -9,6 +9,7 @@ import { HTTPStatus } from '../../../Services/HttpInterceptor';
 import { RequestTracker } from '../../../Models/RequestTracker';
 import { FriendsService } from '../../../Services/FriendsService';
 import { FriendRequest } from '../../../Models/FriendRequest';
+import { SnackBarHelper } from '../../../Helpers/SnackBars';
 
 @Component({
     selector: 'home',
@@ -32,13 +33,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     public invitesSubscription: any;
     public httpStatus: HTTPStatus;
     public sendRequestTo: string;
+    private SnackBarHelper: SnackBarHelper;
 
     // public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
     // public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
     public friends: Array<string>;
     public invites: Array<string>;
 
-    constructor(private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
+    constructor(private _SnackBarHelper: SnackBarHelper, private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
         this.router1 = router;
         this.postService = _postService;
@@ -47,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.currUser = localStorage.getItem('email');
         this.friends = new Array<string>();
         this.invites = new Array<string>();
+        this.SnackBarHelper = _SnackBarHelper;
     }
 
     ngOnInit() {
@@ -207,10 +210,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         request.receiver = this.sendRequestTo;
         this.FriendsService.sendRequest(request)
         .subscribe(result => {
-            console.log(result);
+            this.sendRequestTo = '';
+            this.SnackBarHelper.openSnackBar("A friend request has been sent to " + request.receiver + ".", "Dismiss", 4000);
         }, error => {
             console.error(error);
+            if(error.error === "User not found") {
+                this.SnackBarHelper.openSnackBar("The user " + request.receiver + " could not be found.", "Dismiss", 4000);
+            }
         });
-        this.sendRequestTo = '';
     }
 }
