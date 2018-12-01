@@ -43,6 +43,7 @@ import { DeleteReportDialogComponent } from './components/deleteReportDialog/del
 import { AssignSelfDialogComponent } from './components/assignSelfDialog/assignSelfDialog.component';
 import { BanUserDialogComponent } from './components/banUserDialog/banUserDialog.component';
 import { AddNewPlatformDialogComponent } from './components/addNewPlatformDialog/addNewPlatformDialog.component';
+import { PromoteDemoteDialogComponent } from './components/promoteDemoteDialog/promoteDemoteDialog.component';
 
 //Service and Helper Imports
 import { SelfService } from '../Services/SelfService';
@@ -90,7 +91,8 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         DeleteReportDialogComponent,
         AssignSelfDialogComponent,
         BanUserDialogComponent,
-        AddNewPlatformDialogComponent
+        AddNewPlatformDialogComponent,
+        PromoteDemoteDialogComponent
 
     ],
     imports: [
@@ -174,7 +176,8 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         DeleteReportDialogComponent, 
         AssignSelfDialogComponent,
         BanUserDialogComponent,
-        AddNewPlatformDialogComponent
+        AddNewPlatformDialogComponent,
+        PromoteDemoteDialogComponent
     ],
     providers : [
         SelfService,

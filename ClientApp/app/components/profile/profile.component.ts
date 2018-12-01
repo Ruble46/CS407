@@ -10,6 +10,8 @@ import { FriendsService } from '../../../Services/FriendsService';
 import { FriendRequest } from '../../../Models/FriendRequest';
 import { RequestTracker } from '../../../Models/RequestTracker';
 import { AccountService } from '../../../Services/AccountService';
+import { SnackBarHelper } from '../../../Helpers/SnackBars';
+import { PromoteDemoteDialogComponent } from '../promoteDemoteDialog/promoteDemoteDialog.component';
 
 @Component({
     selector: 'profile',
@@ -33,8 +35,9 @@ export class ProfileComponent implements OnInit {
     public currIsAdmin: boolean = false;
     public userIsAdmin: boolean = false;
     public isYourOwn: boolean = false;
+    private SnackBarHelper: SnackBarHelper;
 
-    constructor(private _AccountService: AccountService, private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(private _SnackBarHelper: SnackBarHelper, private _AccountService: AccountService, private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
         this.reportsService = _reportsService;
         this.dialog1 = dialog;
         this.newReport = new ReportUser();
@@ -42,6 +45,7 @@ export class ProfileComponent implements OnInit {
         this.AccountService = _AccountService;
         this.router1 = router;
         this.FriendsService = _FriendsService;
+        this.SnackBarHelper = _SnackBarHelper;
         route.params.subscribe((params) => {
             this.email = params["email"];
         });
@@ -138,53 +142,73 @@ export class ProfileComponent implements OnInit {
     }
 
     promote() {
-        this.AccountService.promoteToAdmin(this.email)
-        .subscribe(result => {
-            this.AccountService.getUserRole(this.email)
-            .subscribe(result => {
-                let isAdmin: boolean = false;
-                for(let a = 0; a < result.length; a++) {
-                    if(result[a] === 'Admin') {
-                        isAdmin = true;
-                        break;
-                    }
-                }
-                if(isAdmin) {
-                    this.userIsAdmin = true;
-                } else {
-                    this.userIsAdmin = false;
-                }
-            }, error => {
-                console.error(error);
-            });
-        }, error => {
-            console.error(error);
+        const dialogRef = this.dialog.open(PromoteDemoteDialogComponent, {
+            width: '400px',
+            data: "Are you sure you want to promote " + this.email + " to the Admin role?"
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === 'yes') {
+                this.AccountService.promoteToAdmin(this.email)
+                .subscribe(result => {
+                    this.SnackBarHelper.openSnackBar("The user " + this.email + " has been promoted to the Admin role.", "Dismiss", 4000);
+                    this.AccountService.getUserRole(this.email)
+                    .subscribe(result => {
+                        let isAdmin: boolean = false;
+                        for(let a = 0; a < result.length; a++) {
+                            if(result[a] === 'Admin') {
+                                isAdmin = true;
+                                break;
+                            }
+                        }
+                        if(isAdmin) {
+                            this.userIsAdmin = true;
+                        } else {
+                            this.userIsAdmin = false;
+                        }
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+                });
+            }
         });
     }
 
     demote() {
-        this.AccountService.demoteFromAdmin(this.email)
-        .subscribe(result => {        
-            this.AccountService.getUserRole(this.email)
-            .subscribe(result => {
-                let isAdmin: boolean = false;
-                for(let a = 0; a < result.length; a++) {
-                    if(result[a] === 'Admin') {
-                        isAdmin = true;
-                        break;
-                    }
-                }
-                if(isAdmin) {
-                    this.userIsAdmin = true;
-                } else {
-                    this.userIsAdmin = false;
-                }
-            }, error => {
-                console.error(error);
-            });
-        }, error => {
-            console.error(error);
-        })
+        const dialogRef = this.dialog.open(PromoteDemoteDialogComponent, {
+            width: '400px',
+            data: "Are you sure you want to demote " + this.email + " from the Admin role?"
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === 'yes') {
+                this.AccountService.demoteFromAdmin(this.email)
+                .subscribe(result => {        
+                    this.SnackBarHelper.openSnackBar("The user " + this.email + " has been demoted from the Admin role.", "Dismiss", 4000);
+                    this.AccountService.getUserRole(this.email)
+                    .subscribe(result => {
+                        let isAdmin: boolean = false;
+                        for(let a = 0; a < result.length; a++) {
+                            if(result[a] === 'Admin') {
+                                isAdmin = true;
+                                break;
+                            }
+                        }
+                        if(isAdmin) {
+                            this.userIsAdmin = true;
+                        } else {
+                            this.userIsAdmin = false;
+                        }
+                    }, error => {
+                        console.error(error);
+                    });
+                }, error => {
+                    console.error(error);
+                });
+            }
+        });
     }
 
     unfriend() {
