@@ -16,14 +16,36 @@
                             <span class="navMenuItem">Report</span>
                         </button>
 
-                        <button *ngIf="!currIsAdmin" [disabled]="!currIsAdmin" [ngClass]="{'colorGrey': !currIsAdmin}" mat-menu-item (click)="promote()">
-                            <mat-icon class="navMenuItem" [ngClass]="{'colorGrey': !currIsAdmin}">arrow_upward</mat-icon>
-                            <span class="navMenuItem" [ngClass]="{'colorGrey': !currIsAdmin}">Promote</span>
+                        <!-- User IS an admin -->
+                        <button *ngIf="currIsAdmin && userIsAdmin && !isYourOwn" disabled mat-menu-item>
+                            <mat-icon>arrow_upward</mat-icon>
+                            Promote
+                        </button>
+    
+                        <button *ngIf="currIsAdmin && userIsAdmin && !isYourOwn" mat-menu-item class="navMenuItem" (click)="demote()">
+                            <mat-icon class="navMenuItem">arrow_downward</mat-icon>
+                            Demote
                         </button>
 
-                        <button *ngIf="!currIsAdmin" [disabled]="currIsAdmin" [ngClass]="{'colorGrey': currIsAdmin}" mat-menu-item (click)="demote()">
-                            <mat-icon class="navMenuItem" [ngClass]="{'colorGrey': currIsAdmin}">arrow_downward</mat-icon>
-                            <span class="navMenuItem" [ngClass]="{'colorGrey': currIsAdmin}">Demote</span>
+                        <!-- User ISNT an admin -->
+                        <button *ngIf="currIsAdmin && !userIsAdmin && !isYourOwn" mat-menu-item class="navMenuItem" (click)="promote()">
+                            <mat-icon class="navMenuItem">arrow_upward</mat-icon>
+                            Promote
+                        </button>
+
+                        <button *ngIf="currIsAdmin && !userIsAdmin && !isYourOwn" disabled mat-menu-item>
+                            <mat-icon>arrow_downward</mat-icon>
+                            Demote
+                        </button>
+
+                        <!-- User is yourself -->
+                        <button *ngIf="isYourOwn" disabled mat-menu-item>
+                            <mat-icon>arrow_upward</mat-icon>
+                            Promote
+                        </button>
+                        <button *ngIf="isYourOwn" disabled mat-menu-item>
+                            <mat-icon>arrow_downward</mat-icon>
+                            Demote
                         </button>
 
                         <button *ngIf="areFriends" mat-menu-item (click)="unfriend()">

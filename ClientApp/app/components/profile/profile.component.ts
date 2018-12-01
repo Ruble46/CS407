@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
     public areFriends: boolean = false;
     public currIsAdmin: boolean = false;
     public userIsAdmin: boolean = false;
+    public isYourOwn: boolean = false;
 
     constructor(private _AccountService: AccountService, private _FriendsService: FriendsService, _reportsService: ReportsService, public dialog: MatDialog, _UserService: UserService, private route: ActivatedRoute, private router: Router) {
         this.reportsService = _reportsService;
@@ -58,6 +59,10 @@ export class ProfileComponent implements OnInit {
         document.getElementById('navBar').style.backgroundColor = "rgba(0,0,0,0.4)";
 
         let currUser: string = localStorage.getItem('email');
+        if(currUser === this.email) {
+            this.isYourOwn = true;
+        }
+
         this.FriendsService.getFriends(currUser)
         .subscribe(result => {
             let friends: Array<string> = new Array<string>();
@@ -78,22 +83,22 @@ export class ProfileComponent implements OnInit {
         }
 
         this.AccountService.getUserRole(this.email)
-                .subscribe(result => {
-                    let isAdmin: boolean = false;
-                    for(let a = 0; a < result.length; a++) {
-                        if(result[a] === 'Admin') {
-                            isAdmin = true;
-                            break;
-                        }
-                    }
-                    if(isAdmin) {
-                        this.currIsAdmin = true;
-                    } else {
-                        this.currIsAdmin = false;
-                    }
-                }, error => {
-                    console.error(error);
-                });
+        .subscribe(result => {
+            let isAdmin: boolean = false;
+            for(let a = 0; a < result.length; a++) {
+                if(result[a] === 'Admin') {
+                    isAdmin = true;
+                    break;
+                }
+            }
+            if(isAdmin) {
+                this.userIsAdmin = true;
+            } else {
+                this.userIsAdmin = false;
+            }
+        }, error => {
+            console.error(error);
+        });
     }
 
     onLinkClick(event: MatTabChangeEvent) {
@@ -133,11 +138,53 @@ export class ProfileComponent implements OnInit {
     }
 
     promote() {
-
+        this.AccountService.promoteToAdmin(this.email)
+        .subscribe(result => {
+            this.AccountService.getUserRole(this.email)
+            .subscribe(result => {
+                let isAdmin: boolean = false;
+                for(let a = 0; a < result.length; a++) {
+                    if(result[a] === 'Admin') {
+                        isAdmin = true;
+                        break;
+                    }
+                }
+                if(isAdmin) {
+                    this.userIsAdmin = true;
+                } else {
+                    this.userIsAdmin = false;
+                }
+            }, error => {
+                console.error(error);
+            });
+        }, error => {
+            console.error(error);
+        });
     }
 
     demote() {
-
+        this.AccountService.demoteFromAdmin(this.email)
+        .subscribe(result => {        
+            this.AccountService.getUserRole(this.email)
+            .subscribe(result => {
+                let isAdmin: boolean = false;
+                for(let a = 0; a < result.length; a++) {
+                    if(result[a] === 'Admin') {
+                        isAdmin = true;
+                        break;
+                    }
+                }
+                if(isAdmin) {
+                    this.userIsAdmin = true;
+                } else {
+                    this.userIsAdmin = false;
+                }
+            }, error => {
+                console.error(error);
+            });
+        }, error => {
+            console.error(error);
+        })
     }
 
     unfriend() {

@@ -2,11 +2,9 @@
     background-color: transparent;
 }
 
-.colorGrey {
-    color: gray !important;
-    background-color: gray !important;
+.fullWidth {
+    width: 100% !important;
 }
-
 .headerRow {
     position: absolute;
     top: 0;

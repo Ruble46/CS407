@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable, Inject, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 
@@ -10,6 +10,25 @@ export class AccountService {
     constructor(private HTTP: HttpClient, @Inject('BASE_URL') apiURL: string) {
         this.http = HTTP;
         this.apiBaseUrl = apiURL;
+        
+        let temp: string = localStorage.getItem('email');
+        this.getUserRole(temp)
+        .subscribe(result => {
+            let isAdmin: boolean = false;
+            for(let a = 0; a < result.length; a++) {
+                if(result[a] === 'Admin') {
+                    isAdmin = true;
+                    break;
+                }
+            }
+            if(isAdmin) {
+                localStorage.setItem('role', 'Admin');
+            } else {
+                localStorage.setItem('role', 'User');
+            }
+        }, error => {
+            console.error(error);
+        })
     }
 
     getAccount(email: string) {
