@@ -12,13 +12,12 @@ namespace Game2gether.API.Models
         public DateTime AccountCreated { get; set; }
         public string BackgroundColor { get; set; }
         public string ChatColor { get; set; }
-<<<<<<< HEAD
         public Message[] messages { get; set; }
         public string friends { get; set; }
         public string friendRequests { get; set; }
-=======
-        public string SteamId { get; set; }
-        public string SteamName { get; set; }
->>>>>>> Steam API Call
+        public string steamId { get; set; }
+        public string steamAvatar { get; set; }
+        public string steamName { get; set; }
+        public string[] games { get; set; }
     }
 }

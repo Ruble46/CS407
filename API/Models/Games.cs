@@ -9,9 +9,8 @@ namespace Game2gether.API.Models {
         [Key]
         public Guid id { get; set; }
         public String name { get; set; }
-        public List<String> genres { get; set; }
-        public List<String> platforms { get; set; }
-        // public Image picture { get; set; }
+        public string appId { get; set; }
+        public string picture { get; set; }
     }
 }
 
