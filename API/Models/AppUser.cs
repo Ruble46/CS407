@@ -16,8 +16,14 @@ namespace Game2gether.API.Models
         public string friends { get; set; }
         public string friendRequests { get; set; }
         public string steamId { get; set; }
+<<<<<<< HEAD
         public string steamName { get; set; }
         public string steamAvatar { get; set; } 
         public string games { get; set; }
+=======
+        public string steamAvatar { get; set; }
+        public string steamName { get; set; }
+        public string[] games { get; set; }
+>>>>>>> Steam API Conection. Missing Migrations Update
     }
 }
