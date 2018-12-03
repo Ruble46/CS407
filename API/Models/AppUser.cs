@@ -23,7 +23,11 @@ namespace Game2gether.API.Models
 =======
         public string steamAvatar { get; set; }
         public string steamName { get; set; }
+<<<<<<< HEAD
         public string[] games { get; set; }
 >>>>>>> Steam API Conection. Missing Migrations Update
+=======
+        public string games { get; set; }
+>>>>>>> Steam API Connection Changes
     }
 }

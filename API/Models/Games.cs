@@ -9,10 +9,14 @@ namespace Game2gether.API.Models {
         [Key]
         public Guid id { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string name { get; set; }
 =======
         public String name { get; set; }
 >>>>>>> Steam API Conection. Missing Migrations Update
+=======
+        public string name { get; set; }
+>>>>>>> Steam API Connection Changes
         public string appId { get; set; }
         public string picture { get; set; }
     }
