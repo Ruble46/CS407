@@ -18,10 +18,7 @@ namespace Game2gether.API
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
-<<<<<<< HEAD
         public virtual DbSet<Message> Messages { get; set; }
-=======
->>>>>>> Steam API Conection. Missing Migrations Update
         public virtual DbSet<Games> Games { get; set; }
     }
 }

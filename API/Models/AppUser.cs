@@ -17,6 +17,7 @@ namespace Game2gether.API.Models
         public string friendRequests { get; set; }
         public string steamId { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string steamName { get; set; }
         public string steamAvatar { get; set; } 
         public string games { get; set; }
@@ -27,6 +28,10 @@ namespace Game2gether.API.Models
         public string[] games { get; set; }
 >>>>>>> Steam API Conection. Missing Migrations Update
 =======
+=======
+        public string steamName { get; set; }
+        public string steamAvatar { get; set; } 
+>>>>>>> Rebase conflicts
         public string games { get; set; }
 >>>>>>> Steam API Connection Changes
     }
