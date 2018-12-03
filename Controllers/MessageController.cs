@@ -23,13 +23,8 @@ namespace Game2gether.Controllers
         [HttpPost("send")]
         public async Task<IActionResult> send([FromBody] Message message)
         {
-            Message ret = new Message();
-            ret.sender = message.sender;
-            ret.receiver = message.receiver;
-            ret.content = message.content;
-            ret.time = DateTime.Now;
-            ret.unread = true;
-            var result = await _context.Messages.AddAsync(ret);
+            var mes = new Message { sender = message.sender, receiver = message.receiver, content = message.content, time = DateTime.Now, unread = false };
+            var result = await _context.Messages.AddAsync(mes);
             _context.SaveChanges();
             return Ok();
         }
