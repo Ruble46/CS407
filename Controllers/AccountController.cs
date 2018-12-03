@@ -248,6 +248,28 @@ namespace Game2gether.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("ban")]
+        public async Task<IActionResult>ban([FromBody] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest("User Not Found");
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                _context.Remove(_context.Posts.Single(a => a.email == email));
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("delete")]
         public async Task<IActionResult> delete([FromBody] UserForm form)
         {
