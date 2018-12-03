@@ -29,7 +29,7 @@ namespace Game2gether.Controllers
             return Ok();
         }
 
-        [HttpGet("coversation/{email1}/{email2}")]
+        [HttpGet("conversation/{email1}/{email2}")]
         public async Task<IActionResult> getConversation(string email1, string email2)
         {
             var messages = from mes in _context.Messages
