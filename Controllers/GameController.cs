@@ -52,11 +52,15 @@ namespace Game2gether.Controllers {
             JObject joResponse = JObject.Parse(result);
             JObject games =(JObject)joResponse["response"]["game_count"];
             int totalGames = Convert.ToInt32(games.ToString());
-            string[] apps = new string[totalGames];
+            string apps = "";
             for (int i = 0; i < totalGames; i++) {
                 JObject appId = (JObject)joResponse["response"]["games"][i]["appid"];
-                String appIdStr = Convert.ToString(appId); 
-                apps[i] = appIdStr;
+                String appIdStr = Convert.ToString(appId);
+                if(i == 0) {
+                    apps += appIdStr;
+                } else {
+                    apps += "," + appIdStr;
+                }
                 await getSteamGames(id);             
             }
             user.games = apps;
@@ -95,10 +99,11 @@ namespace Game2gether.Controllers {
             List<String> games =  new List<String>();
             var user = await _userManager.FindByEmailAsync(email);
             if(user != null) {
+                var userGames = user.games.Split(",");
                 for (int i = 0; i < user.games.Length; i++)
                 {
                     var query = from p in _context.Games
-                                where p.appId == user.games[i]
+                                where p.appId == userGames[i]
                                 select p;
                     games.Add(query.ToString());
                     

@@ -18,6 +18,6 @@ namespace Game2gether.API.Models
         public string steamId { get; set; }
         public string steamAvatar { get; set; }
         public string steamName { get; set; }
-        public string[] games { get; set; }
+        public string games { get; set; }
     }
 }
