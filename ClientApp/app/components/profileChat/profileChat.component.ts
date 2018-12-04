@@ -49,6 +49,19 @@ export class ProfileChatComponent implements OnInit {
         this.messageSubscription = timer(0, 3000).pipe(switchMap(() => this.MessagesService.getConversation(this.currUser, this.p.email)))
         .subscribe(result => {
             this.messages = result;
+            this.scrollToBottom(); 
+
+            let temp: Message = new Message();
+            temp.sender = this.currUser;
+            temp.receiver = this.p.email;
+            temp.content = "marking messages as read";
+
+            this.MessagesService.markRead(temp)
+            .subscribe(result => {
+                console.log(result);
+            }, error => {
+                console.error(error);
+            })
         }, error => {
             console.error(error);
         });
@@ -77,10 +90,10 @@ export class ProfileChatComponent implements OnInit {
 
         this.MessagesService.sendMessage(message)
         .subscribe(result => {
-            console.log(result);
             this.MessagesService.getConversation(this.currUser, this.p.email)
             .subscribe(result => {
                 this.messages = result;
+                this.scrollToBottom();
             }, error => {
                 console.error(error);
             });

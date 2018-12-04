@@ -56,9 +56,9 @@
                 <mat-card *ngFor="let friend of friends">
                     <mat-card-content>
                         <button mat-icon-button class="notificationBadge">
-                            <mat-icon matBadge="1" matBadgeColor="primary" aria-label="Unread messages" [routerLink]="['/app/profile', friend, 'chat']">message</mat-icon>
+                            <mat-icon matBadge="{{friend.unread}}" matBadgeColor="primary" aria-label="Unread messages" [routerLink]="['/app/profile', friend.email, 'chat']">message</mat-icon>
                         </button>
-                        <a [routerLink]="['/app/profile', friend, 'posts']" class="friendLink">{{friend}}</a>
+                        <a [routerLink]="['/app/profile', friend.email, 'posts']" class="friendLink">{{friend.email}}</a>
                     </mat-card-content>
                 </mat-card>
             </mat-expansion-panel>

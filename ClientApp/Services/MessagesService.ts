@@ -38,6 +38,6 @@ export class MessagesService {
     }
 
     getUnread(email: string) {
-
+        return this.http.get<any>(this.apiBaseUrl + 'api/message/getUnread/' + email);
     }
 }

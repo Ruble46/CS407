@@ -9,6 +9,7 @@ import { HTTPStatus } from '../../../Services/HttpInterceptor';
 import { RequestTracker } from '../../../Models/RequestTracker';
 import { FriendsService } from '../../../Services/FriendsService';
 import { FriendRequest } from '../../../Models/FriendRequest';
+import { Friend } from '../../../Models/Friend';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
 import { MessagesService } from '../../../Services/MessagesService';
 
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     public httpStatus: HTTPStatus;
     public sendRequestTo: string;
     private SnackBarHelper: SnackBarHelper;
-    public friends: Array<string>;
+    public friends: Array<Friend>;
     public invites: Array<string>;
 
     constructor(private _MessagesService: MessagesService, private _SnackBarHelper: SnackBarHelper, private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.FriendsService = _FriendsService;
         this.posts = new Array<Post>();
         this.currUser = localStorage.getItem('email');
-        this.friends = new Array<string>();
+        this.friends = new Array<Friend>();
         this.invites = new Array<string>();
         this.SnackBarHelper = _SnackBarHelper;
         this.MessagesService = _MessagesService;
@@ -57,15 +58,27 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
         .subscribe(result => {
-            console.log(result);
-            this.friends = result.body;
+            //this.friends = result.body;
+            this.friends = new Array<Friend>();
+            for(let a = 0; a < result.body.length; a++) {
+                let email: string = result.body[a];
+                let friend: Friend = new Friend();
+                friend.email = email;
+
+                this.MessagesService.getUnread(this.currUser)
+                .subscribe(result => {
+                    friend.unread = result.length;
+                    this.friends.push(friend);
+                }, error => {
+                    console.error(error);
+                });
+            }
         }, error => {
             console.error(error);
         });
 
         this.invitesSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getRequests(this.currUser)))
         .subscribe(result => {
-            console.log(result);
             this.invites = result.body;
         }, error => {
             console.error(error);
