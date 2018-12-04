@@ -56,6 +56,7 @@ import { ReportsService } from '../Services/ReportsService';
 import { HTTPListener, HTTPStatus } from '../Services/HttpInterceptor';
 import { RatingService } from '../Services/RatingService';
 import { FriendsService } from '../Services/FriendsService';
+import { MessagesService } from '../Services/MessagesService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -190,7 +191,8 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         ...RxJS_Services,
         { provide: HTTP_INTERCEPTORS, useClass: HTTPListener, multi: true },
         RatingService,
-        FriendsService
+        FriendsService,
+        MessagesService
     ]
 })
 export class AppModuleShared {

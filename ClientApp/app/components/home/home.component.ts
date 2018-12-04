@@ -10,6 +10,7 @@ import { RequestTracker } from '../../../Models/RequestTracker';
 import { FriendsService } from '../../../Services/FriendsService';
 import { FriendRequest } from '../../../Models/FriendRequest';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
+import { MessagesService } from '../../../Services/MessagesService';
 
 @Component({
     selector: 'home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router1: Router;
     private postService: PostService;
     private FriendsService: FriendsService;
+    private MessagesService: MessagesService;
     public posts: Array<Post>;
     platforms = new FormControl();
     platformList: string[] = ['Steam'];
@@ -34,13 +36,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     public httpStatus: HTTPStatus;
     public sendRequestTo: string;
     private SnackBarHelper: SnackBarHelper;
-
-    // public friends: Array<string> = ["kleaf.gbit@gmail.com", "womalley1495@gmail.com", "b.omalley95@yahoo.com", "esteban.sierram@gmail.com"];
-    // public invites: Array<string> = ["bob@purdue.edu", "john@purdue.edu", "tom@purdue.edu", "chris@purdue.edu"];
     public friends: Array<string>;
     public invites: Array<string>;
 
-    constructor(private _SnackBarHelper: SnackBarHelper, private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
+    constructor(private _MessagesService: MessagesService, private _SnackBarHelper: SnackBarHelper, private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
         this.router1 = router;
         this.postService = _postService;
@@ -50,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.friends = new Array<string>();
         this.invites = new Array<string>();
         this.SnackBarHelper = _SnackBarHelper;
+        this.MessagesService = _MessagesService;
     }
 
     ngOnInit() {

@@ -1,7 +1,11 @@
-import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ProfileComponent } from '../profile/profile.component';
 import { Router } from '@angular/router';
 import { SelfService } from '../../../Services/SelfService';
+import { MessagesService } from '../../../Services/MessagesService';
+import { Message } from '../../../Models/Message';
+import { switchMap } from 'rxjs/operators';
+import { timer } from 'rxjs';
 
 @Component({
     selector: 'profileChat',
@@ -9,13 +13,22 @@ import { SelfService } from '../../../Services/SelfService';
     styleUrls: ['./profileChat.component.css', '../../../themes/theme.css'],
     encapsulation : ViewEncapsulation.Native
 })
-export class ProfileChatComponent {
+export class ProfileChatComponent implements OnInit {
     private router1: Router;
     private selfService: SelfService;
+    private MessagesService: MessagesService;
+    public messages: Array<Message>;
+    private p: ProfileComponent;
+    private currUser: string;
+    public message: string;
+    public messageSubscription: any;
 
-    constructor(private s: SelfService, private router: Router, profile: ProfileComponent) {
+    constructor(private _MessagesService: MessagesService, private s: SelfService, private router: Router, profile: ProfileComponent) {
         this.selfService = s;
         this.router1 = router;
+        this.MessagesService = _MessagesService;
+        this.messages = new Array<Message>();
+        this.p = profile;
         profile.selected.setValue(2);
     }
 
@@ -30,7 +43,15 @@ export class ProfileChatComponent {
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
     ngOnInit() { 
+        this.currUser = localStorage.getItem('email');
         this.scrollToBottom();
+
+        this.messageSubscription = timer(0, 3000).pipe(switchMap(() => this.MessagesService.getConversation(this.currUser, this.p.email)))
+        .subscribe(result => {
+            this.messages = result;
+        }, error => {
+            console.error(error);
+        });
     }
 
     ngAfterViewChecked() {        
@@ -47,22 +68,30 @@ export class ProfileChatComponent {
         this.router1.navigateByUrl('app/profile/' + email + '/chat');
     }
 
-    public MESSAGES: Array<Message> = [
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 1'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 2'},
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 3'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 4'},
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 5'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 6'},
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 5'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 6'},
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 7'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 8'},
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 9'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 10'},
-        {email: 'bob@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 11'},
-        {email: 'craig@purdue.edu', date: new Date().toLocaleString(), message: 'this is message 12'},
-    ];
+    sendMessage() {
+        let message: Message = new Message();
+        message.sender = this.currUser;
+        message.receiver = this.p.email;
+        message.content = this.message;
+        this.message = "";
+
+        this.MessagesService.sendMessage(message)
+        .subscribe(result => {
+            console.log(result);
+            this.MessagesService.getConversation(this.currUser, this.p.email)
+            .subscribe(result => {
+                this.messages = result;
+            }, error => {
+                console.error(error);
+            });
+        }, error => {
+            console.error(error);
+        });
+    }
+
+    ngOnDestroy() {
+        this.messageSubscription.unsubscribe();
+    }
 
     public CHATS: Array<Chats> = [
         {email: 'bob@purdue.edu', unread: 2},
@@ -87,10 +116,4 @@ export class ProfileChatComponent {
 export interface Chats {
     email: string;
     unread: number;
-}
-
-export interface Message {
-    email: string;
-    date: string;
-    message: string;
 }
