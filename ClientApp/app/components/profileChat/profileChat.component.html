@@ -5,7 +5,7 @@
     <div class="container-fluid fullHeight">
         <div class="row fullHeight">
             <div class="col-sm-5 col-md-5 col-lg-4 fullHeight allChats">
-                <mat-toolbar color="accent">All Chats</mat-toolbar>
+                <mat-toolbar color="accent">All Conversations</mat-toolbar>
                 <div class="allChatFeed">
                     <mat-list *ngFor="let chat of CHATS" class="removeListPadding">
                         <button mat-button class="fullWidth" (click)="toProfile(chat.email)">
@@ -20,11 +20,15 @@
                     </mat-list>
                 </div>
             </div>
-            <div class="col-sm-7 col-md-7 col-lg-8 fullHeight thisChat">
+
+            <div class="col-sm-7 col-md-7 col-lg-8 fullHeight" *ngIf="!areFriends && !myProfile">
+                <mat-toolbar color="primary">You must be friends to send direct messages.</mat-toolbar>
+            </div>
+            <div class="col-sm-7 col-md-7 col-lg-8 fullHeight thisChat" *ngIf="areFriends && !myProfile">
                 <mat-toolbar color="accent">Chat</mat-toolbar>
                 <div class="chatFeed" #scrollMe>
                     <mat-list class="removeListPadding">
-                        <mat-list-item *ngFor="let m of messages" [style.background-color]="getStyle(m.sender)" class="verticalStack chatItem">
+                        <mat-list-item *ngFor="let m of messages" [style.color]="getFontColor(m.sender)" [style.background-color]="getBackgroundStyle(m.sender)" class="verticalStack chatItem">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12 stack">
@@ -32,7 +36,7 @@
                                             {{m.sender}}
                                         </div>
                                         <div class="chatDate">
-                                            <i>{{m.time}}</i> <!-- use the short format -->
+                                            <i>{{m.time | date:'short'}}</i> <!-- use the short format -->
                                         </div>
                                     </div>
                                 </div>

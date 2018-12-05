@@ -12,6 +12,7 @@ import { FriendRequest } from '../../../Models/FriendRequest';
 import { Friend } from '../../../Models/Friend';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
 import { MessagesService } from '../../../Services/MessagesService';
+import { UserService } from '../../../Services/UserService';
 
 @Component({
     selector: 'home',
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private postService: PostService;
     private FriendsService: FriendsService;
     private MessagesService: MessagesService;
+    private UserService: UserService;
     public posts: Array<Post>;
     platforms = new FormControl();
     platformList: string[] = ['Steam'];
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     public friends: Array<Friend>;
     public invites: Array<string>;
 
-    constructor(private _MessagesService: MessagesService, private _SnackBarHelper: SnackBarHelper, private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
+    constructor(private _UserService: UserService, private _MessagesService: MessagesService, private _SnackBarHelper: SnackBarHelper, private _FriendsService: FriendsService, private _httpStatus: HTTPStatus, _postService: PostService, router: Router) {
         this.httpStatus = _httpStatus;
         this.router1 = router;
         this.postService = _postService;
@@ -51,10 +53,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.invites = new Array<string>();
         this.SnackBarHelper = _SnackBarHelper;
         this.MessagesService = _MessagesService;
+        this.UserService = _UserService;
     }
 
     ngOnInit() {
         document.getElementById('navBar').style.backgroundColor = "#34373c";
+
+        let email: string = localStorage.getItem('email');
+        this.UserService.getUser(email)
+        .subscribe(result => {
+            localStorage.setItem('backgroundColor', result.body.backgroundColor);
+            localStorage.setItem('chatColor', result.body.chatColor);
+        }, error => {
+            console.error(error);
+        });
 
         this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
         .subscribe(result => {

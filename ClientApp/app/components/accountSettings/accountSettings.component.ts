@@ -49,13 +49,15 @@ export class AccountSettingsComponent implements OnInit {
 
     saveSettings() {
         var email: string = localStorage.getItem('email');
-        if(this.chatBackground.indexOf('#') != 0 || this.chatFontColor.indexOf('#') != 0) {
+        if((this.chatBackground.indexOf('#') != 0 || this.chatFontColor.indexOf('#') != 0) && this.chatBackground.length > 0) {
             this.openSnackBar('Hex colors must start with a #', 'Close', 3000);
-        } else if(this.chatBackground.length != 7 || this.chatFontColor.length != 7) {
+        } else if(this.chatBackground.length > 7 || this.chatBackground.length > 0 && this.chatBackground.length < 7 || this.chatFontColor.length > 7 || this.chatFontColor.length > 0 && this.chatFontColor.length < 7) {
             this.openSnackBar('Hex colors must be 7 characters, including the #.', 'Close', 4000);
         } else {
             this.AccountService.accountSettings(email, this.chatBackground, this.chatFontColor)
             .subscribe(result => {
+                localStorage.setItem('backgroundColor', this.chatBackground);
+                localStorage.setItem('chatColor', this.chatFontColor);
                 this.openSnackBar('Save Successful', 'Close', 2500);
             }, error => {
                 console.error(error);

@@ -63,6 +63,7 @@ export class NavigationBarComponent implements OnInit {
             this.userService.getUser(this.value)
             .subscribe(result => {
                 this.router.navigateByUrl('app/profile/' + this.value + '/posts');
+                this.value = "";
             }, error => {
                 console.error(error);
                 this.snackBarHelper.openSnackBar('The user ' + this.value + ' does not exist.', 'Close', 3000);

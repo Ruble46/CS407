@@ -54,12 +54,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this.auth2.attachClickHandler(element, {},
           (googleUser) => {
             let profile = googleUser.getBasicProfile();
-            console.log('Token || ' + googleUser.getAuthResponse().id_token);
-            console.log('ID: ' + profile.getId());
             localStorage.setItem('email', profile.U3);
             this.service2.getUserRole(profile.U3)
                 .subscribe(result => {
-                    console.log(result);
                     let isAdmin: boolean = false;
                     for(let a = 0; a < result.length; a++) {
                         if(result[a] === 'Admin') {
@@ -109,10 +106,10 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         //this.googleInit();
-        this.httpStatus.getCounter()
-        .subscribe((count: number) => {
-            console.log(count);
-        });
+        // this.httpStatus.getCounter()
+        // .subscribe((count: number) => {
+        //     console.log(count);
+        // });
     }
 
     signIn() {

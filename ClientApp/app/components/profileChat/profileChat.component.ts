@@ -28,6 +28,8 @@ export class ProfileChatComponent implements OnInit {
     private friendsSubscription;
     public CHATS: Array<Friend>;
     private FriendsService: FriendsService;
+    public areFriends: boolean;
+    public myProfile: boolean;
 
     constructor(private _FriendsService: FriendsService, private _MessagesService: MessagesService, private s: SelfService, private router: Router, profile: ProfileComponent) {
         this.selfService = s;
@@ -36,14 +38,28 @@ export class ProfileChatComponent implements OnInit {
         this.messages = new Array<Message>();
         this.p = profile;
         this.FriendsService = _FriendsService;
+        this.areFriends = false;
+        this.myProfile = false;
         profile.selected.setValue(2);
     }
 
-    getStyle(email: string) {
-        if(email === this.selfService.currentUser) {
+    getBackgroundStyle(email: string) {
+        let bc: string = localStorage.getItem('backgroundColor');
+        if(email === this.currUser && bc.length > 0) {
+            return bc;
+        } else if(email === this.currUser) {
             return "#ffedd0";
         } else {
             return "white";
+        }
+    }
+
+    getFontColor(email: string) {
+        let fc: string = localStorage.getItem('chatColor');
+        if(email === this.currUser && fc.length > 0) {
+            return fc;
+        } else {
+            return "black";
         }
     }
 
@@ -51,6 +67,9 @@ export class ProfileChatComponent implements OnInit {
 
     ngOnInit() { 
         this.currUser = localStorage.getItem('email');
+        if(this.p.email === this.currUser) {
+            this.myProfile = true;
+        }
         this.scrollToBottom();
 
         this.messageSubscription = timer(0, 3000).pipe(switchMap(() => this.MessagesService.getConversation(this.currUser, this.p.email)))
@@ -87,6 +106,10 @@ export class ProfileChatComponent implements OnInit {
                 let email: string = result.body[a];
                 let friend: Friend = new Friend();
                 friend.email = email;
+
+                if(email === this.p.email) {
+                    this.areFriends = true;
+                }
 
                 if(email !== this.p.email) {
                     this.MessagesService.getUnread(this.currUser)
