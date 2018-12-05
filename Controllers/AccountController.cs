@@ -261,7 +261,19 @@ namespace Game2gether.Controllers
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
-                _context.Remove(_context.Posts.Single(a => a.email == email));
+                var posts = from post in _context.Posts
+                              where post.email == email
+                              select post;
+                if(posts.Count() > 0) {
+                    _context.Remove(_context.Posts.Single(a => a.email == email));
+                }
+                var ratings = from rating in _context.Ratings
+                              where rating.rated == email
+                              select rating;
+                if(ratings.Count() > 0)
+                {
+                    _context.Remove(_context.Ratings.Single(a => a.rated == email));
+                }
                 _context.SaveChanges();
                 return Ok();
             }
@@ -282,6 +294,21 @@ namespace Game2gether.Controllers
             var result = await _userManager.DeleteAsync(user);
             if(result.Succeeded)
             {
+                var posts = from post in _context.Posts
+                            where post.email == form.email
+                            select post;
+                if (posts.Count() > 0)
+                {
+                    _context.Remove(_context.Posts.Single(a => a.email == form.email));
+                }
+                var ratings = from rating in _context.Ratings
+                              where rating.rated == form.email
+                              select rating;
+                if (ratings.Count() > 0)
+                {
+                    _context.Remove(_context.Ratings.Single(a => a.rated == form.email));
+                }
+                _context.SaveChanges();
                 return Ok();
             } else
             {
