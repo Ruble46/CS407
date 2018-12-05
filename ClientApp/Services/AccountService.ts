@@ -120,4 +120,17 @@ export class AccountService {
 
         return this.http.post<any>(this.apiBaseUrl + 'api/account/roles/demote/' + email, body, options);
     }
+
+    banUser(email: string) {
+        let body: Object = {
+            email: email
+        }
+
+        let options: Object = {
+            observe: 'response',
+            headers: {'Content-Type':'application/json'}
+        };
+
+        return this.http.post<any>(this.apiBaseUrl + 'api/account/ban', body, options);
+    }
 }

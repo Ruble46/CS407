@@ -58,7 +58,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
         .subscribe(result => {
-            //this.friends = result.body;
             this.friends = new Array<Friend>();
             for(let a = 0; a < result.body.length; a++) {
                 let email: string = result.body[a];

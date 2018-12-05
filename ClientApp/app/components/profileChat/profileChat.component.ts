@@ -6,6 +6,8 @@ import { MessagesService } from '../../../Services/MessagesService';
 import { Message } from '../../../Models/Message';
 import { switchMap } from 'rxjs/operators';
 import { timer } from 'rxjs';
+import { Friend } from '../../../Models/Friend';
+import { FriendsService } from '../../../Services/FriendsService';
 
 @Component({
     selector: 'profileChat',
@@ -22,13 +24,18 @@ export class ProfileChatComponent implements OnInit {
     private currUser: string;
     public message: string;
     public messageSubscription: any;
+    private check: boolean;
+    private friendsSubscription;
+    public CHATS: Array<Friend>;
+    private FriendsService: FriendsService;
 
-    constructor(private _MessagesService: MessagesService, private s: SelfService, private router: Router, profile: ProfileComponent) {
+    constructor(private _FriendsService: FriendsService, private _MessagesService: MessagesService, private s: SelfService, private router: Router, profile: ProfileComponent) {
         this.selfService = s;
         this.router1 = router;
         this.MessagesService = _MessagesService;
         this.messages = new Array<Message>();
         this.p = profile;
+        this.FriendsService = _FriendsService;
         profile.selected.setValue(2);
     }
 
@@ -48,12 +55,19 @@ export class ProfileChatComponent implements OnInit {
 
         this.messageSubscription = timer(0, 3000).pipe(switchMap(() => this.MessagesService.getConversation(this.currUser, this.p.email)))
         .subscribe(result => {
+            let newMessages: boolean = false;
+            if(this.messages.length < result.length) {
+                newMessages = true;
+            }
             this.messages = result;
-            this.scrollToBottom(); 
+
+            if(newMessages) {
+                this.check = true; 
+            }
 
             let temp: Message = new Message();
-            temp.sender = this.currUser;
-            temp.receiver = this.p.email;
+            temp.sender = this.p.email;
+            temp.receiver = this.currUser;
             temp.content = "marking messages as read";
 
             this.MessagesService.markRead(temp)
@@ -65,10 +79,35 @@ export class ProfileChatComponent implements OnInit {
         }, error => {
             console.error(error);
         });
+
+        this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
+        .subscribe(result => {
+            this.CHATS = new Array<Friend>();
+            for(let a = 0; a < result.body.length; a++) {
+                let email: string = result.body[a];
+                let friend: Friend = new Friend();
+                friend.email = email;
+
+                if(email !== this.p.email) {
+                    this.MessagesService.getUnread(this.currUser)
+                    .subscribe(result => {
+                        friend.unread = result.length;
+                        this.CHATS.push(friend);
+                    }, error => {
+                        console.error(error);
+                    });
+                }
+            }
+        }, error => {
+            console.error(error);
+        });
     }
 
     ngAfterViewChecked() {        
-        this.scrollToBottom();        
+        if(this.check == true) {
+            this.scrollToBottom();  
+        }
+        this.check = false;  
     } 
 
     scrollToBottom(): void {
@@ -104,26 +143,8 @@ export class ProfileChatComponent implements OnInit {
 
     ngOnDestroy() {
         this.messageSubscription.unsubscribe();
+        this.friendsSubscription.unsubscribe();
     }
-
-    public CHATS: Array<Chats> = [
-        {email: 'bob@purdue.edu', unread: 2},
-        {email: 'aaron@purdue.edu', unread: 10},
-        {email: 'tom@purdue.edu', unread: 1},
-        {email: 'craig@purdue.edu', unread: 0},
-        {email: 'bob@purdue.edu', unread: 2},
-        {email: 'aaron@purdue.edu', unread: 10},
-        {email: 'tom@purdue.edu', unread: 1},
-        {email: 'craig@purdue.edu', unread: 0},
-        {email: 'bob@purdue.edu', unread: 2},
-        {email: 'aaron@purdue.edu', unread: 10},
-        {email: 'tom@purdue.edu', unread: 1},
-        {email: 'craig@purdue.edu', unread: 0},
-        {email: 'bob@purdue.edu', unread: 2},
-        {email: 'aaron@purdue.edu', unread: 10},
-        {email: 'tom@purdue.edu', unread: 1},
-        {email: 'craig@purdue.edu', unread: 0},
-    ];
 }
 
 export interface Chats {

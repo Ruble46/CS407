@@ -250,8 +250,9 @@ namespace Game2gether.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("ban")]
-        public async Task<IActionResult>ban([FromBody] string email)
+        public async Task<IActionResult>ban([FromBody] dynamic data)
         {
+            string email = data.email;
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {

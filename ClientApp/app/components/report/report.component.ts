@@ -8,6 +8,7 @@ import { DeleteReportDialogComponent } from '../deleteReportDialog/deleteReportD
 import { ReportsService } from '../../../Services/ReportsService';
 import { SnackBarHelper } from '../../../Helpers/SnackBars';
 import { BanUserDialogComponent } from '../banUserDialog/banUserDialog.component';
+import { AccountService } from '../../../Services/AccountService';
 
 @Component({
     selector: 'report',
@@ -19,6 +20,7 @@ import { BanUserDialogComponent } from '../banUserDialog/banUserDialog.component
 export class ReportComponent implements OnInit {
     public dialog1: MatDialog;
     private reportsService: ReportsService;
+    private AccountService: AccountService;
     public newEmail: Email;
     public email: Email;
     private ID: string;
@@ -29,8 +31,9 @@ export class ReportComponent implements OnInit {
     private router: Router;
     private snackBar: SnackBarHelper;
 
-    constructor(private _snackBar: SnackBarHelper, private _router: Router, _reportsService: ReportsService, private route: ActivatedRoute, public dialog: MatDialog) {
+    constructor(private _AccountService: AccountService, private _snackBar: SnackBarHelper, private _router: Router, _reportsService: ReportsService, private route: ActivatedRoute, public dialog: MatDialog) {
         this.reportsService = _reportsService;
+        this.AccountService = _AccountService;
         this.dialog1 = dialog;
         this.router = _router;
         this.snackBar = _snackBar;
@@ -114,7 +117,12 @@ export class ReportComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if(result === 'yes') {
-                console.log('yes was clicked');
+                this.AccountService.banUser(this.Report.reported)
+                .subscribe(result => {
+                    console.log(result);
+                }, error => {
+                    console.error(error);
+                });
             }
         })
     }
