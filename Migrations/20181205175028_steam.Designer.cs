@@ -11,9 +11,10 @@ using System;
 namespace Game2gether.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181205175028_steam")]
+    partial class steam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,14 +68,6 @@ namespace Game2gether.Migrations
                     b.Property<string>("friendRequests");
 
                     b.Property<string>("friends");
-
-                    b.Property<string>("games");
-
-                    b.Property<string>("steamAvatar");
-
-                    b.Property<string>("steamId");
-
-                    b.Property<string>("steamName");
 
                     b.HasKey("Id");
 
