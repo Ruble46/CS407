@@ -37,7 +37,7 @@ export class MessagesService {
         return this.http.post<any>(this.apiBaseUrl + 'api/message/markRead', message, options);
     }
 
-    getUnread(email: string) {
-        return this.http.get<any>(this.apiBaseUrl + 'api/message/getUnread/' + email);
+    getUnread(email1: string, email2: string) {
+        return this.http.get<any>(this.apiBaseUrl + 'api/message/getUnread/' + email1 + '/' + email2);
     }
 }

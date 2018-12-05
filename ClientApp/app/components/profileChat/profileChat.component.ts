@@ -112,7 +112,7 @@ export class ProfileChatComponent implements OnInit {
                 }
 
                 if(email !== this.p.email) {
-                    this.MessagesService.getUnread(this.currUser)
+                    this.MessagesService.getUnread(this.currUser, email)
                     .subscribe(result => {
                         if(result) {
                             friend.unread = result.length;

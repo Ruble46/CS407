@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 let friend: Friend = new Friend();
                 friend.email = email;
 
-                this.MessagesService.getUnread(this.currUser)
+                this.MessagesService.getUnread(this.currUser, email)
                 .subscribe(result => {
                     if(result) {
                         friend.unread = result.length;
