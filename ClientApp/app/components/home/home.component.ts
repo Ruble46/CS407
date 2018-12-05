@@ -78,8 +78,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
                 this.MessagesService.getUnread(this.currUser)
                 .subscribe(result => {
-                    friend.unread = result.length;
+                    if(result) {
+                        friend.unread = result.length;
+                    } else {
+                        friend.unread = 0;
+                    }
                     this.friends.push(friend);
+                    console.log(this.friends);
                 }, error => {
                     console.error(error);
                 });

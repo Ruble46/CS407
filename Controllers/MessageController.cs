@@ -59,7 +59,14 @@ namespace Game2gether.Controllers
             var messages = from mes in _context.Messages
                            where (mes.receiver == email && mes.unread)
                            select mes;
-            return Ok(messages);
+            if(messages.Count() > 0)
+            {
+                return Ok(messages);
+            }
+            else
+            {
+                return Ok();
+            }
         }
 
 
