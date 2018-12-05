@@ -53,11 +53,11 @@ namespace Game2gether.Controllers
             return Ok();
         }
 
-        [HttpGet("getUnread/{email}")]
-        public async Task<IActionResult> getUnread(string email)
+        [HttpGet("getUnread/{email}/{email1}")]
+        public async Task<IActionResult> getUnread(string email, string email1)
         {
             var messages = from mes in _context.Messages
-                           where (mes.receiver == email && mes.unread)
+                           where (mes.sender == email1 && mes.receiver == email && mes.unread)
                            select mes;
             if(messages.Count() > 0)
             {
