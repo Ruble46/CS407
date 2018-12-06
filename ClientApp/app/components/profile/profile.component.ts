@@ -84,6 +84,8 @@ export class ProfileComponent implements OnInit {
         let currRole: string = localStorage.getItem('role');
         if(currRole === "Admin") {
             this.currIsAdmin = true;
+        } else {
+            this.currIsAdmin = false;
         }
 
         this.AccountService.getUserRole(this.email)

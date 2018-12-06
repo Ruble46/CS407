@@ -7,7 +7,7 @@
                 <div class="emailTitle">
                     <span>{{ email }}</span>
 
-                    <button mat-icon-button [matMenuTriggerFor]="playerMenu" class="playerDropDownBtn">
+                    <button *ngIf="!isYourOwn" mat-icon-button [matMenuTriggerFor]="playerMenu" class="playerDropDownBtn">
                         <mat-icon class="playerDropDownIcon">more_vert</mat-icon>
                     </button>
                     <mat-menu #playerMenu="matMenu" xPosition="before" [overlapTrigger]="false">
@@ -34,16 +34,6 @@
                         </button>
 
                         <button *ngIf="currIsAdmin && !userIsAdmin && !isYourOwn" disabled mat-menu-item>
-                            <mat-icon>arrow_downward</mat-icon>
-                            Demote
-                        </button>
-
-                        <!-- User is yourself -->
-                        <button *ngIf="isYourOwn" disabled mat-menu-item>
-                            <mat-icon>arrow_upward</mat-icon>
-                            Promote
-                        </button>
-                        <button *ngIf="isYourOwn" disabled mat-menu-item>
                             <mat-icon>arrow_downward</mat-icon>
                             Demote
                         </button>

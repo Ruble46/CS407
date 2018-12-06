@@ -51,17 +51,17 @@
 }
 
 .gameCardWrapper {
-    height: calc(100% - 40px);
+    height: calc(100% - 10px);
     width: calc(100% - 40px);
     display: inline-flex;
     flex-direction: row;
     overflow-x: auto;
     margin: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .gameCard {
-    height: 175px;
+    height: 200px;
     width: 150px;
     padding: 25px;
     text-align: center;
@@ -81,7 +81,7 @@
 
 .gameCardText {
     line-height: 30px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
 }
 

@@ -12,6 +12,7 @@ import {MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
         MatNativeDateModule, MatCheckboxModule, MatSidenavModule, 
         MatProgressBarModule, MatDialogModule, MatExpansionModule,
         MatButtonToggleModule, MatBadgeModule, MatSnackBarModule } from "@angular/material";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 //Component Imports
@@ -57,6 +58,7 @@ import { HTTPListener, HTTPStatus } from '../Services/HttpInterceptor';
 import { RatingService } from '../Services/RatingService';
 import { FriendsService } from '../Services/FriendsService';
 import { MessagesService } from '../Services/MessagesService';
+import { GamingService } from '../Services/GamingService';
 
 //Shared Modules
 import { RootModuleShared } from '../root/root.shared.module';
@@ -132,6 +134,7 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         MatButtonToggleModule,
         MatBadgeModule,
         MatSnackBarModule,
+        BrowserAnimationsModule,
 
         //Shared Modules
         RootModuleShared,
@@ -192,7 +195,8 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
         { provide: HTTP_INTERCEPTORS, useClass: HTTPListener, multi: true },
         RatingService,
         FriendsService,
-        MessagesService
+        MessagesService,
+        GamingService
     ]
 })
 export class AppModuleShared {

@@ -12,8 +12,8 @@ import { AccountService } from '../../../Services/AccountService';
     encapsulation : ViewEncapsulation.Native
 })
 export class AccountComponent {
-    private selfService: SelfService;
     public email: string;
+
     public AccountCreated: Date;
     private router1: Router;
     public selected = new FormControl(0);
@@ -29,6 +29,9 @@ export class AccountComponent {
         this.AccountService.getAccount(this.email)
         .subscribe(result => {
             this.AccountCreated = result.body.accountCreated;
+            localStorage.setItem('steamId', result.body.steamId);
+            localStorage.setItem('steamName', result.body.steamName);
+            localStorage.setItem('steamAvatar', result.body.steamAvatar);
         }, error => {
             console.error(error);
         });

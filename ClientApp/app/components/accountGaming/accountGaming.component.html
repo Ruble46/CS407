@@ -1,163 +1,57 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div class="profileGamingWrapper">
-    <button mat-raised-button color="primary" class="fullWidth addPlatformBtn" (click)="addNewPlatformDialog()">
+    <button mat-raised-button *ngIf="!hasSteam" color="primary" class="fullWidth addPlatformBtn" (click)="addNewPlatformDialog()">
         <mat-icon>add</mat-icon>
-        <span>Add Steam Profile</span>
+        <span>Link Steam Profile</span>
     </button>
-    <div class="gamingExpansionPanel">
-        <mat-accordion>
-            <mat-expansion-panel>
+
+    <button mat-raised-button *ngIf="hasSteam" color="primary" class="fullWidth addPlatformBtn" (click)="addNewPlatformDialog()">
+        <mat-icon>add</mat-icon>
+        <span>Change Steam Profile</span>
+    </button>
+    <div class="gamingExpansionPanel" >
+
+        <mat-accordion *ngIf="doneLoadingSteam && hasSteam">
+            <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header class="platformExpansionPanelHeader">
                     <mat-panel-title class="gamingHeadPanel">
                         <label class="gamingText">Platform:&nbsp;Steam,&nbsp;&nbsp;&nbsp;</label>
-                        <label class="gamingText">Username:&nbsp;JuiceMyOranges</label>
+                        <label class="gamingText">Username:&nbsp;{{steamName}}</label>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
             
                 <div class="gameCardWrapper">
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League1</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League2</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League3</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League4</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League5</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League6</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League7</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League8</label>
-                    </div>
-                    <div class="gameCard">
-                        <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                        <label class="gameCardText">Rocket League9</label>
+                    <div class="gameCard" *ngFor="let game of games">
+                        <img class="gameCardIcon" src="{{game.picture}}">
+                        <label class="gameCardText">{{game.name}}</label>
                     </div>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-    </div>
-    <div class="gamingExpansionPanel">
-            <mat-accordion>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header class="platformExpansionPanelHeader">
-                        <mat-panel-title class="gamingHeadPanel">
-                            <label class="gamingText">Platform:&nbsp;Steam,&nbsp;&nbsp;&nbsp;</label>
-                            <label class="gamingText">Username:&nbsp;JuiceMyOranges</label>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                
-                    <div class="gameCardWrapper">
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League1</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League2</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League3</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League4</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League5</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League6</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League7</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League8</label>
-                        </div>
-                        <div class="gameCard">
-                            <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                            <label class="gameCardText">Rocket League9</label>
-                        </div>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
-        <div class="gamingExpansionPanel">
-                <mat-accordion>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header class="platformExpansionPanelHeader">
-                            <mat-panel-title class="gamingHeadPanel">
-                                <label class="gamingText">Platform:&nbsp;Steam,&nbsp;&nbsp;&nbsp;</label>
-                                <label class="gamingText">Username:&nbsp;JuiceMyOranges</label>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                    
-                        <div class="gameCardWrapper">
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League1</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League2</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League3</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League4</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League5</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League6</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League7</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League8</label>
-                            </div>
-                            <div class="gameCard">
-                                <img class="gameCardIcon" src="https://dvsgaming.org/wp-content/uploads/2016/04/Rocket_League_coverart.jpg">
-                                <label class="gameCardText">Rocket League9</label>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
-    
-    
+
+        <mat-accordion *ngIf="!doneLoadingSteam && !hasSteam">
+            <mat-expansion-panel disabled>
+                <mat-expansion-panel-header class="platformExpansionPanelHeader">
+                    <mat-panel-title class="gamingHeadPanel">
+                        <label class="gamingText">Checking Steam credentials...</label>
+                        
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+            </mat-expansion-panel>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-accordion>
+
+        <mat-accordion *ngIf="doneLoadingSteam && !hasSteam">
+            <mat-expansion-panel disabled>
+                <mat-expansion-panel-header class="platformExpansionPanelHeader">
+                    <mat-panel-title class="gamingHeadPanel">
+                        <label class="gamingText">You haven't linked your Steam account yet.</label>
+                        
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>   
 </div>
