@@ -95,8 +95,8 @@ namespace Game2gether
 
             //AppUser user = await UserManager.FindByEmailAsync("kleaf.gbit@gmail.com");
             //await UserManager.AddToRoleAsync(user, "Admin");
-            AppUser user = await UserManager.FindByEmailAsync("ruble46@hotmail.com");
-            await UserManager.AddToRoleAsync(user, "Admin");
+            //AppUser user = await UserManager.FindByEmailAsync("ruble46@hotmail.com");
+            //await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

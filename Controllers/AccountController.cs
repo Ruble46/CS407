@@ -275,6 +275,15 @@ namespace Game2gether.Controllers
                     _context.Remove(_context.Ratings.Single(a => a.rated == email));
                 }
                 _context.SaveChanges();
+                var apiKey = _config["SendGridApiKey"];
+                var client = new SendGridClient("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");
+                var from = new EmailAddress("support@game2gether.com", "support");
+                var subject = "You have been banned";
+                var to = new EmailAddress(email, "user");
+                var body = "Based on your behavior, you have been banned from Game2Gether. You're account has been deactivated. If you have any questions regarding this ban contact support@game2gether.com.";
+                var htmlContent = "";
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, body, htmlContent);
+                var response = await client.SendEmailAsync(msg);
                 return Ok();
             }
             else
