@@ -8,7 +8,7 @@
                 <mat-toolbar color="accent">All Conversations</mat-toolbar>
                 <div class="allChatFeed">
                     <mat-list *ngFor="let chat of CHATS" class="removeListPadding">
-                        <button mat-button class="fullWidth" (click)="toProfile(chat.email)">
+                        <button *ngIf="thisUser != chat.email" mat-button class="fullWidth" (click)="toProfile(chat.email)">
                             <mat-list-item class="allChatItem">
                                 <div class="allChatLabelSetWidth">
                                     <label class="allChatLabel">{{chat.email}}</label>

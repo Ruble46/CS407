@@ -103,7 +103,7 @@ export class ReportComponent implements OnInit {
                 }, error => {
                     this.choice = 'false';
                     console.error(error);
-                })
+                });
               }
         });
 
@@ -119,7 +119,14 @@ export class ReportComponent implements OnInit {
             if(result === 'yes') {
                 this.AccountService.banUser(this.Report.reported)
                 .subscribe(result => {
-                    console.log(result);
+                    this.reportsService.closeTicket(this.ID)
+                    .subscribe(result => {
+                        this.router.navigateByUrl('app/reports');
+                        this.choice = 'false';
+                    }, error => {
+                        this.choice = 'false';
+                        console.error(error);
+                    });
                 }, error => {
                     console.error(error);
                 });

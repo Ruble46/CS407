@@ -68,23 +68,33 @@ export class HomeComponent implements OnInit, OnDestroy {
             console.error(error);
         });
 
-        this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
+        this.friendsSubscription = timer(0, 3000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
         .subscribe(result => {
-            this.friends = new Array<Friend>();
+            let emailTemp: Array<string> = new Array<string>();
+            let unreadTemp: Array<number> = new Array<number>();
+            let total: number = result.body.length;
             for(let a = 0; a < result.body.length; a++) {
                 let email: string = result.body[a];
-                let friend: Friend = new Friend();
-                friend.email = email;
+                emailTemp[a] = email;
 
                 this.MessagesService.getUnread(this.currUser, email)
                 .subscribe(result => {
                     if(result) {
-                        friend.unread = result.length;
+                        unreadTemp[a] = result.length;
                     } else {
-                        friend.unread = 0;
+                        unreadTemp[a] = 0;
                     }
-                    this.friends.push(friend);
-                    console.log(this.friends);
+                    
+                    if(unreadTemp.length == total) {
+                        let friendsTemp: Array<Friend> = new Array<Friend>();
+                        for(let b = 0; b < total; b++) {
+                            let friendTemp: Friend = new Friend();
+                            friendTemp.email = emailTemp[b];
+                            friendTemp.unread = unreadTemp[b];
+                            friendsTemp.push(friendTemp);
+                        }
+                        this.friends = friendsTemp;
+                    }
                 }, error => {
                     console.error(error);
                 });
@@ -93,7 +103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             console.error(error);
         });
 
-        this.invitesSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getRequests(this.currUser)))
+        this.invitesSubscription = timer(0, 3000).pipe(switchMap(() => this.FriendsService.getRequests(this.currUser)))
         .subscribe(result => {
             this.invites = result.body;
         }, error => {
@@ -127,7 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
 
         //Home post feed
-        this.postSubscription = timer(0, 300000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
+        this.postSubscription = timer(0, 5000).pipe(switchMap(() => this.postService.getAllPosts())) //REMEMBE TO SWITCH BACK TO 5 SECONDS
         .subscribe(result => {
             this.posts = null;
             this.posts = new Array<Post>();

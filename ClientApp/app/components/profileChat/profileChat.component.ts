@@ -30,6 +30,7 @@ export class ProfileChatComponent implements OnInit {
     private FriendsService: FriendsService;
     public areFriends: boolean;
     public myProfile: boolean;
+    public thisUser: string;
 
     constructor(private _FriendsService: FriendsService, private _MessagesService: MessagesService, private s: SelfService, private router: Router, profile: ProfileComponent) {
         this.selfService = s;
@@ -40,6 +41,7 @@ export class ProfileChatComponent implements OnInit {
         this.FriendsService = _FriendsService;
         this.areFriends = false;
         this.myProfile = false;
+        this.CHATS = new Array<Friend>();
         profile.selected.setValue(2);
     }
 
@@ -66,6 +68,7 @@ export class ProfileChatComponent implements OnInit {
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
     ngOnInit() { 
+        this.thisUser = this.p.email;
         this.currUser = localStorage.getItem('email');
         if(this.p.email === this.currUser) {
             this.myProfile = true;
@@ -91,7 +94,7 @@ export class ProfileChatComponent implements OnInit {
 
             this.MessagesService.markRead(temp)
             .subscribe(result => {
-                console.log(result);
+                // console.log(result);
             }, error => {
                 console.error(error);
             })
@@ -99,31 +102,40 @@ export class ProfileChatComponent implements OnInit {
             console.error(error);
         });
 
-        this.friendsSubscription = timer(0, 10000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
+        this.friendsSubscription = timer(0, 3000).pipe(switchMap(() => this.FriendsService.getFriends(this.currUser)))
         .subscribe(result => {
-            this.CHATS = new Array<Friend>();
+            let emailTemp: Array<string> = new Array<string>();
+            let unreadTemp: Array<number> = new Array<number>();
+            let total: number = result.body.length;
             for(let a = 0; a < result.body.length; a++) {
                 let email: string = result.body[a];
-                let friend: Friend = new Friend();
-                friend.email = email;
+                emailTemp[a] = email;
 
                 if(email === this.p.email) {
                     this.areFriends = true;
                 }
 
-                if(email !== this.p.email) {
-                    this.MessagesService.getUnread(this.currUser, email)
-                    .subscribe(result => {
-                        if(result) {
-                            friend.unread = result.length;
-                        } else {
-                            friend.unread = 0;
+                this.MessagesService.getUnread(this.currUser, email)
+                .subscribe(result => {
+                    if(result) {
+                        unreadTemp[a] = result.length;
+                    } else {
+                        unreadTemp[a] = 0;
+                    }
+                    
+                    if(unreadTemp.length == total) {
+                        let friendsTemp: Array<Friend> = new Array<Friend>();
+                        for(let b = 0; b < total; b++) {
+                            let friendTemp: Friend = new Friend();
+                            friendTemp.email = emailTemp[b];
+                            friendTemp.unread = unreadTemp[b];
+                            friendsTemp.push(friendTemp);
                         }
-                        this.CHATS.push(friend);
-                    }, error => {
-                        console.error(error);
-                    });
-                }
+                        this.CHATS = friendsTemp;
+                    }
+                }, error => {
+                    console.error(error);
+                });
             }
         }, error => {
             console.error(error);
@@ -144,7 +156,10 @@ export class ProfileChatComponent implements OnInit {
     }
 
     toProfile(email) {
-        this.router1.navigateByUrl('app/profile/' + email + '/chat');
+        this.CHATS = new Array<Friend>();
+        this.router1.navigateByUrl('app/profile/' + email + '/chat').then(result => {
+            this.ngOnInit();
+        });
     }
 
     sendMessage() {
