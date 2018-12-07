@@ -276,7 +276,7 @@ namespace Game2gether.Controllers
                 }
                 _context.SaveChanges();
                 var apiKey = _config["SendGridApiKey"];
-                var client = new SendGridClient("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");
+                var client = new SendGridClient(apiKey);
                 var from = new EmailAddress("support@game2gether.com", "support");
                 var subject = "You have been banned";
                 var to = new EmailAddress(email, "user");
